@@ -1,0 +1,36 @@
+- id: DCR-001
+  name: No DCR Configuration Found
+  severity: critical
+  category: dcr
+  platforms: [windows, linux]
+  description: >
+    No Data Collection Rule (DCR) configuration was found in the bundle.
+    Without a DCR, the agent has no data collection instructions. Look for
+    mcsconfig.latest.xml or configchunks directory.
+  detection:
+    file_pattern: "mcsconfig"
+    condition: file_missing
+  remediation: >
+    Associate a DCR with this machine in the Azure portal:
+    1. Navigate to Monitor > Data Collection Rules
+    2. Create or select an existing DCR
+    3. Add this VM/Arc server as a resource
+    Wait 5-10 minutes for the DCR to be downloaded by the agent.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview
+
+- id: DCR-002
+  name: Empty DCR Configuration
+  severity: warning
+  category: dcr
+  platforms: [windows, linux]
+  description: >
+    DCR configuration files exist but appear to contain no data collection
+    definitions (no counter sets, subscriptions, or syslog streams).
+  detection:
+    file_pattern: "mcsconfig"
+    condition: content_match
+    content_regex: "<MonitoringManagement[^>]*/>"
+  remediation: >
+    Review the DCR in the Azure portal. Ensure at least one data source
+    (performance counters, Windows events, syslog, etc.) is configured.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview

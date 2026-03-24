@@ -1,0 +1,51 @@
+[package]
+name = "amadiag"
+version = "0.1.0"
+edition = "2021"
+description = "Diagnostic analyzer for Azure Monitor Agent (AMA) troubleshooter output"
+license = "MIT"
+repository = "https://github.com/johnsirmon/AMADiag"
+keywords = ["azure", "monitoring", "diagnostics", "ama"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Error handling
+anyhow = "1"
+thiserror = "2"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+# Parsing
+quick-xml = { version = "0.37", features = ["serialize"] }
+regex = "1"
+csv = "1"
+
+# Archives
+flate2 = "1"
+tar = "0.4"
+zip = "2"
+
+# File system
+walkdir = "2"
+
+# Terminal output
+owo-colors = "4"
+comfy-table = "7"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Parallelism
+rayon = "1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

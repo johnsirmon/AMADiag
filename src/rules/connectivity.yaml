@@ -1,0 +1,51 @@
+- id: CONN-001
+  name: AMCS Endpoint Unreachable
+  severity: critical
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    The agent cannot reach the Azure Monitor Configuration Service (AMCS) endpoints.
+    This prevents DCR download and data collection configuration.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(AMCS|global\\.handler\\.control).*(fail|error|timeout|unreachable|refused)"
+  remediation: >
+    Verify network connectivity to required AMA endpoints. Ensure the following URLs
+    are reachable: *.handler.control.monitor.azure.com, *.ingest.monitor.azure.com.
+    Check NSG rules, firewalls, and proxy configuration.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
+
+- id: CONN-002
+  name: Log Ingestion Endpoint Unreachable
+  severity: critical
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    The agent cannot reach the log ingestion endpoints. Data collection is configured
+    but logs/metrics are not being delivered.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(ingestion|ingest\\.monitor).*(fail|error|timeout|unreachable|refused)"
+  remediation: >
+    Verify connectivity to the data collection endpoint (DCE) configured in the DCR.
+    Check that *.ingest.monitor.azure.com is reachable through any firewall or proxy.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
+
+- id: CONN-003
+  name: IMDS Endpoint Unreachable
+  severity: critical
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    The Instance Metadata Service (IMDS) at 169.254.169.254 is unreachable.
+    AMA requires IMDS for VM identity, authentication tokens, and metadata.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(169\\.254\\.169\\.254|IMDS).*(unreachable|timeout|fail|refused)"
+  remediation: >
+    IMDS must be accessible from the VM. Do NOT block 169.254.169.254 in local firewall
+    rules. For Arc-enabled servers, HIMDS provides equivalent functionality.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#verify-imds-connectivity

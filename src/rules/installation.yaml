@@ -1,0 +1,34 @@
+- id: INSTALL-001
+  name: Extension Not Installed
+  severity: critical
+  category: installation
+  platforms: [windows, linux]
+  description: >
+    The AMA extension does not appear to be installed. No extension provisioning
+    logs or agent binaries were found in the troubleshooter bundle.
+  detection:
+    file_pattern: "AzureMonitor"
+    condition: file_missing
+  remediation: >
+    Install the Azure Monitor Agent extension:
+    az vm extension set --publisher Microsoft.Azure.Monitor --name AzureMonitorWindowsAgent --vm-name <vm> --resource-group <rg>
+    For Linux: --name AzureMonitorLinuxAgent
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-manage
+
+- id: INSTALL-002
+  name: Extension Provisioning Error Log
+  severity: critical
+  category: installation
+  platforms: [windows, linux]
+  description: >
+    Extension provisioning logs contain error entries indicating the AMA extension
+    failed to install or enable properly.
+  detection:
+    file_pattern: "extension"
+    condition: content_match
+    content_regex: "(?i)(provisioning|install|enable).*(fail|error|timeout)"
+  remediation: >
+    Check the extension status in the Azure portal. Common causes include
+    blocked network endpoints, insufficient permissions, or OS compatibility issues.
+    Try removing and reinstalling the extension.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#step-1-verify-that-the-extension-was-installed-properly

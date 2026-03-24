@@ -1,0 +1,36 @@
+- id: IDENTITY-001
+  name: Missing Managed Identity
+  severity: critical
+  category: identity
+  platforms: [windows, linux]
+  description: >
+    No system-assigned or user-assigned managed identity token was found.
+    AMA requires a managed identity to authenticate with Azure Monitor services.
+    The AuthToken-MSI.json file is absent from the bundle.
+  detection:
+    file_pattern: "AuthToken-MSI"
+    condition: file_missing
+  remediation: >
+    Enable a system-assigned managed identity on the VM:
+    az vm identity assign --resource-group <rg> --name <vm>
+    For Arc servers, the managed identity is created automatically with the
+    Connected Machine Agent registration.
+  doc_link: https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm
+
+- id: IDENTITY-002
+  name: Authentication Token Expired or Invalid
+  severity: critical
+  category: identity
+  platforms: [windows, linux]
+  description: >
+    The managed identity authentication token appears expired or invalid
+    based on error patterns in the agent logs.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(token|auth|MSI).*(expired|invalid|unauthorized|403)"
+  remediation: >
+    Verify the managed identity is enabled and has proper role assignments.
+    For custom metrics, ensure the managed identity has 'Monitoring Metrics Publisher'
+    role on the target resource. Try restarting the AMA extension.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm

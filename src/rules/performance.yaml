@@ -1,0 +1,34 @@
+- id: PERF-001
+  name: No Performance Counter Configuration
+  severity: warning
+  category: performance_counters
+  platforms: [windows]
+  description: >
+    The mcsconfig XML does not contain any CounterSet definitions. If the DCR
+    is expected to collect performance counters, they are not configured.
+  detection:
+    xml_element: "CounterSet"
+    condition: xml_element_missing
+  remediation: >
+    Add performance counter data sources to the DCR in the Azure portal.
+    Navigate to Monitor > Data Collection Rules > [your DCR] > Data sources,
+    and add a Performance Counters source.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-collection-performance-counters
+
+- id: PERF-002
+  name: Invalid Performance Counter Path
+  severity: warning
+  category: performance_counters
+  platforms: [windows]
+  description: >
+    Log entries indicate invalid or unrecognized performance counter paths
+    in the DCR configuration.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(counter|perf).*(invalid|not.found|missing|unknown)"
+  remediation: >
+    Verify that the performance counter paths in the DCR are valid on the target OS.
+    Use 'typeperf -q' on Windows to list available counters. Remove or fix invalid
+    counter paths in the DCR.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-collection-performance-counters

@@ -1,0 +1,54 @@
+- id: SYSLOG-001
+  name: Syslog Forwarder Not Running
+  severity: critical
+  category: syslog
+  platforms: [linux]
+  description: >
+    The syslog forwarder (rsyslog or syslog-ng) appears to be stopped or
+    not functioning. AMA on Linux relies on the local syslog daemon to
+    forward logs to the agent.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(rsyslog|syslog-ng).*(stopped|not.running|inactive|dead|failed)"
+  remediation: >
+    Start the syslog daemon:
+    sudo systemctl start rsyslog
+    (or syslog-ng if using syslog-ng)
+    Verify it is enabled on boot: sudo systemctl enable rsyslog
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-002
+  name: Syslog Port Not Listening
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    The expected syslog forwarding port (typically 28330 for AMA) does not
+    appear to be listening based on diagnostic output.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(28330|514).*(not.listening|refused|bind.fail)"
+  remediation: >
+    Verify the rsyslog/syslog-ng configuration forwards to the correct AMA listening port.
+    Check /etc/rsyslog.d/10-azuremonitoragent.conf for the forwarding rule.
+    Restart rsyslog after configuration changes.
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-003
+  name: Syslog Configuration Missing AMA Forwarding
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    No AMA syslog forwarding configuration file was found (e.g.,
+    10-azuremonitoragent.conf in /etc/rsyslog.d/).
+  detection:
+    file_pattern: "azuremonitoragent"
+    condition: file_missing
+  remediation: >
+    The AMA extension should create the syslog forwarding configuration
+    automatically when a syslog data source is configured in the DCR.
+    Verify the DCR has a syslog data source and try restarting the AMA extension.
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting

@@ -1,0 +1,53 @@
+- id: SZ-001
+  name: Memory Pressure Detected
+  severity: warning
+  category: sizing
+  platforms: [windows, linux]
+  description: >
+    Log entries indicate the machine is experiencing memory pressure.
+    Low available memory can cause AMA to drop events, buffer overflow,
+    or agent process crashes.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(out.of.memory|OOM|memory.pressure|low.memory|insufficient.memory)"
+  remediation: >
+    Ensure the VM has at least 256 MB of free memory for AMA operation.
+    Consider upgrading the VM SKU or reducing the number of data collection
+    rules and data sources to lower the agent's memory footprint.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
+
+- id: SZ-002
+  name: High CPU Usage by AMA
+  severity: warning
+  category: sizing
+  platforms: [windows, linux]
+  description: >
+    Log entries indicate high CPU utilization by the AMA agent processes.
+    This typically occurs on undersized VMs with high data collection volume.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(high.cpu|cpu.throttl|cpu.usage.*9[0-9]%|cpu.usage.*100%)"
+  remediation: >
+    Consider upgrading the VM to a SKU with more CPU cores, or reducing
+    the number and frequency of performance counters being collected.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
+
+- id: SZ-003
+  name: Disk Space Low
+  severity: warning
+  category: sizing
+  platforms: [windows, linux]
+  description: >
+    Log entries indicate disk space issues on the machine. AMA requires
+    disk space for its data store, log buffering, and configuration cache.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(disk.full|no.space|insufficient.disk|disk.space)"
+  remediation: >
+    Free disk space on the partition where AMA stores its data. On Windows this
+    is typically C:\\WindowsAzure\\Resources\\AMADataStore. On Linux, check
+    /var/opt/microsoft/azuremonitoragent/.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
