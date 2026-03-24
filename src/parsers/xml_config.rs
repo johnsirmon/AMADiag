@@ -63,10 +63,8 @@ pub fn parse_mcsconfig(xml_content: &str) -> anyhow::Result<McsConfig> {
                             sample_rate: None,
                         };
                         for attr in e.attributes().flatten() {
-                            let key =
-                                String::from_utf8_lossy(attr.key.as_ref()).to_string();
-                            let val =
-                                String::from_utf8_lossy(&attr.value).to_string();
+                            let key = String::from_utf8_lossy(attr.key.as_ref()).to_string();
+                            let val = String::from_utf8_lossy(&attr.value).to_string();
                             match key.as_str() {
                                 "namespace" | "eventName" => {
                                     current_counter_set.namespace = Some(val);
@@ -85,10 +83,8 @@ pub fn parse_mcsconfig(xml_content: &str) -> anyhow::Result<McsConfig> {
                             query: None,
                         };
                         for attr in e.attributes().flatten() {
-                            let key =
-                                String::from_utf8_lossy(attr.key.as_ref()).to_string();
-                            let val =
-                                String::from_utf8_lossy(&attr.value).to_string();
+                            let key = String::from_utf8_lossy(attr.key.as_ref()).to_string();
+                            let val = String::from_utf8_lossy(&attr.value).to_string();
                             if key == "name" || key == "eventName" {
                                 current_subscription.name = Some(val);
                             }
@@ -125,7 +121,10 @@ pub fn parse_mcsconfig(xml_content: &str) -> anyhow::Result<McsConfig> {
             }
             Ok(Event::Eof) => break,
             Err(e) => {
-                tracing::warn!("XML parse error at position {}: {e}", reader.error_position());
+                tracing::warn!(
+                    "XML parse error at position {}: {e}",
+                    reader.error_position()
+                );
                 break;
             }
             _ => {}

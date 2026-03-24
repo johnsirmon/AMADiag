@@ -66,10 +66,7 @@ fn extract_tar_gz(path: &Path) -> Result<(PathBuf, Option<tempdir::TempDir>)> {
         .unpack(tmp.path())
         .with_context(|| format!("Failed to extract tar.gz: {}", path.display()))?;
 
-    tracing::info!(
-        "Extracted tar.gz bundle to {}",
-        tmp.path().display()
-    );
+    tracing::info!("Extracted tar.gz bundle to {}", tmp.path().display());
     Ok((tmp.path().to_path_buf(), Some(tmp)))
 }
 
@@ -145,7 +142,11 @@ pub fn validate_bundle(path: &Path) -> Result<String> {
          Status:     {}",
         path.display(),
         format_size(total_size),
-        if file_count > 0 { "OK" } else { "EMPTY — no files found in bundle" }
+        if file_count > 0 {
+            "OK"
+        } else {
+            "EMPTY — no files found in bundle"
+        }
     ))
 }
 

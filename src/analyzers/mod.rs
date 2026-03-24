@@ -108,10 +108,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         let mut evidence = Vec::new();
         for line in &bundle.log_lines {
             if pattern.is_match(&line.content) {
-                evidence.push(format!(
-                    "{}:{}: {}",
-                    line.file, line.line_num, line.content
-                ));
+                evidence.push(format!("{}:{}: {}", line.file, line.line_num, line.content));
                 if evidence.len() >= 5 {
                     break; // Cap evidence per finding
                 }

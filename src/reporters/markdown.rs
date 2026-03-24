@@ -10,7 +10,10 @@ pub fn render(report: &DiagnosticReport) -> String {
     // Summary
     out.push_str("## Summary\n\n");
     out.push_str(&format!("- **Bundle**: `{}`\n", report.bundle_path));
-    out.push_str(&format!("- **Files analyzed**: {}\n", report.files_analyzed));
+    out.push_str(&format!(
+        "- **Files analyzed**: {}\n",
+        report.files_analyzed
+    ));
     out.push_str(&format!(
         "- **Total findings**: {}\n",
         report.findings.len()

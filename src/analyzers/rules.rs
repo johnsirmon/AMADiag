@@ -124,7 +124,11 @@ pub fn evaluate_rules(rules: &[RuleDefinition], bundle: &ParsedBundle) -> Vec<Fi
         // Check platform applicability
         if let Some(platform) = &bundle.platform {
             let platform_str = format!("{platform}").to_lowercase();
-            if !rule.platforms.iter().any(|p| p.to_lowercase() == platform_str || p == "all") {
+            if !rule
+                .platforms
+                .iter()
+                .any(|p| p.to_lowercase() == platform_str || p == "all")
+            {
                 continue;
             }
         }
@@ -165,18 +169,18 @@ fn evaluate_single_rule(rule: &RuleDefinition, bundle: &ParsedBundle) -> Option<
             }
         }
         "content_match" => {
-            if let (Some(file_pat), Some(regex_str)) = (
-                &rule.detection.file_pattern,
-                &rule.detection.content_regex,
-            ) {
+            if let (Some(file_pat), Some(regex_str)) =
+                (&rule.detection.file_pattern, &rule.detection.content_regex)
+            {
                 let file_pat_lower = file_pat.to_lowercase();
                 let re = match regex::Regex::new(regex_str) {
                     Ok(r) => r,
                     Err(_) => return None,
                 };
-                bundle.files.iter().any(|(k, v)| {
-                    k.to_lowercase().contains(&file_pat_lower) && re.is_match(v)
-                })
+                bundle
+                    .files
+                    .iter()
+                    .any(|(k, v)| k.to_lowercase().contains(&file_pat_lower) && re.is_match(v))
             } else {
                 false
             }
@@ -189,10 +193,9 @@ fn evaluate_single_rule(rule: &RuleDefinition, bundle: &ParsedBundle) -> Option<
                     false // Can't evaluate without XML
                 } else {
                     match elem_lower.as_str() {
-                        "counterset" => bundle
-                            .xml_configs
-                            .iter()
-                            .all(|c| c.counter_sets.is_empty()),
+                        "counterset" => {
+                            bundle.xml_configs.iter().all(|c| c.counter_sets.is_empty())
+                        }
                         "subscription" => bundle
                             .xml_configs
                             .iter()

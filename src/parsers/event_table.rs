@@ -23,7 +23,10 @@ pub fn parse_csv(content: &str) -> anyhow::Result<Vec<EventEntry>> {
     let ts_idx = find_col(&headers, &["timestamp", "time", "datetime"]);
     let level_idx = find_col(&headers, &["level", "severity", "eventlevel"]);
     let source_idx = find_col(&headers, &["source", "provider", "taskname"]);
-    let msg_idx = find_col(&headers, &["message", "msg", "formattedmessage", "eventmessage"]);
+    let msg_idx = find_col(
+        &headers,
+        &["message", "msg", "formattedmessage", "eventmessage"],
+    );
 
     for record in reader.records().flatten() {
         let timestamp = ts_idx.and_then(|i| record.get(i).map(|s| s.to_string()));

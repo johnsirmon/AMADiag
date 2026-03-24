@@ -68,8 +68,7 @@ fn check_resource_constraints(bundle: &ParsedBundle, findings: &mut Vec<Finding>
     });
 
     static CPU_RE: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?i)(high.cpu|cpu.throttl|cpu.usage.*9[0-9]%|cpu.usage.*100%)")
-            .unwrap()
+        Regex::new(r"(?i)(high.cpu|cpu.throttl|cpu.usage.*9[0-9]%|cpu.usage.*100%)").unwrap()
     });
 
     let _ = Patterns::version_pattern(); // ensure lazy init

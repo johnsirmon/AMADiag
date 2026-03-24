@@ -80,12 +80,7 @@ fn detect_platform(dir: &Path) -> Option<Platform> {
         "mcsconfig.lkg.xml",
     ];
     // Linux indicators
-    let linux_indicators = [
-        "mdsd",
-        "AzureMonitorLinuxAgent",
-        "rsyslog",
-        "waagent",
-    ];
+    let linux_indicators = ["mdsd", "AzureMonitorLinuxAgent", "rsyslog", "waagent"];
 
     let mut win_score = 0;
     let mut linux_score = 0;

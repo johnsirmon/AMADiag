@@ -65,8 +65,10 @@ impl Patterns {
 
     pub fn auth_token_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(managed.identity|MSI|auth.?token).*(fail|error|missing|absent|expired)")
-                .unwrap()
+            Regex::new(
+                r"(?i)(managed.identity|MSI|auth.?token).*(fail|error|missing|absent|expired)",
+            )
+            .unwrap()
         });
         &RE
     }
@@ -81,8 +83,10 @@ impl Patterns {
 
     pub fn service_crash() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(crash|terminated unexpectedly|service.stopped|not.running|process.exited)")
-                .unwrap()
+            Regex::new(
+                r"(?i)(crash|terminated unexpectedly|service.stopped|not.running|process.exited)",
+            )
+            .unwrap()
         });
         &RE
     }
@@ -97,24 +101,24 @@ impl Patterns {
 
     pub fn extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(extension|provisioning).*(fail|error|timeout|not.installed)")
-                .unwrap()
+            Regex::new(r"(?i)(extension|provisioning).*(fail|error|timeout|not.installed)").unwrap()
         });
         &RE
     }
 
     pub fn syslog_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(rsyslog|syslog-ng|syslog|CEF).*(fail|error|not.running|stopped|refused)")
-                .unwrap()
+            Regex::new(
+                r"(?i)(rsyslog|syslog-ng|syslog|CEF).*(fail|error|not.running|stopped|refused)",
+            )
+            .unwrap()
         });
         &RE
     }
 
     pub fn metrics_extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(MetricsExtension|ME\b).*(error|fail|Level\s*2)")
-                .unwrap()
+            Regex::new(r"(?i)(MetricsExtension|ME\b).*(error|fail|Level\s*2)").unwrap()
         });
         &RE
     }
@@ -129,8 +133,7 @@ impl Patterns {
 
     pub fn version_pattern() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(?:version|ver)[:\s]*(\d+\.\d+\.\d+(?:\.\d+)?)")
-                .unwrap()
+            Regex::new(r"(?i)(?:version|ver)[:\s]*(\d+\.\d+\.\d+(?:\.\d+)?)").unwrap()
         });
         &RE
     }
