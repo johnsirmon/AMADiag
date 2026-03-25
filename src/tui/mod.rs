@@ -30,18 +30,25 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
 
         terminal.draw(|frame| ui::draw(frame, &mut app))?;
 
-        if let Some(action) = event::next_action(Duration::from_millis(100))? {
+        if let Some(action) = event::next_action(Duration::from_millis(100), app.screen())? {
             match app.handle_action(action) {
                 ActionResult::None => {}
                 ActionResult::Quit => break,
                 ActionResult::Analyze(path) => {
                     analysis_rx = Some(spawn_analysis(path));
                 }
-                ActionResult::Export(format) => {
+                ActionResult::ShowExport(format) => {
+                    let export_path = app.export_path().to_string();
                     if let Some(report) = app.report() {
-                        match export::export_report(report, format) {
-                            Ok(path) => app
-                                .set_info_status(format!("Exported report to {}", path.display())),
+                        match export::export_report_to(report, format, &export_path) {
+                            Ok(path) => {
+                                app.set_info_status(format!(
+                                    "Report saved to {}",
+                                    path.display()
+                                ));
+                                // Return to dashboard after successful export
+                                app.return_to_dashboard();
+                            }
                             Err(err) => app.set_error_status(format!("Export failed: {err}")),
                         }
                     }

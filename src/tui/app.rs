@@ -545,6 +545,10 @@ impl App {
         self.status = Some(StatusMessage::new(StatusKind::Error, text, None));
     }
 
+    pub fn return_to_dashboard(&mut self) {
+        self.screen = Screen::Dashboard;
+    }
+
     pub fn on_tick(&mut self) {
         self.tick = self.tick.wrapping_add(1);
         if self.status.as_ref().is_some_and(StatusMessage::is_expired) {
