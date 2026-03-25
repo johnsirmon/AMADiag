@@ -72,6 +72,8 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 
 ## 🚀 Quick Start
 
+If you want the easiest path, especially for someone new to command-line tools, start with [`quickstart.md`](quickstart.md).
+
 ```bash
 # 1. Clone and build
 git clone https://github.com/johnsirmon/AMADiag.git
@@ -94,6 +96,8 @@ Or install directly:
 cargo install --path .
 amadiag analyze /path/to/bundle.tgz
 ```
+
+For non-build users, download prebuilt Windows and Linux binaries from the repository's **Releases** page.
 
 ---
 
