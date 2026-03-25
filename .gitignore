@@ -1,3 +1,5 @@
 /target
 /private/
-/.github/
+/.github/*
+!/.github/workflows/
+!/.github/workflows/release.yml

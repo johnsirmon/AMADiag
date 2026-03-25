@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  RELEASE_LABEL: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'manual' }}
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x86_64
+            os: windows-latest
+            artifact_name: amadiag.exe
+            asset_prefix: amadiag-windows-x86_64
+          - name: linux-x86_64
+            os: ubuntu-latest
+            artifact_name: amadiag
+            asset_prefix: amadiag-linux-x86_64
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release binary
+        run: cargo build --release
+
+      - name: Prepare Windows package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $archiveDir = "${{ matrix.asset_prefix }}-${{ env.RELEASE_LABEL }}"
+          $assetName = "$archiveDir.zip"
+          New-Item -ItemType Directory -Path $archiveDir | Out-Null
+          Copy-Item "target/release/${{ matrix.artifact_name }}" "$archiveDir/"
+          Copy-Item "README.md" "$archiveDir/"
+          Copy-Item "quickstart.md" "$archiveDir/"
+          Compress-Archive -Path $archiveDir -DestinationPath $assetName
+          "ASSET_NAME=$assetName" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Prepare Linux package
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          archive_dir="${{ matrix.asset_prefix }}-${{ env.RELEASE_LABEL }}"
+          asset_name="${archive_dir}.tar.gz"
+          mkdir -p "$archive_dir"
+          cp "target/release/${{ matrix.artifact_name }}" "$archive_dir/"
+          cp README.md "$archive_dir/"
+          cp quickstart.md "$archive_dir/"
+          tar -czf "$asset_name" "$archive_dir"
+          echo "ASSET_NAME=$asset_name" >> "$GITHUB_ENV"
+
+      - name: Upload packaged artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ env.ASSET_NAME }}
+
+      - name: Publish release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ASSET_NAME }}
+          generate_release_notes: true
