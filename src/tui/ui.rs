@@ -9,10 +9,136 @@ use ratatui::{
 
 pub fn draw(frame: &mut Frame, app: &mut App) {
     match app.screen() {
+        Screen::FileBrowser => draw_file_browser(frame, app),
         Screen::PathInput => draw_path_input(frame, app),
         Screen::Analyzing => draw_analyzing(frame, app),
         Screen::Dashboard => draw_dashboard(frame, app),
+        Screen::Export => draw_export(frame, app),
     }
+}
+
+// ── File Browser ──────────────────────────────────────────────────────
+
+fn draw_file_browser(frame: &mut Frame, app: &mut App) {
+    let [header, body, footer] = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(3),
+            Constraint::Min(8),
+            Constraint::Length(3),
+        ])
+        .areas(frame.area());
+
+    // Header
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::styled(
+                " AMADiag ",
+                Style::default()
+                    .fg(Color::Cyan)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::raw("  Select an AMA troubleshooter bundle to analyze"),
+        ]))
+        .block(Block::default().borders(Borders::ALL)),
+        header,
+    );
+
+    // Body: breadcrumb + file list
+    let [breadcrumb_area, list_area] = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([Constraint::Length(3), Constraint::Min(4)])
+        .areas(body);
+
+    // Breadcrumb
+    let path_str = app.browser_path().display().to_string();
+    let breadcrumb = Paragraph::new(Line::from(vec![
+        Span::styled(" Location: ", Style::default().add_modifier(Modifier::BOLD)),
+        Span::styled(&path_str, Style::default().fg(Color::White)),
+    ]))
+    .block(
+        Block::default()
+            .borders(Borders::ALL)
+            .title("Current Directory"),
+    );
+    frame.render_widget(breadcrumb, breadcrumb_area);
+
+    // File list
+    let entries = app.browser_entries();
+    if entries.is_empty() {
+        frame.render_widget(
+            Paragraph::new("  (empty directory)")
+                .block(Block::default().borders(Borders::ALL).title("Files"))
+                .style(Style::default().fg(Color::DarkGray)),
+            list_area,
+        );
+    } else {
+        let items: Vec<ListItem> = entries
+            .iter()
+            .map(|entry| {
+                let (marker, style) = if entry.is_dir {
+                    (
+                        "DIR  ",
+                        Style::default()
+                            .fg(Color::Cyan)
+                            .add_modifier(Modifier::BOLD),
+                    )
+                } else if entry.is_bundle {
+                    (
+                        "AMA  ",
+                        Style::default()
+                            .fg(Color::Green)
+                            .add_modifier(Modifier::BOLD),
+                    )
+                } else {
+                    ("     ", Style::default().fg(Color::DarkGray))
+                };
+                let line = Line::from(vec![
+                    Span::styled(marker, style),
+                    Span::styled(&entry.name, style),
+                ]);
+                ListItem::new(line)
+            })
+            .collect();
+
+        let title = format!("Files ({} items)", entries.len());
+        let list = List::new(items)
+            .block(Block::default().borders(Borders::ALL).title(title))
+            .highlight_style(
+                Style::default()
+                    .bg(Color::Cyan)
+                    .fg(Color::Black)
+                    .add_modifier(Modifier::BOLD),
+            )
+            .highlight_symbol(">> ");
+
+        frame.render_stateful_widget(list, list_area, app.browser_state());
+    }
+
+    // Footer
+    let footer_line = match app.status() {
+        Some(status) => Line::from(Span::styled(
+            status.text.clone(),
+            match status.kind {
+                StatusKind::Info => Style::default().fg(Color::Green),
+                StatusKind::Error => Style::default().fg(Color::Red),
+            },
+        )),
+        None => Line::from(vec![
+            Span::styled("[Enter] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Select  "),
+            Span::styled("[Backspace] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Parent  "),
+            Span::styled("[t] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Type path  "),
+            Span::styled("[Esc/q] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Quit"),
+        ]),
+    };
+    frame.render_widget(
+        Paragraph::new(footer_line).block(Block::default().borders(Borders::ALL)),
+        footer,
+    );
 }
 
 fn draw_path_input(frame: &mut Frame, app: &mut App) {
