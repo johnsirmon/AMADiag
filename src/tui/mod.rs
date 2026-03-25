@@ -42,10 +42,7 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
                     if let Some(report) = app.report() {
                         match export::export_report_to(report, format, &export_path) {
                             Ok(path) => {
-                                app.set_info_status(format!(
-                                    "Report saved to {}",
-                                    path.display()
-                                ));
+                                app.set_info_status(format!("Report saved to {}", path.display()));
                                 // Return to dashboard after successful export
                                 app.return_to_dashboard();
                             }

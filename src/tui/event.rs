@@ -32,9 +32,7 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::Esc => Some(Action::EditPath),
                 KeyCode::Enter => Some(Action::Submit),
                 KeyCode::Backspace => Some(Action::Backspace),
-                KeyCode::Char('t')
-                    if key.modifiers.contains(KeyModifiers::CONTROL) =>
-                {
+                KeyCode::Char('t') if key.modifiers.contains(KeyModifiers::CONTROL) => {
                     Some(Action::ToggleView)
                 }
                 KeyCode::Char(ch) => Some(Action::InputChar(ch)),

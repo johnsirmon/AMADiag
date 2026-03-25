@@ -5,16 +5,32 @@ use std::path::{Path, PathBuf};
 
 pub fn export_report(report: &DiagnosticReport, format: OutputFormat) -> Result<PathBuf> {
     let path = default_export_path(Path::new(&report.bundle_path), format);
+    export_report_to(report, format, &path.display().to_string())
+}
+
+pub fn export_report_to(
+    report: &DiagnosticReport,
+    format: OutputFormat,
+    output_path: &str,
+) -> Result<PathBuf> {
+    let path = PathBuf::from(output_path.trim());
     let rendered = match format {
         OutputFormat::Markdown => reporters::markdown::render(report),
         OutputFormat::Json => reporters::json::render(report)?,
     };
 
+    // Ensure parent directory exists
+    if let Some(parent) = path.parent() {
+        if !parent.exists() {
+            std::fs::create_dir_all(parent)?;
+        }
+    }
+
     std::fs::write(&path, rendered)?;
     Ok(path)
 }
 
-fn default_export_path(source_path: &Path, format: OutputFormat) -> PathBuf {
+pub fn default_export_path(source_path: &Path, format: OutputFormat) -> PathBuf {
     let parent = source_path.parent().unwrap_or_else(|| Path::new("."));
     let stem = source_path
         .file_stem()
