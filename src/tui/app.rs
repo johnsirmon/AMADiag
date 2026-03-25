@@ -25,10 +25,13 @@ pub enum Action {
     Backspace,
     InputChar(char),
     Paste(String),
+    FocusPrevious,
     Next,
     Previous,
     PageDown,
     PageUp,
+    Home,
+    End,
     FocusNext,
     EditPath,
     Retry,
@@ -152,6 +155,17 @@ impl App {
         report.findings.get(index)
     }
 
+    pub fn selected_index(&self) -> Option<usize> {
+        self.findings_state.selected()
+    }
+
+    pub fn finding_count(&self) -> usize {
+        self.report
+            .as_ref()
+            .map(|report| report.findings.len())
+            .unwrap_or_default()
+    }
+
     pub fn primary_finding(&self) -> Option<&Finding> {
         self.report
             .as_ref()?
@@ -201,6 +215,15 @@ impl App {
                 }
                 ActionResult::None
             }
+            Action::FocusPrevious => {
+                if self.screen == Screen::Dashboard {
+                    self.focus = match self.focus {
+                        Focus::Findings => Focus::Details,
+                        Focus::Details => Focus::Findings,
+                    };
+                }
+                ActionResult::None
+            }
             Action::Next => {
                 if self.screen == Screen::Dashboard {
                     self.move_next();
@@ -225,6 +248,18 @@ impl App {
                 }
                 ActionResult::None
             }
+            Action::Home => {
+                if self.screen == Screen::Dashboard {
+                    self.move_home();
+                }
+                ActionResult::None
+            }
+            Action::End => {
+                if self.screen == Screen::Dashboard {
+                    self.move_end();
+                }
+                ActionResult::None
+            }
             Action::FocusNext => {
                 if self.screen == Screen::Dashboard {
                     self.focus = match self.focus {
@@ -234,11 +269,15 @@ impl App {
                 }
                 ActionResult::None
             }
-            Action::EditPath => {
-                self.screen = Screen::PathInput;
-                self.detail_scroll = 0;
-                ActionResult::None
-            }
+            Action::EditPath => match self.screen {
+                Screen::PathInput => ActionResult::Quit,
+                Screen::Analyzing => ActionResult::None,
+                Screen::Dashboard => {
+                    self.screen = Screen::PathInput;
+                    self.detail_scroll = 0;
+                    ActionResult::None
+                }
+            },
             Action::Retry => {
                 if let Some(path) = self.last_path.clone() {
                     self.start_analysis(path)
@@ -389,6 +428,31 @@ impl App {
         let previous = current.saturating_sub(1);
         self.findings_state.select(Some(previous));
         self.detail_scroll = 0;
+    }
+
+    fn move_home(&mut self) {
+        if self.focus == Focus::Details {
+            self.detail_scroll = 0;
+            return;
+        }
+
+        if self.finding_count() > 0 {
+            self.findings_state.select(Some(0));
+            self.detail_scroll = 0;
+        }
+    }
+
+    fn move_end(&mut self) {
+        if self.focus == Focus::Details {
+            self.detail_scroll = self.detail_scroll.saturating_add(20);
+            return;
+        }
+
+        let count = self.finding_count();
+        if count > 0 {
+            self.findings_state.select(Some(count - 1));
+            self.detail_scroll = 0;
+        }
     }
 
     fn scroll_details(&mut self, amount: u16) {

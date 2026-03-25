@@ -44,7 +44,16 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
         .constraints([Constraint::Length(5), Constraint::Min(4)])
         .areas(popup);
 
-    let input = Paragraph::new(app.input_path())
+    let input_text = if app.input_path().is_empty() {
+        Text::from(Line::from(Span::styled(
+            r"Example: C:\AMA-Diag-Logs or C:\temp\bundle.zip",
+            Style::default().fg(Color::DarkGray),
+        )))
+    } else {
+        Text::from(app.input_path().to_string())
+    };
+
+    let input = Paragraph::new(input_text)
         .block(
             Block::default()
                 .borders(Borders::ALL)
@@ -77,7 +86,7 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
     frame.render_widget(details, detail_area);
 
     frame.render_widget(
-        Paragraph::new("Enter: analyze  q: quit  Paste supported")
+        Paragraph::new("Enter: analyze  Esc/q: quit  Paste supported")
             .style(Style::default().fg(Color::DarkGray)),
         footer,
     );
@@ -100,6 +109,7 @@ fn draw_analyzing(frame: &mut Frame, app: &mut App) {
         Line::from(app.input_path()),
         Line::from(""),
         Line::from("The analyzer is running on a worker thread so the UI stays responsive."),
+        Line::from("Press q to quit."),
     ]);
 
     let paragraph = Paragraph::new(text)
@@ -243,9 +253,17 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
         .collect();
 
     let title = if app.focus() == Focus::Findings {
-        "Findings [focus]"
+        format!(
+            "Findings [focus] {}/{}",
+            app.selected_index().map(|i| i + 1).unwrap_or(0),
+            app.finding_count()
+        )
     } else {
-        "Findings"
+        format!(
+            "Findings {}/{}",
+            app.selected_index().map(|i| i + 1).unwrap_or(0),
+            app.finding_count()
+        )
     };
 
     let list = List::new(items)
@@ -263,13 +281,13 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
 
 fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
     let title = if app.focus() == Focus::Details {
-        "Finding details [focus]"
+        format!("Finding details [focus]  scroll {}", app.detail_scroll())
     } else {
-        "Finding details"
+        format!("Finding details  scroll {}", app.detail_scroll())
     };
 
     let text = if let Some(finding) = app.selected_finding().or_else(|| app.primary_finding()) {
-        Text::from(vec![
+        let mut lines = vec![
             Line::from(Span::styled(
                 format!("{} {}", severity_badge(finding.severity), finding.name),
                 severity_style(finding.severity).add_modifier(Modifier::BOLD),
@@ -285,14 +303,9 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
             Line::from(finding.description.clone()),
             Line::from(""),
             Line::from(Span::styled(
-                "Evidence",
+                format!("Evidence ({})", finding.evidence.len()),
                 Style::default().add_modifier(Modifier::BOLD),
             )),
-            if finding.evidence.is_empty() {
-                Line::from("No direct evidence lines captured for this finding.")
-            } else {
-                Line::from(finding.evidence.join("\n"))
-            },
             Line::from(""),
             Line::from(Span::styled(
                 "Remediation",
@@ -310,7 +323,19 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
                     .clone()
                     .unwrap_or_else(|| "No documentation link supplied.".to_string()),
             ),
-        ])
+        ];
+
+        if finding.evidence.is_empty() {
+            lines.push(Line::from(
+                "No direct evidence lines captured for this finding.",
+            ));
+        } else {
+            for evidence in &finding.evidence {
+                lines.push(Line::from(format!("- {evidence}")));
+            }
+        }
+
+        Text::from(lines)
     } else {
         Text::from("Run an analysis to see detailed findings here.")
     };
@@ -332,7 +357,7 @@ fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
             },
         ),
         None => Span::styled(
-            "Enter: analyze  Up/Down: navigate  Tab: switch focus  m: export Markdown  j: export JSON  n: change path  r: rerun  q: quit",
+            "Up/Down: select  PgUp/PgDn: scroll  Home/End: jump  Left/Right/Tab: switch pane  m: export .md  j: export .json  n/Esc: change path  r: rerun  q: quit",
             Style::default().fg(Color::DarkGray),
         ),
     };

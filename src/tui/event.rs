@@ -14,13 +14,19 @@ pub fn next_action(timeout: Duration) -> Result<Option<Action>> {
             KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
                 Some(Action::Quit)
             }
+            KeyCode::Esc => Some(Action::EditPath),
             KeyCode::Enter => Some(Action::Submit),
             KeyCode::Backspace => Some(Action::Backspace),
             KeyCode::Tab => Some(Action::FocusNext),
+            KeyCode::BackTab => Some(Action::FocusPrevious),
+            KeyCode::Left => Some(Action::FocusPrevious),
+            KeyCode::Right => Some(Action::FocusNext),
             KeyCode::Up => Some(Action::Previous),
             KeyCode::Down => Some(Action::Next),
             KeyCode::PageUp => Some(Action::PageUp),
             KeyCode::PageDown => Some(Action::PageDown),
+            KeyCode::Home => Some(Action::Home),
+            KeyCode::End => Some(Action::End),
             KeyCode::Char('n') => Some(Action::EditPath),
             KeyCode::Char('r') => Some(Action::Retry),
             KeyCode::Char('m') => Some(Action::ExportMarkdown),
