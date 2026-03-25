@@ -184,16 +184,11 @@ impl App {
         &mut self.findings_state
     }
 
-    pub fn selected_finding(&self) -> Option<&Finding> {
-        let report = self.report.as_ref()?;
-        let index = self.findings_state.selected()?;
-        report.findings.get(index)
-    }
-
     pub fn selected_index(&self) -> Option<usize> {
         self.findings_state.selected()
     }
 
+    #[allow(dead_code)]
     pub fn finding_count(&self) -> usize {
         self.report
             .as_ref()

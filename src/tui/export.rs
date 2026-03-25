@@ -3,6 +3,7 @@ use crate::reporters::{self, OutputFormat};
 use anyhow::Result;
 use std::path::{Path, PathBuf};
 
+#[allow(dead_code)]
 pub fn export_report(report: &DiagnosticReport, format: OutputFormat) -> Result<PathBuf> {
     let path = default_export_path(Path::new(&report.bundle_path), format);
     export_report_to(report, format, &path.display().to_string())

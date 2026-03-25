@@ -64,8 +64,8 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
     frame.render_widget(breadcrumb, breadcrumb_area);
 
     // File list
-    let entries = app.browser_entries();
-    if entries.is_empty() {
+    let entry_count = app.browser_entries().len();
+    if entry_count == 0 {
         frame.render_widget(
             Paragraph::new("  (empty directory)")
                 .block(Block::default().borders(Borders::ALL).title("Files"))
@@ -73,7 +73,8 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
             list_area,
         );
     } else {
-        let items: Vec<ListItem> = entries
+        let items: Vec<ListItem> = app
+            .browser_entries()
             .iter()
             .map(|entry| {
                 let (marker, style) = if entry.is_dir {
@@ -95,13 +96,13 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
                 };
                 let line = Line::from(vec![
                     Span::styled(marker, style),
-                    Span::styled(&entry.name, style),
+                    Span::styled(entry.name.clone(), style),
                 ]);
                 ListItem::new(line)
             })
             .collect();
 
-        let title = format!("Files ({} items)", entries.len());
+        let title = format!("Files ({entry_count} items)");
         let list = List::new(items)
             .block(Block::default().borders(Borders::ALL).title(title))
             .highlight_style(
@@ -190,7 +191,7 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
 
     let mut lines = vec![
         Line::from("Type or paste a path, then press Enter to start analysis."),
-        Line::from("This first version is path-driven on purpose to keep the integration small."),
+        Line::from("Press Ctrl+T to switch back to the file browser."),
         Line::from(""),
     ];
     if let Some(hint) = app.input_hint() {
@@ -212,7 +213,7 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
     frame.render_widget(details, detail_area);
 
     frame.render_widget(
-        Paragraph::new("Enter: analyze  Esc/q: quit  Paste supported")
+        Paragraph::new("Enter: analyze  Ctrl+T: file browser  Esc: quit  Paste supported")
             .style(Style::default().fg(Color::DarkGray)),
         footer,
     );
@@ -349,13 +350,20 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
 }
 
 fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
-    let Some(report) = app.report() else {
+    if app.report().is_none() {
         return;
-    };
+    }
 
-    if report.findings.is_empty() {
+    let filtered_count = app.filtered_finding_count();
+
+    if filtered_count == 0 {
+        let msg = if app.severity_filter() < 3 {
+            "No findings match the current severity filter. Press 3 to show all."
+        } else {
+            "No issues detected. The AMA configuration appears healthy."
+        };
         frame.render_widget(
-            Paragraph::new("No issues detected. The AMA configuration appears healthy.")
+            Paragraph::new(msg)
                 .block(Block::default().borders(Borders::ALL).title("Findings"))
                 .wrap(Wrap { trim: true }),
             area,
@@ -363,8 +371,9 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
         return;
     }
 
-    let items: Vec<ListItem> = report
-        .findings
+    // Build items from filtered findings (immutable borrow scoped here)
+    let items: Vec<ListItem> = app
+        .filtered_findings()
         .iter()
         .map(|finding| {
             let line = Line::from(vec![
@@ -378,19 +387,32 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
         })
         .collect();
 
-    let title = if app.focus() == Focus::Findings {
-        format!(
-            "Findings [focus] {}/{}",
-            app.selected_index().map(|i| i + 1).unwrap_or(0),
-            app.finding_count()
-        )
-    } else {
-        format!(
-            "Findings {}/{}",
-            app.selected_index().map(|i| i + 1).unwrap_or(0),
-            app.finding_count()
+    // Build title with severity counts (separate borrow scope)
+    let (crit_count, warn_count, info_count) = {
+        let report = app.report().unwrap();
+        (
+            report.finding_count_by_severity(crate::analyzers::finding::Severity::Critical),
+            report.finding_count_by_severity(crate::analyzers::finding::Severity::Warning),
+            report.finding_count_by_severity(crate::analyzers::finding::Severity::Info),
         )
     };
+
+    let filter_label = match app.severity_filter() {
+        1 => " [Crit only]",
+        2 => " [Crit+Warn]",
+        _ => "",
+    };
+
+    let focus_label = if app.focus() == Focus::Findings {
+        " [focus]"
+    } else {
+        ""
+    };
+
+    let selected_display = app.selected_index().map(|i| i + 1).unwrap_or(0);
+    let title = format!(
+        "Findings{focus_label} {selected_display}/{filtered_count} ({crit_count}C {warn_count}W {info_count}I){filter_label}",
+    );
 
     let list = List::new(items)
         .block(Block::default().borders(Borders::ALL).title(title))
@@ -412,7 +434,10 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
         format!("Finding details  scroll {}", app.detail_scroll())
     };
 
-    let text = if let Some(finding) = app.selected_finding().or_else(|| app.primary_finding()) {
+    let text = if let Some(finding) = app
+        .selected_filtered_finding()
+        .or_else(|| app.primary_finding())
+    {
         let mut lines = vec![
             Line::from(Span::styled(
                 format!("{} {}", severity_badge(finding.severity), finding.name),
@@ -474,23 +499,171 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
 }
 
 fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
-    let status_line = match app.status() {
-        Some(status) => Span::styled(
+    let content = match app.status() {
+        Some(status) => Line::from(Span::styled(
             status.text.clone(),
             match status.kind {
                 StatusKind::Info => Style::default().fg(Color::Green),
                 StatusKind::Error => Style::default().fg(Color::Red),
             },
-        ),
-        None => Span::styled(
-            "Up/Down: select  PgUp/PgDn: scroll  Home/End: jump  Left/Right/Tab: switch pane  m: export .md  j: export .json  n/Esc: change path  r: rerun  q: quit",
-            Style::default().fg(Color::DarkGray),
-        ),
+        )),
+        None => Line::from(vec![
+            Span::styled("[M] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Export MD  "),
+            Span::styled("[J] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Export JSON  "),
+            Span::styled("[R] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Rerun  "),
+            Span::styled("[N/Esc] ", Style::default().fg(Color::Cyan)),
+            Span::raw("New  "),
+            Span::styled("[1/2/3] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Filter  "),
+            Span::styled("[Q] ", Style::default().fg(Color::Cyan)),
+            Span::raw("Quit"),
+        ]),
     };
 
-    let paragraph = Paragraph::new(Line::from(status_line))
-        .block(Block::default().borders(Borders::ALL).title("Help"));
+    let paragraph = Paragraph::new(content).block(Block::default().borders(Borders::ALL));
     frame.render_widget(paragraph, area);
+}
+
+// ── Export Screen ─────────────────────────────────────────────────────
+
+fn draw_export(frame: &mut Frame, app: &mut App) {
+    let popup = centered_rect(70, 50, frame.area());
+    frame.render_widget(Clear, popup);
+
+    let [title_area, format_area, path_area, hint_area, footer_area] = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(3),
+            Constraint::Length(3),
+            Constraint::Length(5),
+            Constraint::Min(3),
+            Constraint::Length(3),
+        ])
+        .areas(popup);
+
+    // Title
+    frame.render_widget(
+        Paragraph::new(Span::styled(
+            " Generate Report",
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        ))
+        .block(Block::default().borders(Borders::ALL).title("Export")),
+        title_area,
+    );
+
+    // Format selector
+    let md_style = if matches!(
+        app.export_format(),
+        crate::reporters::OutputFormat::Markdown
+    ) {
+        Style::default()
+            .fg(Color::Green)
+            .add_modifier(Modifier::BOLD)
+    } else {
+        Style::default().fg(Color::DarkGray)
+    };
+    let json_style = if matches!(app.export_format(), crate::reporters::OutputFormat::Json) {
+        Style::default()
+            .fg(Color::Green)
+            .add_modifier(Modifier::BOLD)
+    } else {
+        Style::default().fg(Color::DarkGray)
+    };
+
+    let format_line = Line::from(vec![
+        Span::raw("  Format: "),
+        Span::styled(
+            if matches!(
+                app.export_format(),
+                crate::reporters::OutputFormat::Markdown
+            ) {
+                "(*)  Markdown"
+            } else {
+                "( )  Markdown"
+            },
+            md_style,
+        ),
+        Span::raw("    "),
+        Span::styled(
+            if matches!(app.export_format(), crate::reporters::OutputFormat::Json) {
+                "(*)  JSON"
+            } else {
+                "( )  JSON"
+            },
+            json_style,
+        ),
+    ]);
+    frame.render_widget(
+        Paragraph::new(format_line).block(
+            Block::default()
+                .borders(Borders::ALL)
+                .title("Format [Tab to toggle]"),
+        ),
+        format_area,
+    );
+
+    // Path field
+    let path_text = if app.export_path().is_empty() {
+        Text::from(Line::from(Span::styled(
+            "Enter output path...",
+            Style::default().fg(Color::DarkGray),
+        )))
+    } else {
+        Text::from(app.export_path().to_string())
+    };
+    frame.render_widget(
+        Paragraph::new(path_text)
+            .block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title("Output Path (editable)")
+                    .border_style(Style::default().fg(Color::Cyan)),
+            )
+            .wrap(Wrap { trim: false }),
+        path_area,
+    );
+
+    // Hint
+    let default_dir = app
+        .last_path()
+        .and_then(|p| p.parent())
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(|| ".".to_string());
+    let hint_lines = vec![
+        Line::from(Span::styled(
+            format!("  Default directory: {default_dir}"),
+            Style::default().fg(Color::DarkGray),
+        )),
+        Line::from(""),
+        Line::from(Span::styled(
+            "  Report will be written when you press Enter.",
+            Style::default().fg(Color::DarkGray),
+        )),
+    ];
+    frame.render_widget(
+        Paragraph::new(Text::from(hint_lines))
+            .block(Block::default().borders(Borders::ALL).title("Info")),
+        hint_area,
+    );
+
+    // Footer
+    let footer_line = Line::from(vec![
+        Span::styled("[Enter] ", Style::default().fg(Color::Cyan)),
+        Span::raw("Generate  "),
+        Span::styled("[Tab] ", Style::default().fg(Color::Cyan)),
+        Span::raw("Toggle format  "),
+        Span::styled("[Esc] ", Style::default().fg(Color::Cyan)),
+        Span::raw("Cancel"),
+    ]);
+    frame.render_widget(
+        Paragraph::new(footer_line).block(Block::default().borders(Borders::ALL)),
+        footer_area,
+    );
 }
 
 fn severity_badge(severity: crate::analyzers::finding::Severity) -> &'static str {
