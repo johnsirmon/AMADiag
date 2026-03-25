@@ -62,6 +62,7 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 - 🪟🐧 **Auto-detect Windows & Linux** bundles from file structure alone
 - 📦 **Archive support** — `.tgz`, `.zip`, or plain directories
 - 📊 **Dual output** — human-readable Markdown or machine-readable JSON for CI/CD
+- 🖥️ **Interactive TUI** — keyboard-first dashboard for analyzing bundles and exporting reports
 - ⚡ **Single binary, zero runtime deps** — all rules embedded at compile time
 - 🧩 **YAML-extensible** — add custom detection rules without writing Rust
 - 🏥 **XML config parsing** — streaming parser for `mcsconfig.lkg.xml` / `mcsconfig.latest.xml`
@@ -79,6 +80,9 @@ cargo build --release
 
 # 2. Analyze a troubleshooter bundle
 ./target/release/amadiag analyze /path/to/bundle.tgz
+
+# 2b. Or launch the interactive TUI
+./target/release/amadiag tui
 
 # 3. Review the report
 #    Findings are printed to stdout as a Markdown table
@@ -109,7 +113,22 @@ amadiag analyze ./bundle.tgz --format json --output report.json
 
 # Verbose logging
 amadiag analyze ./bundle.tgz --verbose
+
+# Interactive TUI
+amadiag tui
+
+# Start the TUI with a preselected path
+amadiag tui ./bundle.tgz
 ```
+
+The TUI is keyboard-first and path-driven in v1:
+
+- type or paste a path to a `.zip`, `.tgz`, `.tar.gz`, or extracted log folder
+- press `Enter` to analyze
+- use `Up` / `Down` to navigate findings
+- use `Tab` to switch between the findings list and the details pane
+- press `m` to export Markdown or `j` to export JSON
+- press `n` to return to path entry, `r` to rerun, and `q` to quit
 
 ### Validate a bundle (no analysis)
 

@@ -45,6 +45,14 @@ enum Commands {
         #[command(subcommand)]
         action: RulesAction,
     },
+
+    #[cfg(feature = "tui")]
+    #[command(visible_alias = "interactive")]
+    /// Launch the interactive terminal UI
+    Tui {
+        /// Optional path to a bundle (.tgz, .zip, or directory)
+        path: Option<PathBuf>,
+    },
 }
 
 #[derive(Subcommand)]
@@ -105,7 +113,30 @@ fn main() -> Result<()> {
             let rules = amadiag::analyzers::rules::load_builtin_rules()?;
             amadiag::analyzers::rules::print_rules_table(&rules);
         }
+
+        #[cfg(feature = "tui")]
+        Commands::Tui { path } => {
+            amadiag::tui::run(path)?;
+        }
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parse_analyze_command() {
+        let cli = Cli::try_parse_from(["amadiag", "analyze", "bundle.zip"]).unwrap();
+        assert!(matches!(cli.command, Commands::Analyze { .. }));
+    }
+
+    #[cfg(feature = "tui")]
+    #[test]
+    fn parse_tui_command() {
+        let cli = Cli::try_parse_from(["amadiag", "tui", "bundle.zip"]).unwrap();
+        assert!(matches!(cli.command, Commands::Tui { .. }));
+    }
 }
