@@ -705,8 +705,8 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
     ]);
     frame.render_widget(
         Paragraph::new(format_line).block(
-            Block::default()
-                .borders(Borders::ALL)
+            Block::bordered()
+                .border_type(BorderType::Rounded)
                 .title("Format [Tab to toggle]"),
         ),
         format_area,
@@ -724,8 +724,8 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
     frame.render_widget(
         Paragraph::new(path_text)
             .block(
-                Block::default()
-                    .borders(Borders::ALL)
+                Block::bordered()
+                    .border_type(BorderType::Rounded)
                     .title("Output Path (editable)")
                     .border_style(Style::default().fg(Color::Cyan)),
             )
@@ -752,21 +752,27 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
     ];
     frame.render_widget(
         Paragraph::new(Text::from(hint_lines))
-            .block(Block::default().borders(Borders::ALL).title("Info")),
+            .block(
+                Block::bordered()
+                    .border_type(BorderType::Rounded)
+                    .title("Info"),
+            ),
         hint_area,
     );
 
     // Footer
     let footer_line = Line::from(vec![
-        Span::styled("[Enter] ", Style::default().fg(Color::Cyan)),
-        Span::raw("Generate  "),
-        Span::styled("[Tab] ", Style::default().fg(Color::Cyan)),
-        Span::raw("Toggle format  "),
-        Span::styled("[Esc] ", Style::default().fg(Color::Cyan)),
-        Span::raw("Cancel"),
+        key_badge("Enter"),
+        key_desc("Generate  "),
+        key_badge("Tab"),
+        key_desc("Toggle format  "),
+        key_badge("Esc"),
+        key_desc("Cancel"),
     ]);
     frame.render_widget(
-        Paragraph::new(footer_line).block(Block::default().borders(Borders::ALL)),
+        Paragraph::new(footer_line).block(
+            Block::bordered().border_type(BorderType::Rounded),
+        ),
         footer_area,
     );
 }
