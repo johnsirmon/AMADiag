@@ -751,12 +751,11 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
         )),
     ];
     frame.render_widget(
-        Paragraph::new(Text::from(hint_lines))
-            .block(
-                Block::bordered()
-                    .border_type(BorderType::Rounded)
-                    .title("Info"),
-            ),
+        Paragraph::new(Text::from(hint_lines)).block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title("Info"),
+        ),
         hint_area,
     );
 
@@ -770,9 +769,7 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
         key_desc("Cancel"),
     ]);
     frame.render_widget(
-        Paragraph::new(footer_line).block(
-            Block::bordered().border_type(BorderType::Rounded),
-        ),
+        Paragraph::new(footer_line).block(Block::bordered().border_type(BorderType::Rounded)),
         footer_area,
     );
 }
