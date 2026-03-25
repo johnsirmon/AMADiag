@@ -23,6 +23,7 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::Home => Some(Action::Home),
                 KeyCode::End => Some(Action::End),
                 KeyCode::Char('t') => Some(Action::ToggleView),
+                KeyCode::Char('h') => Some(Action::ToggleHidden),
                 _ => None,
             },
             Screen::PathInput => match key.code {

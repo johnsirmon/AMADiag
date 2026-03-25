@@ -45,6 +45,7 @@ pub enum Action {
     ExportConfirm,
     ExportCancel,
     ExportToggleFormat,
+    ToggleHidden,
 }
 
 pub enum ActionResult {
@@ -87,6 +88,8 @@ pub struct BrowserEntry {
     pub name: String,
     pub is_dir: bool,
     pub is_bundle: bool,
+    pub size: Option<u64>,
+    pub child_count: Option<usize>,
 }
 
 pub struct App {
@@ -111,6 +114,10 @@ pub struct App {
     // Export screen state
     export_format: OutputFormat,
     export_path: String,
+    // Hidden files toggle
+    show_hidden: bool,
+    // Number of directories (for separator rendering)
+    dir_count: usize,
 }
 
 impl App {
@@ -147,6 +154,8 @@ impl App {
             severity_filter: 3,
             export_format: OutputFormat::Markdown,
             export_path: String::new(),
+            show_hidden: false,
+            dir_count: 0,
         };
         app.findings_state.select(None);
         app.refresh_input_validation();
@@ -246,6 +255,14 @@ impl App {
 
     pub fn last_path(&self) -> Option<&PathBuf> {
         self.last_path.as_ref()
+    }
+
+    pub fn show_hidden(&self) -> bool {
+        self.show_hidden
+    }
+
+    pub fn dir_count(&self) -> usize {
+        self.dir_count
     }
 
     /// Returns findings filtered by the current severity filter.
@@ -497,6 +514,14 @@ impl App {
                 }
                 ActionResult::None
             }
+            Action::ToggleHidden => {
+                if self.screen == Screen::FileBrowser {
+                    self.show_hidden = !self.show_hidden;
+                    let path = self.browser_path.clone();
+                    self.load_browser_dir(&path);
+                }
+                ActionResult::None
+            }
         }
     }
 
@@ -606,13 +631,29 @@ impl App {
 
         for entry in entries.flatten() {
             let name = entry.file_name().to_string_lossy().to_string();
+
+            // Filter hidden files (dotfiles) unless show_hidden is enabled
+            if !self.show_hidden && name.starts_with('.') {
+                continue;
+            }
+
             let is_dir = entry.file_type().map(|ft| ft.is_dir()).unwrap_or(false);
             let is_bundle = Self::is_bundle_entry(&entry);
+
+            let (size, child_count) = if is_dir {
+                let count = entry.path().read_dir().map(|rd| rd.count()).ok();
+                (None, count)
+            } else {
+                let sz = entry.metadata().map(|m| m.len()).ok();
+                (sz, None)
+            };
 
             let entry = BrowserEntry {
                 name,
                 is_dir,
                 is_bundle,
+                size,
+                child_count,
             };
 
             if is_dir {
@@ -625,6 +666,7 @@ impl App {
         dirs.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
         files.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
+        self.dir_count = dirs.len();
         self.browser_entries.extend(dirs);
         self.browser_entries.extend(files);
 

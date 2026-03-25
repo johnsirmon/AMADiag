@@ -3,9 +3,10 @@ use ratatui::{
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
     text::{Line, Span, Text},
-    widgets::{Block, Borders, Clear, List, ListItem, Paragraph, Wrap},
+    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph, Wrap},
     Frame,
 };
+use tui_big_text::{BigText, PixelSize};
 
 pub fn draw(frame: &mut Frame, app: &mut App) {
     match app.screen() {
@@ -23,100 +24,163 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
     let [header, body, footer] = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),
+            Constraint::Length(5),
             Constraint::Min(8),
             Constraint::Length(3),
         ])
         .areas(frame.area());
 
-    // Header
+    // Header: big text title with version + path breadcrumb merged
+    let [title_area, path_area] = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([Constraint::Length(32), Constraint::Min(20)])
+        .areas(header);
+
+    let big_title = BigText::builder()
+        .pixel_size(PixelSize::Quadrant)
+        .style(Style::default().fg(Color::Cyan))
+        .lines(vec![Line::from("AMADiag")])
+        .build();
     frame.render_widget(
-        Paragraph::new(Line::from(vec![
+        big_title,
+        Block::bordered()
+            .border_type(BorderType::Rounded)
+            .inner(title_area),
+    );
+    frame.render_widget(
+        Block::bordered().border_type(BorderType::Rounded),
+        title_area,
+    );
+
+    let path_str = clean_path(&app.browser_path().display().to_string());
+    let hidden_indicator = if app.show_hidden() { " [hidden: shown]" } else { "" };
+    let path_block = Paragraph::new(vec![
+        Line::from(vec![
             Span::styled(
-                " AMADiag ",
+                format!("v{}", env!("CARGO_PKG_VERSION")),
+                Style::default().fg(Color::DarkGray),
+            ),
+            Span::raw("  "),
+            Span::styled(
+                "Select an AMA troubleshooter bundle to analyze",
+                Style::default().fg(Color::White),
+            ),
+        ]),
+        Line::from(""),
+        Line::from(vec![
+            Span::styled(" 📂 ", Style::default().fg(Color::Yellow)),
+            Span::styled(
+                path_str,
                 Style::default()
-                    .fg(Color::Cyan)
+                    .fg(Color::White)
                     .add_modifier(Modifier::BOLD),
             ),
-            Span::raw("  Select an AMA troubleshooter bundle to analyze"),
-        ]))
-        .block(Block::default().borders(Borders::ALL)),
-        header,
-    );
+            Span::styled(
+                hidden_indicator,
+                Style::default().fg(Color::DarkGray),
+            ),
+        ]),
+    ])
+    .block(Block::bordered().border_type(BorderType::Rounded));
+    frame.render_widget(path_block, path_area);
 
-    // Body: breadcrumb + file list
-    let [breadcrumb_area, list_area] = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([Constraint::Length(3), Constraint::Min(4)])
-        .areas(body);
-
-    // Breadcrumb
-    let path_str = app.browser_path().display().to_string();
-    let breadcrumb = Paragraph::new(Line::from(vec![
-        Span::styled(" Location: ", Style::default().add_modifier(Modifier::BOLD)),
-        Span::styled(&path_str, Style::default().fg(Color::White)),
-    ]))
-    .block(
-        Block::default()
-            .borders(Borders::ALL)
-            .title("Current Directory"),
-    );
-    frame.render_widget(breadcrumb, breadcrumb_area);
-
-    // File list
+    // File list with separator between dirs and files
     let entry_count = app.browser_entries().len();
+    let has_bundles = app.browser_entries().iter().any(|e| e.is_bundle);
+
     if entry_count == 0 {
         frame.render_widget(
             Paragraph::new("  (empty directory)")
-                .block(Block::default().borders(Borders::ALL).title("Files"))
+                .block(
+                    Block::bordered()
+                        .border_type(BorderType::Rounded)
+                        .title("Files"),
+                )
                 .style(Style::default().fg(Color::DarkGray)),
-            list_area,
+            body,
         );
     } else {
-        let items: Vec<ListItem> = app
-            .browser_entries()
-            .iter()
-            .map(|entry| {
-                let (marker, style) = if entry.is_dir {
-                    (
-                        "DIR  ",
-                        Style::default()
-                            .fg(Color::Cyan)
-                            .add_modifier(Modifier::BOLD),
-                    )
-                } else if entry.is_bundle {
-                    (
-                        "AMA  ",
-                        Style::default()
-                            .fg(Color::Green)
-                            .add_modifier(Modifier::BOLD),
-                    )
-                } else {
-                    ("     ", Style::default().fg(Color::DarkGray))
-                };
-                let line = Line::from(vec![
-                    Span::styled(marker, style),
-                    Span::styled(entry.name.clone(), style),
-                ]);
-                ListItem::new(line)
-            })
-            .collect();
+        let dir_count = app.dir_count();
+        let mut items: Vec<ListItem> = Vec::new();
+
+        for (i, entry) in app.browser_entries().iter().enumerate() {
+            // Insert separator between dirs and files
+            if i == dir_count && dir_count > 0 {
+                items.push(ListItem::new(Line::from(Span::styled(
+                    " ─────────────────────────────────",
+                    Style::default().fg(Color::DarkGray),
+                ))));
+            }
+
+            let (icon, style) = if entry.is_dir {
+                (
+                    "📁 ",
+                    Style::default()
+                        .fg(Color::Cyan)
+                        .add_modifier(Modifier::BOLD),
+                )
+            } else if entry.is_bundle {
+                (
+                    "🔍 ",
+                    Style::default()
+                        .fg(Color::Green)
+                        .add_modifier(Modifier::BOLD),
+                )
+            } else {
+                (
+                    file_icon(&entry.name),
+                    Style::default().fg(Color::DarkGray),
+                )
+            };
+
+            let mut spans = vec![
+                Span::styled(icon, style),
+                Span::styled(entry.name.clone(), style),
+            ];
+
+            // Append size or item count
+            if let Some(count) = entry.child_count {
+                spans.push(Span::styled(
+                    format!("  ({count} items)"),
+                    Style::default().fg(Color::DarkGray),
+                ));
+            } else if let Some(size) = entry.size {
+                spans.push(Span::styled(
+                    format!("  ({})", format_size(size)),
+                    Style::default().fg(Color::DarkGray),
+                ));
+            }
+
+            items.push(ListItem::new(Line::from(spans)));
+        }
+
+        // No bundles hint
+        if !has_bundles {
+            items.push(ListItem::new(Line::from(Span::styled(
+                " 💡 No AMA bundles (.zip, .tgz) found in this directory",
+                Style::default().fg(Color::Yellow),
+            ))));
+        }
 
         let title = format!("Files ({entry_count} items)");
         let list = List::new(items)
-            .block(Block::default().borders(Borders::ALL).title(title))
+            .block(
+                Block::bordered()
+                    .border_type(BorderType::Rounded)
+                    .title(title),
+            )
             .highlight_style(
                 Style::default()
-                    .bg(Color::Cyan)
-                    .fg(Color::Black)
+                    .bg(Color::Blue)
+                    .fg(Color::White)
                     .add_modifier(Modifier::BOLD),
             )
-            .highlight_symbol(">> ");
+            .highlight_symbol("▶ ");
 
-        frame.render_stateful_widget(list, list_area, app.browser_state());
+        frame.render_stateful_widget(list, body, app.browser_state());
     }
 
-    // Footer
+    // Footer with pill-badge keybindings
     let footer_line = match app.status() {
         Some(status) => Line::from(Span::styled(
             status.text.clone(),
@@ -126,18 +190,22 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
             },
         )),
         None => Line::from(vec![
-            Span::styled("[Enter] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Select  "),
-            Span::styled("[Backspace] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Parent  "),
-            Span::styled("[t] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Type path  "),
-            Span::styled("[Esc/q] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Quit"),
+            key_badge("Enter"),
+            key_desc("Select  "),
+            key_badge("Bksp"),
+            key_desc("Parent  "),
+            key_badge("t"),
+            key_desc("Type path  "),
+            key_badge("h"),
+            key_desc(if app.show_hidden() { "Hide hidden  " } else { "Show hidden  " }),
+            key_badge("Esc"),
+            key_desc("Quit"),
         ]),
     };
     frame.render_widget(
-        Paragraph::new(footer_line).block(Block::default().borders(Borders::ALL)),
+        Paragraph::new(footer_line).block(
+            Block::bordered().border_type(BorderType::Rounded),
+        ),
         footer,
     );
 }
@@ -153,8 +221,12 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
         .areas(frame.area());
 
     frame.render_widget(
-        Paragraph::new("AMADiag Interactive")
-            .block(Block::default().borders(Borders::ALL).title("AMADiag TUI"))
+        Paragraph::new(format!("AMADiag v{}", env!("CARGO_PKG_VERSION")))
+            .block(
+                Block::bordered()
+                    .border_type(BorderType::Rounded)
+                    .title("AMADiag TUI"),
+            )
             .style(
                 Style::default()
                     .fg(Color::Cyan)
@@ -182,8 +254,8 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
 
     let input = Paragraph::new(input_text)
         .block(
-            Block::default()
-                .borders(Borders::ALL)
+            Block::bordered()
+                .border_type(BorderType::Rounded)
                 .title("Input path (.zip, .tgz, .tar.gz, or extracted folder)"),
         )
         .wrap(Wrap { trim: false });
@@ -208,7 +280,11 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
     }
 
     let details = Paragraph::new(Text::from(lines))
-        .block(Block::default().borders(Borders::ALL).title("Validation"))
+        .block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title("Validation"),
+        )
         .wrap(Wrap { trim: false });
     frame.render_widget(details, detail_area);
 
@@ -233,14 +309,18 @@ fn draw_analyzing(frame: &mut Frame, app: &mut App) {
                 .add_modifier(Modifier::BOLD),
         )),
         Line::from(""),
-        Line::from(app.input_path()),
+        Line::from(clean_path(app.input_path()).to_string()),
         Line::from(""),
         Line::from("The analyzer is running on a worker thread so the UI stays responsive."),
         Line::from("Press q to quit."),
     ]);
 
     let paragraph = Paragraph::new(text)
-        .block(Block::default().borders(Borders::ALL).title("Analyzing"))
+        .block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title("Analyzing"),
+        )
         .wrap(Wrap { trim: false });
     frame.render_widget(paragraph, popup);
 }
@@ -282,11 +362,15 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
         .areas(area);
 
     let bundle_summary = Paragraph::new(Text::from(vec![
-        Line::from(format!("Bundle: {}", report.bundle_path)),
+        Line::from(format!("Bundle: {}", clean_path(&report.bundle_path))),
         Line::from(format!("Files analyzed: {}", report.files_analyzed)),
         Line::from(format!("Findings: {}", report.findings.len())),
     ]))
-    .block(Block::default().borders(Borders::ALL).title("Summary"))
+    .block(
+        Block::bordered()
+            .border_type(BorderType::Rounded)
+            .title(format!("Summary — AMADiag v{}", env!("CARGO_PKG_VERSION"))),
+    )
     .wrap(Wrap { trim: false });
     frame.render_widget(bundle_summary, left);
 
@@ -315,7 +399,11 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
                 .unwrap_or_else(|| "Unknown".to_string())
         )),
     ]))
-    .block(Block::default().borders(Borders::ALL).title("Environment"))
+    .block(
+        Block::bordered()
+            .border_type(BorderType::Rounded)
+            .title("Environment"),
+    )
     .wrap(Wrap { trim: false });
     frame.render_widget(environment, middle);
 
@@ -341,8 +429,8 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
 
     let focus = Paragraph::new(Text::from(root_cause_lines))
         .block(
-            Block::default()
-                .borders(Borders::ALL)
+            Block::bordered()
+                .border_type(BorderType::Rounded)
                 .title("Root cause focus"),
         )
         .wrap(Wrap { trim: false });
@@ -364,7 +452,11 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
         };
         frame.render_widget(
             Paragraph::new(msg)
-                .block(Block::default().borders(Borders::ALL).title("Findings"))
+                .block(
+                    Block::bordered()
+                        .border_type(BorderType::Rounded)
+                        .title("Findings"),
+                )
                 .wrap(Wrap { trim: true }),
             area,
         );
@@ -415,14 +507,18 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
     );
 
     let list = List::new(items)
-        .block(Block::default().borders(Borders::ALL).title(title))
+        .block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title(title),
+        )
         .highlight_style(
             Style::default()
-                .bg(Color::Cyan)
-                .fg(Color::Black)
+                .bg(Color::Blue)
+                .fg(Color::White)
                 .add_modifier(Modifier::BOLD),
         )
-        .highlight_symbol(">> ");
+        .highlight_symbol("▶ ");
 
     frame.render_stateful_widget(list, area, app.findings_state());
 }
@@ -492,7 +588,11 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
     };
 
     let details = Paragraph::new(text)
-        .block(Block::default().borders(Borders::ALL).title(title))
+        .block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title(title),
+        )
         .wrap(Wrap { trim: false })
         .scroll((app.detail_scroll(), 0));
     frame.render_widget(details, area);
@@ -508,22 +608,24 @@ fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
             },
         )),
         None => Line::from(vec![
-            Span::styled("[M] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Export MD  "),
-            Span::styled("[J] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Export JSON  "),
-            Span::styled("[R] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Rerun  "),
-            Span::styled("[N/Esc] ", Style::default().fg(Color::Cyan)),
-            Span::raw("New  "),
-            Span::styled("[1/2/3] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Filter  "),
-            Span::styled("[Q] ", Style::default().fg(Color::Cyan)),
-            Span::raw("Quit"),
+            key_badge("M"),
+            key_desc("Export MD  "),
+            key_badge("J"),
+            key_desc("Export JSON  "),
+            key_badge("R"),
+            key_desc("Rerun  "),
+            key_badge("N/Esc"),
+            key_desc("New  "),
+            key_badge("1/2/3"),
+            key_desc("Filter  "),
+            key_badge("Q"),
+            key_desc("Quit"),
         ]),
     };
 
-    let paragraph = Paragraph::new(content).block(Block::default().borders(Borders::ALL));
+    let paragraph = Paragraph::new(content).block(
+        Block::bordered().border_type(BorderType::Rounded),
+    );
     frame.render_widget(paragraph, area);
 }
 
@@ -552,7 +654,11 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
                 .fg(Color::Cyan)
                 .add_modifier(Modifier::BOLD),
         ))
-        .block(Block::default().borders(Borders::ALL).title("Export")),
+        .block(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title("Export"),
+        ),
         title_area,
     );
 
