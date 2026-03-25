@@ -1,36 +1,99 @@
-# AMADiag
+<div align="center">
 
-Diagnostic analyzer for [Azure Monitor Agent (AMA)](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-overview) troubleshooter output. Identifies common failures, environment sizing issues, and actionable remediation steps from troubleshooter log bundles — so problems can be resolved without manually reading through dozens of log files.
+# 🔍 AMADiag
 
-## Features
+**Automated root-cause analysis for Azure Monitor Agent troubleshooter output**
 
-- **Automatic platform detection** — recognizes Windows and Linux AMA bundles
-- **Archive extraction** — handles `.tgz`, `.zip`, and plain directories
-- **17 built-in detection rules** across 7 categories: installation, connectivity, DCR, identity, performance counters, syslog/CEF, and environment sizing
-- **Pattern-based log scanning** — regex engine detects IMDS failures, auth errors, service crashes, and more
-- **XML config parsing** — streaming parser for `mcsconfig.lkg.xml` / `mcsconfig.latest.xml` (CounterSet, Subscription nodes)
-- **CSV event table parsing** — MetricsExtension ETW trace analysis
-- **Markdown and JSON reports** — human-readable or machine-readable output
-- **Single binary** — no runtime dependencies, all rules embedded at compile time
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 
-## Installation
+*Drop in an AMA troubleshooter bundle. Get a diagnostic report in seconds — no AMA expertise required.*
 
-### From source
+</div>
 
-```bash
-cargo install --path .
+---
+
+## 💡 Why AMADiag?
+
+When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes silent — diagnosing the cause means manually sifting through extension logs, DCR configs, IMDS responses, and MetricsExtension traces across multiple Microsoft Learn guides.
+
+**AMADiag does that for you.** Feed it a troubleshooter bundle and it returns a structured report with root causes, severity ratings, and step-by-step remediation — linked directly to the relevant docs.
+
+```
+┌─────────────────────────────────────┐
+│  AMA Troubleshooter Output Bundle   │
+│  (.tgz / .zip / log directory)      │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────┐
+│           AMADiag CLI                │
+│                                      │
+│  ┌────────────┐  ┌────────────────┐  │
+│  │  Parsers   │─▶│  Rules Engine  │  │
+│  │  Win / Lin │  │  (17 YAML +    │  │
+│  └────────────┘  │   9 regex)     │  │
+│                  └───────┬────────┘  │
+│                          │           │
+│  ┌───────────────────────▼────────┐  │
+│  │  Report Generator              │  │
+│  │  Markdown  ·  JSON             │  │
+│  └────────────────────────────────┘  │
+└──────────────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────┐
+│  Diagnostic Report                   │
+│  • Findings with severity & evidence │
+│  • Remediation steps                 │
+│  • Environment sizing assessment     │
+│  • Links to Microsoft Learn docs     │
+└──────────────────────────────────────┘
 ```
 
-### Build from source
+---
+
+## ✨ Highlights
+
+- 🔎 **17 built-in detection rules** across 7 categories — installation, connectivity, DCR, identity, performance counters, syslog/CEF, and environment sizing
+- 🧠 **9 regex pattern scanners** for IMDS, auth, connectivity, service crashes, DCR errors, extension failures, syslog, MetricsExtension, and Arc agent issues
+- 🪟🐧 **Auto-detect Windows & Linux** bundles from file structure alone
+- 📦 **Archive support** — `.tgz`, `.zip`, or plain directories
+- 📊 **Dual output** — human-readable Markdown or machine-readable JSON for CI/CD
+- ⚡ **Single binary, zero runtime deps** — all rules embedded at compile time
+- 🧩 **YAML-extensible** — add custom detection rules without writing Rust
+- 🏥 **XML config parsing** — streaming parser for `mcsconfig.lkg.xml` / `mcsconfig.latest.xml`
+- 📈 **ETW trace analysis** — MetricsExtension CSV event table parsing
+
+---
+
+## 🚀 Quick Start
 
 ```bash
+# 1. Clone and build
 git clone https://github.com/johnsirmon/AMADiag.git
 cd AMADiag
 cargo build --release
-# Binary at target/release/amadiag (.exe on Windows)
+
+# 2. Analyze a troubleshooter bundle
+./target/release/amadiag analyze /path/to/bundle.tgz
+
+# 3. Review the report
+#    Findings are printed to stdout as a Markdown table
 ```
 
-## Usage
+Or install directly:
+
+```bash
+cargo install --path .
+amadiag analyze /path/to/bundle.tgz
+```
+
+---
+
+## 📖 Usage
 
 ### Analyze a troubleshooter bundle
 
@@ -48,87 +111,60 @@ amadiag analyze ./bundle.tgz --format json --output report.json
 amadiag analyze ./bundle.tgz --verbose
 ```
 
-### Validate a bundle
+### Validate a bundle (no analysis)
 
 ```bash
 amadiag validate /path/to/bundle
 ```
 
-Prints file counts, sizes, and format summary without running full analysis.
+Prints file counts, sizes, and format summary without running the full analysis pipeline.
 
-### List detection rules
+### List all detection rules
 
 ```bash
 amadiag rules list
 ```
 
-### Exit codes
+### Exit Codes
 
 | Code | Meaning |
-|------|---------|
-| 0 | Analysis complete — no critical findings |
-| 1 | Analysis complete — critical findings detected |
-| 2 | Input error (invalid path, unrecognized format) |
+|:----:|---------|
+| `0`  | Analysis complete — no critical findings |
+| `1`  | Analysis complete — **critical findings detected** |
+| `2`  | Input error (invalid path, unrecognized format) |
 
-## Detection Rules
+---
+
+## 🛡️ Detection Rules
+
+AMADiag ships with **17 YAML-defined rules** covering the most common AMA failure modes:
 
 | ID | Name | Severity | Category | Platforms |
-|----|------|----------|----------|-----------|
-| INSTALL-001 | Extension Not Installed | Critical | Installation | Windows, Linux |
-| INSTALL-002 | Extension Provisioning Error Log | Critical | Installation | Windows, Linux |
-| CONN-001 | AMCS Endpoint Unreachable | Critical | Connectivity | Windows, Linux |
-| CONN-002 | Log Ingestion Endpoint Unreachable | Critical | Connectivity | Windows, Linux |
-| CONN-003 | IMDS Endpoint Unreachable | Critical | Connectivity | Windows, Linux |
-| DCR-001 | No DCR Configuration Found | Critical | DCR | Windows, Linux |
-| DCR-002 | Empty DCR Configuration | Warning | DCR | Windows, Linux |
-| IDENTITY-001 | Missing Managed Identity | Critical | Identity | Windows, Linux |
-| IDENTITY-002 | Authentication Token Expired or Invalid | Critical | Identity | Windows, Linux |
-| PERF-001 | No Performance Counter Configuration | Warning | Performance Counters | Windows |
-| PERF-002 | Invalid Performance Counter Path | Warning | Performance Counters | Windows |
-| SYSLOG-001 | Syslog Forwarder Not Running | Critical | Syslog | Linux |
-| SYSLOG-002 | Syslog Port Not Listening | Warning | Syslog | Linux |
-| SYSLOG-003 | Syslog Configuration Missing AMA Forwarding | Warning | Syslog | Linux |
-| SZ-001 | Memory Pressure Detected | Warning | Sizing | Windows, Linux |
-| SZ-002 | High CPU Usage by AMA | Warning | Sizing | Windows, Linux |
-| SZ-003 | Disk Space Low | Warning | Sizing | Windows, Linux |
+|----|------|:--------:|----------|:---------:|
+| `INSTALL-001` | Extension Not Installed | 🔴 Critical | Installation | Win · Lin |
+| `INSTALL-002` | Extension Provisioning Error Log | 🔴 Critical | Installation | Win · Lin |
+| `CONN-001` | AMCS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
+| `CONN-002` | Log Ingestion Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
+| `CONN-003` | IMDS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
+| `DCR-001` | No DCR Configuration Found | 🔴 Critical | DCR | Win · Lin |
+| `DCR-002` | Empty DCR Configuration | 🟡 Warning | DCR | Win · Lin |
+| `IDENTITY-001` | Missing Managed Identity | 🔴 Critical | Identity | Win · Lin |
+| `IDENTITY-002` | Auth Token Expired or Invalid | 🔴 Critical | Identity | Win · Lin |
+| `PERF-001` | No Performance Counter Config | 🟡 Warning | Perf Counters | Win |
+| `PERF-002` | Invalid Performance Counter Path | 🟡 Warning | Perf Counters | Win |
+| `SYSLOG-001` | Syslog Forwarder Not Running | 🔴 Critical | Syslog | Lin |
+| `SYSLOG-002` | Syslog Port Not Listening | 🟡 Warning | Syslog | Lin |
+| `SYSLOG-003` | Syslog Config Missing AMA Forwarding | 🟡 Warning | Syslog | Lin |
+| `SZ-001` | Memory Pressure Detected | 🟡 Warning | Sizing | Win · Lin |
+| `SZ-002` | High CPU Usage by AMA | 🟡 Warning | Sizing | Win · Lin |
+| `SZ-003` | Disk Space Low | 🟡 Warning | Sizing | Win · Lin |
 
-In addition to YAML-defined rules, the log scanner runs 9 regex-based pattern checks for IMDS errors, authentication failures, connectivity issues, service crashes, DCR errors, extension failures, syslog issues, MetricsExtension errors, and Arc agent problems.
+> **Plus 9 regex-based pattern scanners** that run alongside YAML rules — catching IMDS errors, authentication failures, connectivity issues, service crashes, DCR errors, extension failures, syslog issues, MetricsExtension errors, and Arc agent problems.
 
-## Project Structure
+---
 
-```
-src/
-├── main.rs                 # CLI entry point (clap)
-├── lib.rs                  # Library root
-├── detect.rs               # Orchestrator: extract → parse → analyze → report
-├── input.rs                # Bundle extraction (.tgz, .zip, directory) and validation
-├── parsers/
-│   ├── mod.rs              # File walker, platform detection
-│   ├── common.rs           # Log line classification, regex patterns
-│   ├── xml_config.rs       # mcsconfig XML parser (quick-xml)
-│   ├── event_table.rs      # MetricsExtension ETW CSV parser
-│   ├── windows.rs          # Windows-specific enrichment
-│   └── linux.rs            # Linux-specific enrichment
-├── analyzers/
-│   ├── mod.rs              # Analysis orchestration, pattern scanning
-│   ├── finding.rs          # Data model (Finding, Severity, Category, DiagnosticReport)
-│   ├── rules.rs            # YAML rules engine (load, evaluate, display)
-│   └── sizing.rs           # Environment sizing checks (memory, CPU, disk)
-├── reporters/
-│   ├── mod.rs              # OutputFormat enum
-│   ├── markdown.rs         # Markdown report renderer
-│   └── json.rs             # JSON report renderer
-└── rules/                  # Embedded YAML rule definitions
-    ├── installation.yaml
-    ├── connectivity.yaml
-    ├── dcr.yaml
-    ├── identity.yaml
-    ├── performance.yaml
-    ├── syslog.yaml
-    └── sizing.yaml
-```
-
-## Adding Custom Rules
+<details>
+<summary><strong>🧩 Adding Custom Rules</strong></summary>
 
 Rules are defined in YAML. Each rule specifies a detection condition and remediation guidance:
 
@@ -151,11 +187,102 @@ Rules are defined in YAML. Each rule specifies a detection condition and remedia
 
 Built-in rules are embedded at compile time from `src/rules/`. To add new rules, create or modify YAML files in that directory and rebuild.
 
-## Requirements
+</details>
 
-- Rust 1.70+ (build)
-- No runtime dependencies
+<details>
+<summary><strong>📁 Project Structure</strong></summary>
 
-## License
+```
+src/
+├── main.rs                 # CLI entry point (clap)
+├── lib.rs                  # Library root
+├── detect.rs               # Orchestrator: extract → parse → analyze → report
+├── input.rs                # Bundle extraction (.tgz, .zip, directory) + validation
+├── parsers/
+│   ├── mod.rs              # File walker, platform detection
+│   ├── common.rs           # Log line classification, regex patterns
+│   ├── xml_config.rs       # mcsconfig XML parser (quick-xml)
+│   ├── event_table.rs      # MetricsExtension ETW CSV parser
+│   ├── windows.rs          # Windows-specific enrichment
+│   └── linux.rs            # Linux-specific enrichment
+├── analyzers/
+│   ├── mod.rs              # Analysis orchestration, pattern scanning
+│   ├── finding.rs          # Finding / Severity / Category / DiagnosticReport
+│   ├── rules.rs            # YAML rules engine (load, evaluate, display)
+│   └── sizing.rs           # Environment sizing checks (memory, CPU, disk)
+├── reporters/
+│   ├── mod.rs              # OutputFormat enum
+│   ├── markdown.rs         # Markdown report renderer
+│   └── json.rs             # JSON report renderer
+└── rules/                  # Embedded YAML rule definitions
+    ├── installation.yaml
+    ├── connectivity.yaml
+    ├── dcr.yaml
+    ├── identity.yaml
+    ├── performance.yaml
+    ├── syslog.yaml
+    └── sizing.yaml
+```
 
-MIT
+</details>
+
+---
+
+## 🎯 Who Is This For?
+
+| Persona | Use Case |
+|---------|----------|
+| **Azure Admin / IT Pro** | Fast root-cause identification without reading multiple troubleshooting docs |
+| **SOC / Sentinel Analyst** | Determine why syslog/CEF data stopped flowing into Sentinel |
+| **Microsoft Support Engineer** | Structured analysis to accelerate case resolution from customer bundles |
+| **DevOps / SRE** | CLI + JSON output for validating AMA health in deployment pipelines |
+
+---
+
+## 📋 Requirements
+
+| | |
+|---|---|
+| **Build** | Rust 1.70+ |
+| **Runtime** | No dependencies — single statically-linked binary |
+| **Input** | AMA troubleshooter output (`.tgz`, `.zip`, or directory) |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! The easiest way to get started is by adding a new detection rule — all it takes is a YAML file (see **Adding Custom Rules** above).
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feat/my-rule`)
+3. Add or modify rules in `src/rules/`
+4. Run `cargo test` to validate
+5. Open a pull request
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+---
+
+## 📚 Acknowledgements
+
+AMADiag builds on the diagnostic guidance from these Microsoft Learn resources:
+
+- [Azure Monitor Agent Overview](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-overview)
+- [Troubleshoot AMA on Windows VMs](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm)
+- [Troubleshoot AMA on Linux VMs](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm)
+- [AMA Troubleshooter — Windows](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-windows)
+- [AMA Troubleshooter — Linux](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-linux)
+- [Troubleshoot CEF/Syslog via AMA](https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting)
+- [Data Collection Rules](https://learn.microsoft.com/en-us/azure/azure-monitor/vm/data-collection)
+
+---
+
+<div align="center">
+
+*Built with 🦀 Rust — fast, safe, zero-dependency diagnostics for Azure Monitor Agent.*
+
+</div>
