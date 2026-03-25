@@ -53,7 +53,11 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
     );
 
     let path_str = clean_path(&app.browser_path().display().to_string());
-    let hidden_indicator = if app.show_hidden() { " [hidden: shown]" } else { "" };
+    let hidden_indicator = if app.show_hidden() {
+        " [hidden: shown]"
+    } else {
+        ""
+    };
     let path_block = Paragraph::new(vec![
         Line::from(vec![
             Span::styled(
@@ -75,10 +79,7 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
                     .fg(Color::White)
                     .add_modifier(Modifier::BOLD),
             ),
-            Span::styled(
-                hidden_indicator,
-                Style::default().fg(Color::DarkGray),
-            ),
+            Span::styled(hidden_indicator, Style::default().fg(Color::DarkGray)),
         ]),
     ])
     .block(Block::bordered().border_type(BorderType::Rounded));
@@ -127,10 +128,7 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
                         .add_modifier(Modifier::BOLD),
                 )
             } else {
-                (
-                    file_icon(&entry.name),
-                    Style::default().fg(Color::DarkGray),
-                )
+                (file_icon(&entry.name), Style::default().fg(Color::DarkGray))
             };
 
             let mut spans = vec![
@@ -197,15 +195,17 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
             key_badge("t"),
             key_desc("Type path  "),
             key_badge("h"),
-            key_desc(if app.show_hidden() { "Hide hidden  " } else { "Show hidden  " }),
+            key_desc(if app.show_hidden() {
+                "Hide hidden  "
+            } else {
+                "Show hidden  "
+            }),
             key_badge("Esc"),
             key_desc("Quit"),
         ]),
     };
     frame.render_widget(
-        Paragraph::new(footer_line).block(
-            Block::bordered().border_type(BorderType::Rounded),
-        ),
+        Paragraph::new(footer_line).block(Block::bordered().border_type(BorderType::Rounded)),
         footer,
     );
 }
@@ -623,9 +623,8 @@ fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
         ]),
     };
 
-    let paragraph = Paragraph::new(content).block(
-        Block::bordered().border_type(BorderType::Rounded),
-    );
+    let paragraph =
+        Paragraph::new(content).block(Block::bordered().border_type(BorderType::Rounded));
     frame.render_widget(paragraph, area);
 }
 
