@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
-[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 
 *Drop in an AMA troubleshooter bundle. Get a diagnostic report in seconds — no AMA expertise required.*
@@ -72,7 +72,7 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 
 ## 🚀 Quick Start
 
-If you want the easiest path, especially for someone new to command-line tools, start with [`quickstart.md`](quickstart.md).
+If you want the easiest path, especially for someone new to command-line tools, start with [`quickstart.md`](quickstart.md). It explains how to download a ready-made release and run AMADiag without installing Rust.
 
 ```bash
 # 1. Clone and build
@@ -97,7 +97,7 @@ cargo install --path .
 amadiag analyze /path/to/bundle.tgz
 ```
 
-For non-build users, download prebuilt Windows and Linux binaries from the repository's **Releases** page.
+For non-build users, download prebuilt Windows and Linux binaries from the repository's **Releases** page. Those packages are meant to be the easiest path and do not require building from source.
 
 ---
 

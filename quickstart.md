@@ -4,6 +4,8 @@ This guide is for people who do **not** regularly build software from source cod
 
 If you can download a file, unzip it, and open a terminal, you can run AMADiag.
 
+You do **not** need Rust or a compiler if you use the release downloads.
+
 ## What AMADiag does
 
 AMADiag reads an Azure Monitor Agent troubleshooting bundle and tells you:
@@ -25,8 +27,8 @@ Go to the project's **Releases** page and download the package for your operatin
 
 You should see release files like:
 
-- `amadiag-windows-x86_64.zip`
-- `amadiag-linux-x86_64.tar.gz`
+- `amadiag-windows-x86_64-v0.2.0.zip`
+- `amadiag-linux-x86_64-v0.2.0.tar.gz`
 
 After downloading:
 
@@ -34,6 +36,29 @@ After downloading:
 - Linux: extract the archive and look for `amadiag`
 
 If you are not sure where to put it, your **Downloads** folder is fine.
+
+## Fastest possible path
+
+If you only want the shortest version:
+
+1. Download the release for your operating system from **Releases**
+2. Unzip or extract it
+3. Open a terminal in that folder
+4. Run:
+
+### Windows
+
+```powershell
+.\amadiag.exe tui
+```
+
+### Linux
+
+```bash
+./amadiag tui
+```
+
+5. Paste the path to your AMA bundle and press `Enter`
 
 ## What you need before running it
 
@@ -202,8 +227,8 @@ The repository includes a GitHub Actions workflow that builds Windows and Linux 
 Example:
 
 ```bash
-git tag v0.1.1
-git push origin v0.1.1
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 That workflow creates a GitHub Release and uploads packaged binaries for users to download.

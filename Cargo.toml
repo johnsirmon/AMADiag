@@ -1,6 +1,6 @@
 [package]
 name = "amadiag"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Diagnostic analyzer for Azure Monitor Agent (AMA) troubleshooter output"
 license = "MIT"
