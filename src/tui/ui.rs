@@ -57,7 +57,12 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
     );
 
     let binding = app.browser_path().display().to_string();
-    let path_str = clean_path(&binding);
+    let full_path = clean_path(&binding);
+    let folder_name = app
+        .browser_path()
+        .file_name()
+        .map(|n| n.to_string_lossy().to_string())
+        .unwrap_or_else(|| full_path.to_string());
     let hidden_indicator = if app.show_hidden() {
         " [hidden: shown]"
     } else {
@@ -75,17 +80,20 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
                 Style::default().fg(Color::White),
             ),
         ]),
-        Line::from(""),
         Line::from(vec![
             Span::styled(" 📂 ", Style::default().fg(Color::Yellow)),
             Span::styled(
-                path_str,
+                &folder_name,
                 Style::default()
                     .fg(Color::White)
                     .add_modifier(Modifier::BOLD),
             ),
             Span::styled(hidden_indicator, Style::default().fg(Color::DarkGray)),
         ]),
+        Line::from(Span::styled(
+            format!("    {full_path}"),
+            Style::default().fg(Color::DarkGray),
+        )),
     ])
     .block(Block::bordered().border_type(BorderType::Rounded));
     frame.render_widget(path_block, path_area);
