@@ -1,0 +1,98 @@
+Starting external process: C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection.ps1 -OutputDirectory C:\Windows\SystemTemp\AgentTroubleshooter -SkipAdminCheck -TimeOutSecondsSearchFiles 600 -SkipCollectionTsfLogs -SkipCollectionCertificates
+WARNING: Administrative permissions check skipped due to SkipAdminCheck being set.
+Begin - MDM Data Collection Script - 03/26/2026 13:48:38
+Script version 1.14
+Collecting general information...
+Collecting information about logical disks
+Searching the process: MetricsExtension.Native.exe
+Testing several MetricsExtension global endpoints
+Collecting time from ME client and server
+WARNING: SkipCollectionCertificates has been set, skipping the collection of certificates.
+Listing open sockets and owning processes
+WARNING: TCP connect to (2603:1030:7:5::24 : 80) failed
+WARNING: Ping to 2603:1030:7:5::24 failed
+WARNING: TCP connect to (2603:1030:7:5::24 : 443) failed
+WARNING: Ping to 2603:1030:7:5::24 failed
+Resolve-DnsName : global.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (global.metrics.nsatc.net:String) [Resolve-DnsName], Win32Exception
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+Resolve-DnsName : global.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (global.metrics.nsatc.net:String) [Resolve-DnsName], Win32Exception
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+Resolve-DnsName : azglobal.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (azglobal.metrics.nsatc.net:String) [Resolve-DnsName], Win32Excepti 
+   on
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+Resolve-DnsName : azglobal.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (azglobal.metrics.nsatc.net:String) [Resolve-DnsName], Win32Excepti 
+   on
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+Collecting application event logs for Level Error and EventID 1000 happened within last one hour...
+Collecting raw and aggregated metrics, please DO NOT press CTRL+C
+Waiting for 190 seconds, press CTRL+C to quit ...189188187186185184183182181180179178177176175174173172171170169168167166165164163162161160159158157156155154153152151150149148147146145144143142141140139138137136135134133132131130129128127126125124123122121120119118117116115114113112111110109108107106105104103102101100 99 98 97 96 95 94 93 92 91 90 89 88 87 86 85 84 83 82 81 80 79 78 77 76 75 74 73 72 71 70 69 68 67 66 65 64 63 62 61 60 59 58 57 56 55 54 53 52 51 50 49 48 47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0
+WARNING: No autopilot logs were found. If this machine is not an Autopilot machine, this is not an issue.
+WARNING: D:\app\autopilot.ini was not found. If this machine is not an Autopilot machine, this is not an issue.
+Searching the process: MonAgentHost.exe
+WARNING: SkipCollectionTsfLogs has been set, skipping the collection of tsf logs.
+Compressing MDM Data Collection Output ...
+Done -^> MDM Data ready at C:\Windows\SystemTemp\AgentTroubleshooter\MdmDataCollectionOutput2026_03_26_01_48_38_random_2025558213.zip
+End - MDM Data Collection Script - 03/26/2026 13:52:40
+Execution completed in 00:04:03.5779817
+Starting external process: C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe 
+                if (-Not $ImportFunctions)
+                {
+                    $aadLogs = Get-WinEvent -LogName "Microsoft-Windows-AAD/Operational"
+                    $aadLogs | Export-Csv -Path (Join-Path -Path C:\Windows\SystemTemp\AgentTroubleshooter -ChildPath 'AADLogs.csv') -NoTypeInformation
+                } -SkipCollectionCertificates
+Get-WinEvent : No events were found that match the specified selection criteria.
+At line:3 char:13
++  $aadLogs = Get-WinEvent -LogName Microsoft-Windows-AAD/Operational
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-WinEvent], Exception
+    + FullyQualifiedErrorId : NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand
+ 
+-SkipCollectionCertificates : The term '-SkipCollectionCertificates' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:5 char:4
++    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (-SkipCollectionCertificates:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+Execution completed in 00:00:01.1734188

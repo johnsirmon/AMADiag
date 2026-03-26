@@ -1,0 +1,952 @@
+[2026-03-26 12:56:16.000]  [ExtensionConfiguration] ErrorCode:0 INFO: Initializing ExtensionConfiguration
+[2026-03-26 12:56:16.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2026-03-26 12:56:16.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\RuntimeSettings
+[2026-03-26 12:56:16.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2026-03-26 12:56:16.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2026-03-26 12:56:16.000]  [ParseExtensionSettingsJson] ErrorCode:0 WARN: extension settings file C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\RuntimeSettings\0.settings does not exist
+[2026-03-26 12:56:16.000]  [StatusReporting] ErrorCode:0 INFO: Status file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Status\0.status
+[2026-03-26 12:56:16.000]  [HeartbeatReporting] ErrorCode:0 INFO: HeartBeat file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Status\HeartBeat.Json
+[2026-03-26 12:56:16.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType
+[2026-03-26 12:56:16.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType, Value:IAAS
+[2026-03-26 12:56:16.000]  [StatusAggregator] ErrorCode:0 INFO: StatusAggregator getting initialized
+[2026-03-26 12:56:16.000]  [StatusAggregator] ErrorCode:0 INFO: Completed Setting the event for status aggregator thread
+[2026-03-26 12:56:16.000]  [HeartbeatAggregator] ErrorCode:0 INFO: Heartbeat aggregator getting initialized
+[2026-03-26 12:56:16.000]  [HeartbeatAggregator] ErrorCode:0 INFO: Completed Setting the event for heartbeat aggregator thread
+[2026-03-26 12:56:16.000]  [ParseHealthMonitorCommand] ErrorCode:0 INFO: ShutdownEventName:Global\AMA-HealthMonitor-ShutdownEvent MaResetSignal:AzureMonitorAgent-ResetEvent Operation:enable
+[2026-03-26 12:56:16.000]  [StartSendingStatus] ErrorCode:0 INFO: Start the thread for sending constant Status
+[2026-03-26 12:56:16.000]  [StartSendingStatus] ErrorCode:0 INFO: Started the thread for sending constant Status
+[2026-03-26 12:56:16.000]  [StartSendingHeartbeat] ErrorCode:0 INFO: Start the thread for sending constant heartbeat
+[2026-03-26 12:56:16.000]  [StartSendingHeartbeat] ErrorCode:0 INFO: Started the thread for sending constant heartbeat
+[2026-03-26 12:56:16.000]  [StartAggregatingHeartbeat] ErrorCode:0 INFO: Start the thread for sending constant heartbeat aggregation
+[2026-03-26 12:56:16.000]  [StartAggregatingHeartbeat] ErrorCode:0 INFO: Started the thread for sending constant heartbeat aggregation
+[2026-03-26 12:57:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:57:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:57:16.000]  [StartMetricsExtension] ErrorCode:0 INFO: MetricsExtension launch arguments: -stopEvent AMA-MetricsExtension-ShutdownEvent -diagnosticsProvider 501ed43d-2913-11f1-8b3b-002248784a84 -TokenSource AMCS -ExecutionPriorityLevel 0 -OperationEnvironment AMA-Windows/1.39.0.0 -ManagedIdentity sai -Input etw,otlp_grpc -OtlpGrpcHost 127.0.0.1 -ConfigOverrides {\"enableInternalMetricsGigQosTarget\":false}
+[2026-03-26 12:57:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 12:57:16.000]  [StartProcess] ErrorCode:0 INFO: Starting the command: Monitoring\Agent\Extensions\MetricsExtension\MetricsExtension.Native.exe -stopEvent AMA-MetricsExtension-ShutdownEvent -diagnosticsProvider 501ed43d-2913-11f1-8b3b-002248784a84 -TokenSource AMCS -ExecutionPriorityLevel 0 -OperationEnvironment AMA-Windows/1.39.0.0 -ManagedIdentity sai -Input etw,otlp_grpc -OtlpGrpcHost 127.0.0.1 -ConfigOverrides {\"enableInternalMetricsGigQosTarget\":false}.
+[2026-03-26 12:57:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:57:16.000]  [StartMetricsExtension] ErrorCode:0 INFO: Metrics extension started successfully
+[2026-03-26 12:57:16.000]  [StartMetricsExtension] ErrorCode:0 INFO: Job object created or opened for metrics extension
+[2026-03-26 12:57:16.000]  [StartMetricsExtension] ErrorCode:0 INFO: Job object limits set successfully for metrics extension.
+[2026-03-26 12:57:16.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 12:57:16.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 12:57:16.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:4336
+[2026-03-26 12:57:16.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 4336.
+[2026-03-26 12:57:16.000]  [FindProcessById] ErrorCode:0 INFO: No Running Process MonAgentLauncher.exe found. ID: 4336.
+[2026-03-26 12:57:16.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1301 INFO: The MA process is not running based on the m_registry
+[2026-03-26 12:57:16.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 12:57:16.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 12:57:16.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 12:57:16.000]  [CheckIfMAServiceIsRunByCustomer] ErrorCode:0 INFO: MA Serivce is not run by customer.
+[2026-03-26 12:57:16.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 12:57:16.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 12:57:16.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 12:57:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 12:57:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 12:57:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 12:57:17.000]  [StartAzureMA] ErrorCode:0 INFO: Starting agent with MCS:Monitoring\Agent\MonAgentLauncher.exe  -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName
+[2026-03-26 12:57:17.000]  [SetSecurityAttributesOnDir] ErrorCode:0 INFO: Explicit ACE is already set by user. Skipping setting security info.
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: Validating persistence key for the data store at path: C:\WindowsAzure\Resources\AMADataStore.amawin\.persistencekey.
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: Key file exist in data store
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: The key file's real path: \\?\C:\WindowsAzure\Resources\AMADataStore.amawin\.persistencekey.
+[2026-03-26 12:57:17.000]  [DoesRegValueExist] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\AzureMonitorAgent\Secrets, Name:PersistenceKeyCreated
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: The registry value  exist
+[2026-03-26 12:57:17.000]  [SetRegSecurityDescriptorOnSubKey] ErrorCode:0 INFO: Setting security descriptor for registry key: SOFTWARE\Microsoft\AzureMonitorAgent\Secrets
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: Validating persistence key in file and registry.
+[2026-03-26 12:57:17.000]  [ValidateDataStorePersistence] ErrorCode:0 INFO: Validated persistence key in file. Launching AMA.
+[2026-03-26 12:57:17.000]  [StartAzureMA] ErrorCode:0 INFO: Successfully validated datastore persistence C:\WindowsAzure\Resources\AMADataStore.amawin\
+[2026-03-26 12:57:17.000]  [StartHealthMonitor] ErrorCode:0 ERROR: Environment variable MA_RoleEnvironment_VmScaleSetName not found.
+[2026-03-26 12:57:17.000]  [AddAgentVersionToEnvVars] ErrorCode:0 INFO: Agent version=[1.39.0.0]
+[2026-03-26 12:57:17.000]  [AddSystemUuidToEnvVars] ErrorCode:0 INFO: Env Var: 22AFD636-AEC1-4782-9055-F85EA283DC20
+[2026-03-26 12:57:17.000]  [AddSmBiosAssestTagToEnvVars] ErrorCode:0 INFO: Env Var: 7783-7084-3265-9085-8269-3286-77
+[2026-03-26 12:57:17.000]  [AddParentJobObjectLimitsEnabledToEnvVars] ErrorCode:0 INFO: Parent job cpu rate flags=0x0
+[2026-03-26 12:57:17.000]  [AddLargeEventsEnableEnvironmentVariable] ErrorCode:0 INFO: LargeEvents feature Enabled.
+[2026-03-26 12:57:17.000]  [AddMeDiagProviderIdToEnvVars] ErrorCode:0 INFO: Successfully added ME diagnostics provider id: AmaMeDiagnosticProvider=501ed43d-2913-11f1-8b3b-002248784a84
+[2026-03-26 12:57:17.000]  [StartAzureMA] ErrorCode:0 INFO: MCS endpoints, regional=[MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com], global=[MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com], resource=[MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/]
+[2026-03-26 12:57:17.000]  [GetArcProxyAddress] ErrorCode:0 INFO: expandedArcAgentConfigFilePath: C:\ProgramData\AzureConnectedMachineAgent\Config\localconfig.json
+[2026-03-26 12:57:17.000]  [GetArcProxyAddress] ErrorCode:0 INFO: Arc agent config file does not exist.
+[2026-03-26 12:57:17.000]  [StartProcess] ErrorCode:0 INFO: Starting the command: Monitoring\Agent\MonAgentLauncher.exe -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName.
+[2026-03-26 12:57:17.000]  [SetRegValueDWORD] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 12:57:17.000]  [SetRegValueDWORD] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 12:57:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 12:57:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:57:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:57:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 12:57:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:58:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:58:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:58:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:58:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 12:58:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 12:58:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 12:58:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 12:58:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:58:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:58:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 12:58:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:59:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:59:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:59:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:59:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 12:59:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 12:59:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 12:59:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 12:59:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 12:59:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 12:59:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 12:59:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:00:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:00:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:00:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:00:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:00:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:00:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:00:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:00:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:00:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:00:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:00:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:01:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:01:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:01:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:01:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:01:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:01:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:01:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:01:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:01:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:01:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:01:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:02:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:02:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:02:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:02:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:02:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:02:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:02:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:02:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:02:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:02:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:02:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:02:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:02:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:02:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:02:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:02:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:02:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:02:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:02:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:02:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:02:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:02:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:02:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:02:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:02:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:02:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:02:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:03:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:03:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:03:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:03:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:03:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:03:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:03:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:03:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:03:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:03:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:03:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:04:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:04:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:04:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:04:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:04:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:04:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:04:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:04:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:04:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:04:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:04:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:05:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:05:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:05:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:05:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:05:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:05:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:05:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:05:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:05:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:05:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:05:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:06:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:06:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:06:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:06:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:06:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:06:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:06:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:06:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:06:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:06:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:06:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:07:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:07:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:07:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:07:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:07:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:07:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:07:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:07:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:07:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:07:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:07:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:07:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:07:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:07:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:07:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:07:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:07:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:07:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:07:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:07:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:07:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:07:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:07:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:07:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:07:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:07:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:07:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:08:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:08:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:08:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:08:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:08:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:08:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:08:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:08:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:08:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:08:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:08:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:09:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:09:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:09:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:09:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:09:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:09:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:09:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:09:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:09:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:09:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:09:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:10:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:10:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:10:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:10:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:10:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:10:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:10:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:10:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:10:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:10:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:10:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:11:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:11:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:11:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:11:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:11:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:11:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:11:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:11:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:11:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:11:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:11:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:12:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:12:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:12:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:12:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:12:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:12:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:12:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:12:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:12:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:12:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:12:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:12:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:12:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:12:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:12:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:12:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:12:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:12:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:12:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:12:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:12:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:12:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:12:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:12:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:12:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:12:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:12:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:13:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:13:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:13:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:13:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:13:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:13:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:13:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:13:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:13:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:13:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:13:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:14:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:14:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:14:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:14:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:14:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:14:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:14:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:14:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:14:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:14:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:14:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:15:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:15:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:15:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:15:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:15:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:15:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:15:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:15:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:15:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:15:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:15:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:16:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:16:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:16:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:16:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:16:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:16:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:16:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:16:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:16:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:16:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:16:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:17:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:17:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:17:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:17:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:17:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:17:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:17:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:17:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:17:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:17:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:17:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:17:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:17:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:17:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:17:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:17:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:17:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:17:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:17:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:17:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:17:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:17:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:17:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:17:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:17:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:17:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:17:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:18:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:18:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:18:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:18:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:18:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:18:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:18:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:18:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:18:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:18:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:18:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:19:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:19:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:19:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:19:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:19:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:19:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:19:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:19:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:19:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:19:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:19:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:20:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:20:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:20:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:20:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:20:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:20:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:20:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:20:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:20:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:20:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:20:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:21:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:21:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:21:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:21:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:21:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:21:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:21:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:21:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:21:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:21:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:21:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:22:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:22:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:22:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:22:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:22:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:22:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:22:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:22:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:22:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:22:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:22:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:22:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:22:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:22:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:22:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:22:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:22:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:22:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:22:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:22:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: amawin_group
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:22:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:22:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:22:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:22:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:22:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:22:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:22:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:23:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:23:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:23:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:23:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:23:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:23:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:23:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:23:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:23:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:23:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:23:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:24:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:24:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:24:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:24:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:24:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:24:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:24:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:24:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:24:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:24:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:24:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:25:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:25:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:25:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:25:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:25:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:25:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:25:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:25:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:25:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:25:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:25:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:26:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:26:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:26:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:26:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:26:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:26:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:26:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:26:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:26:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:26:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:26:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:27:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:27:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:27:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:27:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:27:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:27:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:27:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:27:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:27:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:27:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:27:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:27:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:27:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:27:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:27:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:27:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:27:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:27:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:27:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:27:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:27:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:27:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:27:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:27:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:27:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:27:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:27:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:28:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:28:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:28:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:28:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:28:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:28:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:28:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:28:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:28:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:28:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:28:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:29:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:29:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:29:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:29:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:29:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:29:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:29:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:29:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:29:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:29:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:29:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:30:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:30:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:30:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:30:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:30:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:30:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:30:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:30:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:30:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:30:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:30:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:31:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:31:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:31:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:31:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:31:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:31:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:31:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:31:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:31:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:31:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:31:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:32:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:32:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:32:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:32:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:32:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:32:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:32:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:32:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:32:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:32:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:32:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:32:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:32:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:32:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:32:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:32:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:32:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:32:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:32:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:32:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:32:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:32:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:32:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:32:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:32:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:32:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:32:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:33:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:33:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:33:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:33:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:33:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:33:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:33:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:33:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:33:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:33:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:33:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:34:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:34:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:34:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:34:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:34:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:34:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:34:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:34:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:34:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:34:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:34:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:35:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:35:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:35:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:35:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:35:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:35:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:35:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:35:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:35:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:35:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:35:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:36:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:36:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:36:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:36:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:36:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:36:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:36:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:36:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:36:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:36:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:36:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:37:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:37:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:37:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:37:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:37:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:37:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:37:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:37:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:37:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:37:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:37:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:37:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:37:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:37:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:37:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:37:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:37:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:37:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:37:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:37:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:37:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:37:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:37:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:37:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:37:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:37:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:37:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:38:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:38:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:38:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:38:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:38:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:38:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:38:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:38:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:38:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:38:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:38:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:39:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:39:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:39:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:39:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:39:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:39:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:39:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:39:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:39:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:39:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:39:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:40:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:40:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:40:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:40:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:40:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:40:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:40:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:40:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:40:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:40:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:40:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:41:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:41:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:41:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:41:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:41:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:41:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:41:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:41:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:41:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:41:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:41:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:42:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:42:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:42:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:42:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:42:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:42:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:42:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:42:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:42:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:42:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:42:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:42:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:42:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:42:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:42:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:42:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:42:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:42:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:42:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:42:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:42:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:42:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:42:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:42:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:42:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:42:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:42:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:43:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:43:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:43:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:43:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:43:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:43:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:43:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:43:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:43:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:43:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:43:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:44:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:44:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:44:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:44:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:44:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:44:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:44:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:44:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:44:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:44:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:44:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:45:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:45:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:45:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:45:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:45:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:45:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:45:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:45:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:45:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:45:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:45:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:46:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:46:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:46:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:46:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:46:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:46:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:46:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:46:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:46:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:46:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:46:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:47:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:47:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:47:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:47:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:47:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:47:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:47:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:47:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:47:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:47:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:47:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:47:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:47:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:47:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:47:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:47:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:47:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:47:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:47:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:47:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:47:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:47:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:47:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:47:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:47:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:47:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:47:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:48:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:48:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:48:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:48:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:48:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:48:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:48:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:48:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:48:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:48:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:48:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:49:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:49:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:49:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:49:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:49:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:49:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:49:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:49:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:49:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:49:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:49:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:50:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:50:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:50:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:50:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:50:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:50:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:50:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:50:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:50:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:50:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:50:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:51:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:51:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:51:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:51:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:51:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:51:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:51:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:51:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:51:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:51:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:51:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:52:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:52:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:52:16.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-03-26 13:52:16.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:52:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MetricsExtension.Native.exe with ID: 964.
+[2026-03-26 13:52:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MetricsExtension.Native.exe found. ID: 964.
+[2026-03-26 13:52:17.000]  [StartMetricsExtension] ErrorCode:0 ERROR: Metrics extension is already running
+[2026-03-26 13:52:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-03-26 13:52:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess
+[2026-03-26 13:52:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:MaServiceProcess, Value:5740
+[2026-03-26 13:52:17.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 5740.
+[2026-03-26 13:52:17.000]  [FindProcessById] ErrorCode:0 INFO: Running Process MonAgentLauncher.exe found. ID: 5740.
+[2026-03-26 13:52:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:0 INFO: The MA process is running based on the m_registry
+[2026-03-26 13:52:17.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, Name:AMAMultitenantServiceProcess
+[2026-03-26 13:52:17.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\47.4.1.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-03-26 13:52:17.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-03-26 13:52:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-03-26 13:52:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-03-26 13:52:17.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS. Endpoint: http://169.254.169.254
+[2026-03-26 13:52:17.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWin_group
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-03-26 13:52:17.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-03-26 13:52:17.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-03-26 13:52:17.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-03-26 13:52:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-03-26 13:52:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-03-26 13:52:46.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-03-26 13:52:46.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.

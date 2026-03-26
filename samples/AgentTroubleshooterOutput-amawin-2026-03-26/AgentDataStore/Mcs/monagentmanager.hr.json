@@ -1,0 +1,1 @@
+{"OSVer":"Microsoft Windows Server 2019 Datacenter","AgentVer":"1.39.0.0","Context":"monagentmanager","Id":"HP5B","Connectivity":{"Amcs":{"https://westus2-5w48.westus2-1.handler.control.monitor.azure.com":true}},"Features":{"ConfigCheck":true}}

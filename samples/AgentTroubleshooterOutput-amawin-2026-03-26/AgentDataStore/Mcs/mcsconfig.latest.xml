@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MonitoringManagement version="1.0" namespace="AzureMonitorAgent" timestamp="2014-03-09T00:00:00.0000000Z">
+  <Management eventVolume="Medium" disableNodeDiagnostics="true">
+       <Identity type="TenantRole" />
+    <AgentResourceUsage diskQuotaInMB="10000" />
+  </Management>
+  <Events>
+    <HeartBeats>
+      <HeartBeat diskQuotaInMB = "32" retryTimeout = "PT10M" retentionInDays = "29" duration = "PT2M" sampleRateInSeconds = "60" storeType = "Local" eventName = "MaHeartBeats" />
+    </HeartBeats>
+    <WindowsEventLogSubscriptions duration="PT1M" startTimeDeltaInSeconds="-900">
+      <Subscription eventName="c7836023744250932452_546419284751770569" storeType="Local" query="Application!*[System[(Level=1 or Level=2)]]">
+        <Column name="PublisherId" type="mt:wstr" defaultAssignment="00000000-0000-0000-0000-000000000000">
+          <Value>/Event/System/Provider/@Guid</Value>
+        </Column>
+        <Column name="TimeCreated" type="mt:wstr" >
+          <Value>/Event/System/TimeCreated/@SystemTime</Value>
+        </Column>
+        <Column name="PublisherName" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Provider/@Name</Value>
+        </Column>
+        <Column name="Channel" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Channel</Value>
+        </Column>
+        <Column name="LoggingComputer" type="mt:wstr" defaultAssignment = "" >
+          <Value>/Event/System/Computer</Value>
+        </Column>
+        <Column name="EventNumber" type="mt:wstr" defaultAssignment = "0" >
+          <Value>/Event/System/EventID</Value>
+        </Column>
+        <Column name="EventCategory" type="mt:wstr" defaultAssignment = "1" >
+          <Value>/Event/System/Task</Value>
+        </Column>
+        <Column name="EventLevel" type="mt:wstr" defaultAssignment="4">
+          <Value>/Event/System/Level</Value>
+        </Column>
+        <Column name="UserName" type="mt:wstr" defaultAssignment = "N/A" >
+          <Value>/Event/System/Security/@UserID</Value >
+        </Column>
+        <Column name="RawXml" type="mt:wstr" defaultAssignment="">
+          <Value>/</Value>
+        </Column>
+        <Column name="EventDescription" type="mt:wstr" defaultAssignment="">
+          <Value>GetEventMetadata("Description")</Value>
+        </Column>
+        <Column name="RenderingInfo" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/RenderingInfo</Value>
+        </Column>
+        <Column name="EventRecordId" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/EventRecordID</Value>
+        </Column>
+        <Column name="Keywords" type="mt:wstr" defaultAssignment="0x0000000000000000">
+          <Value>/Event/System/Keywords</Value>
+        </Column>
+      </Subscription>
+      <Subscription eventName="c7836023744250932452_546419284751770569" storeType="Local" query="Security!*[System[(band(Keywords,4503599627370496))]]">
+        <Column name="PublisherId" type="mt:wstr" defaultAssignment="00000000-0000-0000-0000-000000000000">
+          <Value>/Event/System/Provider/@Guid</Value>
+        </Column>
+        <Column name="TimeCreated" type="mt:wstr" >
+          <Value>/Event/System/TimeCreated/@SystemTime</Value>
+        </Column>
+        <Column name="PublisherName" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Provider/@Name</Value>
+        </Column>
+        <Column name="Channel" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Channel</Value>
+        </Column>
+        <Column name="LoggingComputer" type="mt:wstr" defaultAssignment = "" >
+          <Value>/Event/System/Computer</Value>
+        </Column>
+        <Column name="EventNumber" type="mt:wstr" defaultAssignment = "0" >
+          <Value>/Event/System/EventID</Value>
+        </Column>
+        <Column name="EventCategory" type="mt:wstr" defaultAssignment = "1" >
+          <Value>/Event/System/Task</Value>
+        </Column>
+        <Column name="EventLevel" type="mt:wstr" defaultAssignment="4">
+          <Value>/Event/System/Level</Value>
+        </Column>
+        <Column name="UserName" type="mt:wstr" defaultAssignment = "N/A" >
+          <Value>/Event/System/Security/@UserID</Value >
+        </Column>
+        <Column name="RawXml" type="mt:wstr" defaultAssignment="">
+          <Value>/</Value>
+        </Column>
+        <Column name="EventDescription" type="mt:wstr" defaultAssignment="">
+          <Value>GetEventMetadata("Description")</Value>
+        </Column>
+        <Column name="RenderingInfo" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/RenderingInfo</Value>
+        </Column>
+        <Column name="EventRecordId" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/EventRecordID</Value>
+        </Column>
+        <Column name="Keywords" type="mt:wstr" defaultAssignment="0x0000000000000000">
+          <Value>/Event/System/Keywords</Value>
+        </Column>
+      </Subscription>
+      <Subscription eventName="c7836023744250932452_546419284751770569" storeType="Local" query="System!*[System[(Level=2 or Level=3)]]">
+        <Column name="PublisherId" type="mt:wstr" defaultAssignment="00000000-0000-0000-0000-000000000000">
+          <Value>/Event/System/Provider/@Guid</Value>
+        </Column>
+        <Column name="TimeCreated" type="mt:wstr" >
+          <Value>/Event/System/TimeCreated/@SystemTime</Value>
+        </Column>
+        <Column name="PublisherName" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Provider/@Name</Value>
+        </Column>
+        <Column name="Channel" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/Channel</Value>
+        </Column>
+        <Column name="LoggingComputer" type="mt:wstr" defaultAssignment = "" >
+          <Value>/Event/System/Computer</Value>
+        </Column>
+        <Column name="EventNumber" type="mt:wstr" defaultAssignment = "0" >
+          <Value>/Event/System/EventID</Value>
+        </Column>
+        <Column name="EventCategory" type="mt:wstr" defaultAssignment = "1" >
+          <Value>/Event/System/Task</Value>
+        </Column>
+        <Column name="EventLevel" type="mt:wstr" defaultAssignment="4">
+          <Value>/Event/System/Level</Value>
+        </Column>
+        <Column name="UserName" type="mt:wstr" defaultAssignment = "N/A" >
+          <Value>/Event/System/Security/@UserID</Value >
+        </Column>
+        <Column name="RawXml" type="mt:wstr" defaultAssignment="">
+          <Value>/</Value>
+        </Column>
+        <Column name="EventDescription" type="mt:wstr" defaultAssignment="">
+          <Value>GetEventMetadata("Description")</Value>
+        </Column>
+        <Column name="RenderingInfo" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/RenderingInfo</Value>
+        </Column>
+        <Column name="EventRecordId" type="mt:wstr" defaultAssignment="">
+          <Value>/Event/System/EventRecordID</Value>
+        </Column>
+        <Column name="Keywords" type="mt:wstr" defaultAssignment="0x0000000000000000">
+          <Value>/Event/System/Keywords</Value>
+        </Column>
+      </Subscription>
+
+    </WindowsEventLogSubscriptions>
+  </Events>
+  <EventStreamingAnnotations>
+    <EventStreamingAnnotation name ="^c7836023744250932452_546419284751770569$">
+      <OMS>
+        <Content>
+          <![CDATA[ <Config channelProtocol="ods" workspaceName="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" workspaceId="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" solutionType="LogManagement" logType="GENERIC_EVENT_BLOB" globallyUniqueChannelId="dcr-7291dc57ac3c4d45aa35942270c31f4a.ods-d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" endpoint="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com" tokenBased="true" /> ]]>
+        </Content>
+      </OMS>
+    </EventStreamingAnnotation>
+
+    <EventStreamingAnnotation name ="^c7836023744250932452_hb$">
+      <OMS>
+        <Content>
+          <![CDATA[ <Config channelProtocol="ods" workspaceName="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" workspaceId="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" solutionType="LogManagement" logType="HEALTH_ASSESSMENT_BLOB" globallyUniqueChannelId="dcr-7291dc57ac3c4d45aa35942270c31f4a.ods-d1521c3b-0bd3-4d94-a6ed-22c3170a6b74" endpoint="d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com" tokenBased="true" /> ]]>
+        </Content>
+      </OMS>
+    </EventStreamingAnnotation>
+
+  </EventStreamingAnnotations>
+</MonitoringManagement>

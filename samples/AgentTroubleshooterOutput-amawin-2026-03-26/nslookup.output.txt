@@ -1,0 +1,29 @@
+Starting external process: C:\Windows\system32\nslookup.exe westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    amcs-prod-wus2-1-handler.westus2.cloudapp.azure.com
+Address:  40.64.132.133
+Aliases:  westus2-5w48.westus2-1.handler.control.monitor.azure.com
+	  westus2.handler.control.monitor.azure.com
+	  amcs-prod-wus2-handler.trafficmanager.net
+Execution completed in 00:00:00.2740250
+Starting external process: C:\Windows\system32\nslookup.exe d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    ipv4-wus2-oi-ods-cses-d.westus2.cloudapp.azure.com
+Address:  40.78.243.19
+Aliases:  d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+	  wus2-oi-ods.trafficmanager.net
+Execution completed in 00:00:00.1401057
+Starting external process: C:\Windows\system32\nslookup.exe westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    amcs-prod-wus2-1-handler.westus2.cloudapp.azure.com
+Address:  40.64.132.133
+Aliases:  westus2-5w48.westus2-1.handler.control.monitor.azure.com
+	  westus2.handler.control.monitor.azure.com
+	  amcs-prod-wus2-handler.trafficmanager.net
+Execution completed in 00:00:00.1791369

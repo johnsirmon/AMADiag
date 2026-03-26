@@ -1,0 +1,119 @@
+Starting external process: C:\Windows\system32\curl.exe --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+*   Trying 169.254.169.254:80...
+* Connected to 169.254.169.254 (169.254.169.254) port 80
+* using HTTP/1.x
+> GET /metadata/instance?api-version=2019-11-01&format=json HTTP/1.1
+> Host: 169.254.169.254
+> User-Agent: curl/8.13.0
+> Accept: */*
+> Metadata: true
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Server: IMDS/150.870.65.1854
+< x-ms-request-id: ead32a90-084a-47cc-ba25-7960a56f3f55
+< Date: Thu, 26 Mar 2026 13:52:43 GMT
+< Content-Length: 1679
+< 
+* Connection #0 to host 169.254.169.254 left intact
+Execution completed in 00:00:00.1372941
+Starting external process: C:\Windows\system32\curl.exe -4 --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+*   Trying 169.254.169.254:80...
+* Connected to 169.254.169.254 (169.254.169.254) port 80
+* using HTTP/1.x
+> GET /metadata/instance?api-version=2019-11-01&format=json HTTP/1.1
+> Host: 169.254.169.254
+> User-Agent: curl/8.13.0
+> Accept: */*
+> Metadata: true
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Server: IMDS/150.870.65.1854
+< x-ms-request-id: b992a20b-48a4-44c3-801c-20170b49fb81
+< Date: Thu, 26 Mar 2026 13:52:44 GMT
+< Content-Length: 1679
+< 
+* Connection #0 to host 169.254.169.254 left intact
+Execution completed in 00:00:00.0852893
+Starting external process: C:\Windows\system32\curl.exe -6 --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+* closing connection #0
+curl: (7) Could not connect to server
+Execution completed in 00:00:00.0523492
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Host westus2-5w48.westus2-1.handler.control.monitor.azure.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 40.64.132.133
+*   Trying 40.64.132.133:443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Connected to westus2-5w48.westus2-1.handler.control.monitor.azure.com (40.64.132.133) port 443
+* using HTTP/1.x
+> GET /ping HTTP/1.1
+> Host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Healthy
+> User-Agent: curl/8.13.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Cache-Control: no-store, no-cache
+< Pragma: no-cache
+< Transfer-Encoding: chunked
+< Content-Type: text/plain
+< Expires: Thu, 01 Jan 1970 00:00:00 GMT
+< Server: Microsoft-HTTPAPI/2.0
+< Request-Context: appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3
+< Date: Thu, 26 Mar 2026 13:52:52 GMT
+< 
+* Connection #0 to host westus2-5w48.westus2-1.handler.control.monitor.azure.com left intact
+Execution completed in 00:00:00.1328730
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Host westus2-5w48.westus2-1.handler.control.monitor.azure.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 40.64.132.133
+*   Trying 40.64.132.133:443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Connected to westus2-5w48.westus2-1.handler.control.monitor.azure.com (40.64.132.133) port 443
+* using HTTP/1.x
+> GET /ping HTTP/1.1
+Healthy
+> Host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+> User-Agent: curl/8.13.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Cache-Control: no-store, no-cache
+< Pragma: no-cache
+< Transfer-Encoding: chunked
+< Content-Type: text/plain
+< Expires: Thu, 01 Jan 1970 00:00:00 GMT
+< Server: Microsoft-HTTPAPI/2.0
+< Request-Context: appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3
+< Date: Thu, 26 Mar 2026 13:52:53 GMT
+< 
+* Connection #0 to host westus2-5w48.westus2-1.handler.control.monitor.azure.com left intact
+Execution completed in 00:00:00.1120986
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Could not resolve host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+* shutting down connection #0
+curl: (6) Could not resolve host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0647837
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.1125621
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.0822633
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.0624450
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.1196488
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0925689
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0649918

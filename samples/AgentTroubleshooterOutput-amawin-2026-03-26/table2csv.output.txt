@@ -1,0 +1,106 @@
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\c7836023744250932452_546419284751770569.tsf"
+--------------------c7836023744250932452_546419284751770569.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=75
+2 schema(s) defined in table
+Total returned number of records will be 74
+first record time stamp: 1DCBD1FD7D3028E  2026-03-26T12:55:37.6838286Z
+last record time stamp: 1DCBD208BC501A6  2026-03-26T13:00:39.5819430Z
+Time elapsed: 0.039525(s), read 74 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\c7836023744250932452_546419284751770569.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.9993880
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\DefaultExtensionEtw.tsf"
+--------------------DefaultExtensionEtw.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=0
+1 schema(s) defined in table
+No records qualified
+Time elapsed: 0.055698(s), read 0 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\DefaultExtensionEtw.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1165804
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\LogAnalyticsHeartbeats.tsf"
+--------------------LogAnalyticsHeartbeats.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=50
+1 schema(s) defined in table
+Total returned number of records will be 50
+first record time stamp: 1DCBD203BDB3483  2026-03-26T12:58:25.5096963Z
+last record time stamp: 1DCBD271471A754  2026-03-26T13:47:25.8639188Z
+Time elapsed: 0.050117(s), read 50 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\LogAnalyticsHeartbeats.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1263412
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaCounterEvent.tsf"
+--------------------MaCounterEvent.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=60 MB, Size=50844888 bytes, #records=764227
+2 schema(s) defined in table
+Total returned number of records will be 121745
+first record time stamp: 1DC915595804C6B  2026-01-29T19:29:28.0733291Z
+last record time stamp: 1DCBD2725D56A11  2026-03-26T13:47:55.0389777Z
+Time elapsed: 2.485121(s), read 121745 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaCounterEvent.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:02.5464744
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAEventTable.tsf"
+--------------------MAEventTable.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=300 MB, Size=302503128 bytes, #records=977558
+2 schema(s) defined in table
+Total returned number of records will be 361070
+first record time stamp: 1DCA2ACDF1C9536  2026-02-20T21:07:07.5539254Z
+last record time stamp: 1DCBD27270DC871  2026-03-26T13:47:57.0861169Z
+Time elapsed: 28.272894(s), read 361070 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MAEventTable.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:28.3341202
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAGenevaNotifMsgEvents.tsf"
+--------------------MAGenevaNotifMsgEvents.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=50 MB, Size=34067672 bytes, #records=0
+1 schema(s) defined in table
+No records qualified
+Time elapsed: 0.063214(s), read 0 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MAGenevaNotifMsgEvents.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1195022
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaHeartBeats.tsf"
+--------------------MaHeartBeats.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=50 MB, Size=34067672 bytes, #records=51
+1 schema(s) defined in table
+Total returned number of records will be 51
+first record time stamp: 1DCBD203BD86C2D  2026-03-26T12:58:25.4914605Z
+last record time stamp: 1DCBD273832BA3F  2026-03-26T13:48:25.8495039Z
+Time elapsed: 0.057861(s), read 51 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaHeartBeats.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1160425
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaMetricsExtensionEtw.tsf"
+--------------------MaMetricsExtensionEtw.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=560
+1 schema(s) defined in table
+Total returned number of records will be 560
+first record time stamp: 1DCBD20289DFB34  2026-03-26T12:57:53.2317492Z
+last record time stamp: 1DCBD27371BC964  2026-03-26T13:48:24.0214372Z
+Time elapsed: 0.052578(s), read 560 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaMetricsExtensionEtw.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1193336
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaQosEvent.tsf"
+--------------------MaQosEvent.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=100 MB, Size=50844888 bytes, #records=364671
+2 schema(s) defined in table
+Total returned number of records will be 26344
+first record time stamp: 1DCA4F9A625C61F  2026-02-23T19:21:45.5577631Z
+last record time stamp: 1DCBD2732F89DA8  2026-03-26T13:48:17.0800552Z
+Time elapsed: 1.727941(s), read 26344 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaQosEvent.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:01.7927368
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaTelemetryEvents.tsf"
+--------------------MaTelemetryEvents.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=100 MB, Size=34067672 bytes, #records=127318
+13 schema(s) defined in table
+Total returned number of records will be 5713
+first record time stamp: 1DC915590AD5BD7  2026-01-29T19:29:19.9800279Z
+last record time stamp: 1DCBD273757622D  2026-03-26T13:48:24.4120109Z
+Time elapsed: 1.241083(s), read 5713 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaTelemetryEvents.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:01.2944512

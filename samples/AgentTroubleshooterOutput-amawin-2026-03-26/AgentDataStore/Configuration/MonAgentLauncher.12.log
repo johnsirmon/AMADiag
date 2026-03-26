@@ -1,0 +1,10 @@
+﻿Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - Event AzureMonitorAgentExtension-StopAgentEventName does not exist; creating it.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - The launcher will signal AzureMonitorAgentExtension-StopAgentEventName whenever the agent shuts down.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - Event AzureMonitorAgentExtension-ShutdownEventName does not exist; creating it.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - The launcher will exit when AzureMonitorAgentExtension-ShutdownEventName is signaled.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - Event AzureMonitorAgentExtension-TotalShutdownEventName does not exist; creating it.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - The launcher will exit when AzureMonitorAgentExtension-TotalShutdownEventName is signaled.
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - Starting the host: 'C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentHost.exe  -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin" -parent 3012 -mcsmode  -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -InitializedEvent AzureMonitorAgentExtension-StartAgentEventName'
+Info  (2026-02-20T20:55:13Z): MonAgentLauncher.exe - Started the host
+Info  (2026-02-21T00:28:52Z): MonAgentLauncher.exe - Exiting the monitoring launcher after handling control 6.
+Info  (2026-02-21T00:28:52Z): MonAgentLauncher.exe - Stopping the monitoring agent host 464.

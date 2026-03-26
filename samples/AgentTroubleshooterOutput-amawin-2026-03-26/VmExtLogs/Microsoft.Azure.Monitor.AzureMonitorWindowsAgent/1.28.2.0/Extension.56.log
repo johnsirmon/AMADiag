@@ -1,0 +1,33 @@
+[2026-01-29 19:31:47.000]  [ExtensionConfiguration] ErrorCode:0 INFO: Initializing ExtensionConfiguration
+[2026-01-29 19:31:47.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2026-01-29 19:31:47.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings
+[2026-01-29 19:31:47.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2026-01-29 19:31:47.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2026-01-29 19:31:47.000]  [ParseExtensionSettingsJson] ErrorCode:0 WARN: extension settings file C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings\0.settings does not exist
+[2026-01-29 19:31:47.000]  [StatusReporting] ErrorCode:0 INFO: Status file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\0.status
+[2026-01-29 19:31:47.000]  [HeartbeatReporting] ErrorCode:0 INFO: HeartBeat file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json
+[2026-01-29 19:31:47.000]  [Extension] ErrorCode:0 INFO: LogFolder: C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0, ConfigFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings, StatusFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status, HeartbeatFile: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json, DeploymentId: 6ae3003f-61ac-4f59-825a-9c388331e531, RoleName: _amawin, Instance: _amawin, ExtensionVersion: 46.19.3.0
+[2026-01-29 19:31:47.000]  [ParseExtensionCommand] ErrorCode:0 INFO: Command Received : uninstall
+[2026-01-29 19:31:47.000]  [Main] ErrorCode:0 INFO: 2026-01-29 19:25:07.000
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType, Value:IAAS
+[2026-01-29 19:31:47.000]  [HandleCommand] ErrorCode:0 INFO: Handling Command: uninstall
+[2026-01-29 19:31:47.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:47.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:47.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:47.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:47.000]  [HandleUninstallCommand] ErrorCode:0 INFO: Starting Extension Uninstall
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus, Value:Disabled
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionIsInUpdate
+[2026-01-29 19:31:47.000]  [QueryRegValueString] ErrorCode:1205 ERROR: RegQueryValueExA: failed to query REG_SZ value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, name=ExtensionIsInUpdate, error=2, type=0
+[2026-01-29 19:31:47.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SYSTEM\CurrentControlSet\Control\Session Manager\Environment, Name:AzureMonAgentClientLocation
+[2026-01-29 19:31:47.000]  [DeleteRegValue] ErrorCode:0 INFO: Deleted Registry for Key:SYSTEM\CurrentControlSet\Control\Session Manager\Environment, Name:AzureMonAgentClientLocation
+[2026-01-29 19:31:47.000]  [DeleteRegSubKey] ErrorCode:0 INFO: Deleting the s_registry key: SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0
+[2026-01-29 19:31:47.000]  [DeleteRegSubKey] ErrorCode:0 INFO: Successfully deleted the s_registry key: SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0
+[2026-01-29 19:31:47.000]  [HandleUninstallCommand] ErrorCode:0 INFO: Completed the UnInstall command.
+[2026-01-29 19:31:47.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:47.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:47.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:47.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:47.000]  [Main] ErrorCode:0 ERROR: Operation Complete.

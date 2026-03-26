@@ -1,0 +1,51 @@
+[2026-01-29 19:31:40.000]  [ExtensionConfiguration] ErrorCode:0 INFO: Initializing ExtensionConfiguration
+[2026-01-29 19:31:40.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2026-01-29 19:31:40.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings
+[2026-01-29 19:31:40.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2026-01-29 19:31:40.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2026-01-29 19:31:40.000]  [ParseExtensionSettingsJson] ErrorCode:0 WARN: extension settings file C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings\0.settings does not exist
+[2026-01-29 19:31:40.000]  [StatusReporting] ErrorCode:0 INFO: Status file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\0.status
+[2026-01-29 19:31:40.000]  [HeartbeatReporting] ErrorCode:0 INFO: HeartBeat file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json
+[2026-01-29 19:31:40.000]  [Extension] ErrorCode:0 INFO: LogFolder: C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0, ConfigFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings, StatusFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status, HeartbeatFile: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json, DeploymentId: 6ae3003f-61ac-4f59-825a-9c388331e531, RoleName: _amawin, Instance: _amawin, ExtensionVersion: 46.19.3.0
+[2026-01-29 19:31:40.000]  [ParseExtensionCommand] ErrorCode:0 INFO: Command Received : disable
+[2026-01-29 19:31:40.000]  [Main] ErrorCode:0 INFO: 2026-01-29 19:25:07.000
+[2026-01-29 19:31:40.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType
+[2026-01-29 19:31:40.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType, Value:IAAS
+[2026-01-29 19:31:40.000]  [HandleCommand] ErrorCode:0 INFO: Handling Command: disable
+[2026-01-29 19:31:40.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:40.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:40.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:40.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:40.000]  [HandleDisableCommand] ErrorCode:0 INFO: Starting Extension disable
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 INFO: Begin to stop the health monitor.
+[2026-01-29 19:31:40.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Check to see if health monitor is running based on m_registry.
+[2026-01-29 19:31:40.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess
+[2026-01-29 19:31:40.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess, Value:2880
+[2026-01-29 19:31:40.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process AMAExtHealthMonitor.exe with ID: 2880.
+[2026-01-29 19:31:40.000]  [FindProcessById] ErrorCode:0 INFO: Running Process AMAExtHealthMonitor.exe found. ID: 2880.
+[2026-01-29 19:31:40.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Health monitor is running. Id:2880
+[2026-01-29 19:31:40.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Health Monitor Status based on m_registry: 1.
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 INFO: Stopping the running Health monitor process.
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 INFO: Sending stop event to Health monitor process.
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 WARN: Find any rouge health monitor lying around.
+[2026-01-29 19:31:40.000]  [FindProcessByName] ErrorCode:0 INFO: Attempt to find the process Name: AMAExtHealthMonitor.exe.
+[2026-01-29 19:31:40.000]  [FindProcessByName] ErrorCode:0 INFO: Found running process Name: AMAExtHealthMonitor.exe. ProcessId: 2880
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 WARN: No rouge health monitor lying around.
+[2026-01-29 19:31:40.000]  [FindProcessByName] ErrorCode:0 INFO: Attempt to find the process Name: AMAExtHealthMonitor.exe.
+[2026-01-29 19:31:40.000]  [FindProcessByName] ErrorCode:0 INFO: Found running process Name: AMAExtHealthMonitor.exe. ProcessId: 2880
+[2026-01-29 19:31:40.000]  [WaitForProcessExit] ErrorCode:183 WARN: AMAExtHealthMonitor.exe process is still running. Retry 1/120. Delay between each retry is 5 seconds
+[2026-01-29 19:31:45.000]  [FindProcessByName] ErrorCode:0 INFO: Attempt to find the process Name: AMAExtHealthMonitor.exe.
+[2026-01-29 19:31:45.000]  [FindProcessByName] ErrorCode:0 INFO: Not Found running process Name: AMAExtHealthMonitor.exe. ProcessId: 0
+[2026-01-29 19:31:45.000]  [StopHealthMonitor] ErrorCode:0 WARN: Health monitor stopped.
+[2026-01-29 19:31:45.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess
+[2026-01-29 19:31:45.000]  [DeleteRegValue] ErrorCode:0 INFO: Deleted Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess
+[2026-01-29 19:31:45.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorConfigSequenceNumber
+[2026-01-29 19:31:45.000]  [DeleteRegValue] ErrorCode:0 INFO: Deleted Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorConfigSequenceNumber
+[2026-01-29 19:31:45.000]  [SetRegValueString] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus, Value:Disabled
+[2026-01-29 19:31:45.000]  [SetRegValueString] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus, Value:Disabled
+[2026-01-29 19:31:45.000]  [HandleDisableCommand] ErrorCode:0 INFO: Completed the Disable command.
+[2026-01-29 19:31:45.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:45.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:45.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:45.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:45.000]  [Main] ErrorCode:0 ERROR: Operation Complete.

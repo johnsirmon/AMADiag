@@ -1,0 +1,586 @@
+﻿[0] Time Stamp,PublisherId,TimeCreated,PublisherName,Channel,LoggingComputer,EventNumber,EventCategory,EventLevel,UserName,RawXml,EventDescription,RenderingInfo,EventRecordId,Keywords,SchemaID
+[1] Time Stamp,ObfuscatedData
+2026-03-26T12:55:37.6838286Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:37.683828600Z","Microsoft-Windows-Security-Auditing","Security","amawin","4953","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4953</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:37.683828600Z'/><EventRecordID>96170</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='968'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='Profile'>All</Data><Data Name='ReasonForRejection'>An error occurred.</Data><Data Name='RuleId'>WMPNetworkSvc-2</Data><Data Name='RuleName'>-</Data></EventData></Event>","Windows Firewall ignored a rule because it could not be parsed.
+	
+Profile:	All
+
+Reason for Rejection:	An error occurred.
+
+Rule:
+	ID:	WMPNetworkSvc-2
+	Name:	-",,"96170","0x8010000000000000", [0]
+2026-03-26T12:55:37.6838287Z,"{555908d1-a6d7-4695-8e1e-26931d2012f4}","2026-02-24T05:49:48.991646000Z","Service Control Manager","System","amawin","7043","0","2","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Service Control Manager' Guid='{555908d1-a6d7-4695-8e1e-26931d2012f4}' EventSourceName='Service Control Manager'/><EventID Qualifiers='49152'>7043</EventID><Version>0</Version><Level>2</Level><Task>0</Task><Opcode>0</Opcode><Keywords>0x8080000000000000</Keywords><TimeCreated SystemTime='2026-02-24T05:49:48.991646000Z'/><EventRecordID>11717</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-e07e-70b5f6a4dc01}'/><Execution ProcessID='816' ThreadID='2948'/><Channel>System</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='param1'>Windows Defender Advanced Threat Protection Service</Data><Binary>530065006E00730065000000</Binary></EventData></Event>","The Windows Defender Advanced Threat Protection Service service did not shut down properly after receiving a preshutdown control.",,"11717","0x8080000000000000", [0]
+2026-03-26T12:55:37.6839098Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:37.683909800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4953","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4953</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:37.683909800Z'/><EventRecordID>96171</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='968'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='Profile'>All</Data><Data Name='ReasonForRejection'>The target schema version does not support port ranges.</Data><Data Name='RuleId'>Wcmsvc-2</Data><Data Name='RuleName'>Allow TCP traffic from Wcmsvc</Data></EventData></Event>","Windows Firewall ignored a rule because it could not be parsed.
+	
+Profile:	All
+
+Reason for Rejection:	The target schema version does not support port ranges.
+
+Rule:
+	ID:	Wcmsvc-2
+	Name:	Allow TCP traffic from Wcmsvc",,"96171","0x8010000000000000", [0]
+2026-03-26T12:55:37.6839099Z,"00000000-0000-0000-0000-000000000000","2026-03-26T12:55:07.816806900Z","volmgr","System","amawin","46","0","2","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='volmgr'/><EventID Qualifiers='49156'>46</EventID><Level>2</Level><Task>0</Task><Keywords>0x80000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:07.816806900Z'/><EventRecordID>11769</EventRecordID><Channel>System</Channel><Computer>amawin</Computer><Security/></System><EventData><Data>\Device\HarddiskVolume4</Data><Binary>0000000001000000000000002E0004C0091000000F0000C000000000000000000000000000000000</Binary></EventData></Event>","Crash dump initialization failed!",,"11769","0x80000000000000", [0]
+2026-03-26T12:55:37.6839838Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:37.683983800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4953","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4953</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:37.683983800Z'/><EventRecordID>96172</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='968'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='Profile'>All</Data><Data Name='ReasonForRejection'>An error occurred.</Data><Data Name='RuleId'>SearchProtocolHost-2</Data><Data Name='RuleName'>-</Data></EventData></Event>","Windows Firewall ignored a rule because it could not be parsed.
+	
+Profile:	All
+
+Reason for Rejection:	An error occurred.
+
+Rule:
+	ID:	SearchProtocolHost-2
+	Name:	-",,"96172","0x8010000000000000", [0]
+2026-03-26T12:55:37.6839839Z,"00000000-0000-0000-0000-000000000000","2026-03-26T12:55:11.401872400Z","mlx4_bus","System","amawin","64","0","3","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='mlx4_bus'/><EventID Qualifiers='32776'>64</EventID><Level>3</Level><Task>0</Task><Keywords>0x80000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:11.401872400Z'/><EventRecordID>11791</EventRecordID><Channel>System</Channel><Computer>amawin</Computer><Security/></System><EventData><Data></Data><Data>2b2fcb18-e9a5-4409-b10</Data><Data>RoCE v2.0</Data><Data>No RoCE</Data><Binary>00000000040030000000000040000880000000000000000000000000000000000000000000000000</Binary></EventData></Event>","2b2fcb18-e9a5-4409-b10: RoCE v2.0 mode was requested, but it is not supported. The NIC starts in No RoCE mode. 
+ NOTE: If your environment contains mix of different NIC types, you need to make sure that the whole environment is configured to use the same RoCE mode, 
+ otherwise the traffic between the different NICs does not work.",,"11791","0x80000000000000", [0]
+2026-03-26T12:55:37.6840517Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:37.684051700Z","Microsoft-Windows-Security-Auditing","Security","amawin","4953","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4953</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:37.684051700Z'/><EventRecordID>96173</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='968'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='Profile'>All</Data><Data Name='ReasonForRejection'>An error occurred.</Data><Data Name='RuleId'>MDEServer-1</Data><Data Name='RuleName'>-</Data></EventData></Event>","Windows Firewall ignored a rule because it could not be parsed.
+	
+Profile:	All
+
+Reason for Rejection:	An error occurred.
+
+Rule:
+	ID:	MDEServer-1
+	Name:	-",,"96173","0x8010000000000000", [0]
+2026-03-26T12:55:38.6189971Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.618997100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.618997100Z'/><EventRecordID>96199</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96199","0x8010000000000000", [0]
+2026-03-26T12:55:38.6190640Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.619064000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.619064000Z'/><EventRecordID>96200</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96200","0x8010000000000000", [0]
+2026-03-26T12:55:38.6191172Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.619117200Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.619117200Z'/><EventRecordID>96201</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Inbound Default Rule
+	Name:	RemotePrivNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96201","0x8010000000000000", [0]
+2026-03-26T12:55:38.6191468Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.619146800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.619146800Z'/><EventRecordID>96202</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Outbound Default Rule
+	Name:	RemotePrivNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96202","0x8010000000000000", [0]
+2026-03-26T12:55:38.9002631Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900263100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900263100Z'/><EventRecordID>96208</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-HTTPSTR-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (HTTP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-HTTPSTR-In-TCP-PlayToScope
+	Name:	Cast to Device streaming server (HTTP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96208","0x8010000000000000", [0]
+2026-03-26T12:55:38.9003087Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900308700Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900308700Z'/><EventRecordID>96209</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTCP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-UDP-PlayToScope
+	Name:	Cast to Device streaming server (RTCP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96209","0x8010000000000000", [0]
+2026-03-26T12:55:38.9003368Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900336800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900336800Z'/><EventRecordID>96210</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-RTSP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTSP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-RTSP-PlayToScope
+	Name:	Cast to Device streaming server (RTSP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96210","0x8010000000000000", [0]
+2026-03-26T12:55:38.9003641Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900364100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900364100Z'/><EventRecordID>96211</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-SSDP-Discovery-PlayToScope</Data><Data Name='RuleName'>Cast to Device SSDP Discovery (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-SSDP-Discovery-PlayToScope
+	Name:	Cast to Device SSDP Discovery (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96211","0x8010000000000000", [0]
+2026-03-26T12:55:38.9003908Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900390800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900390800Z'/><EventRecordID>96212</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-UPnP-Events-PlayToScope</Data><Data Name='RuleName'>Cast to Device UPnP Events (TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-UPnP-Events-PlayToScope
+	Name:	Cast to Device UPnP Events (TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96212","0x8010000000000000", [0]
+2026-03-26T12:55:38.9004231Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900423100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900423100Z'/><EventRecordID>96213</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-UDP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-UDP-PlayToScope
+	Name:	Cast to Device functionality (qWave-UDP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96213","0x8010000000000000", [0]
+2026-03-26T12:55:38.9004488Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.900448800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.900448800Z'/><EventRecordID>96214</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-TCP-PlayToScope
+	Name:	Cast to Device functionality (qWave-TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96214","0x8010000000000000", [0]
+2026-03-26T12:55:38.9015671Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.901567100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.901567100Z'/><EventRecordID>96215</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-Teredo-In</Data><Data Name='RuleName'>Core Networking - Teredo (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-Teredo-In
+	Name:	Core Networking - Teredo (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96215","0x8010000000000000", [0]
+2026-03-26T12:55:38.9016180Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.901618000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.901618000Z'/><EventRecordID>96216</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-IPHTTPS-In</Data><Data Name='RuleName'>Core Networking - IPHTTPS (TCP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-IPHTTPS-In
+	Name:	Core Networking - IPHTTPS (TCP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96216","0x8010000000000000", [0]
+2026-03-26T12:55:38.9026849Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.902684900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.902684900Z'/><EventRecordID>96217</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96217","0x8010000000000000", [0]
+2026-03-26T12:55:38.9027435Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.902743500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.902743500Z'/><EventRecordID>96218</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96218","0x8010000000000000", [0]
+2026-03-26T12:55:38.9027736Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.902773600Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.902773600Z'/><EventRecordID>96219</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Inbound Default Rule
+	Name:	RemotePrivNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96219","0x8010000000000000", [0]
+2026-03-26T12:55:38.9028165Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.902816500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.902816500Z'/><EventRecordID>96220</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Outbound Default Rule
+	Name:	RemotePrivNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96220","0x8010000000000000", [0]
+2026-03-26T12:55:38.9132780Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.913278000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.913278000Z'/><EventRecordID>96296</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96296","0x8010000000000000", [0]
+2026-03-26T12:55:38.9133090Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.913309000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.913309000Z'/><EventRecordID>96297</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96297","0x8010000000000000", [0]
+2026-03-26T12:55:38.9140415Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.914041500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.914041500Z'/><EventRecordID>96298</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96298","0x8010000000000000", [0]
+2026-03-26T12:55:38.9140821Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.914082100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.914082100Z'/><EventRecordID>96299</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96299","0x8010000000000000", [0]
+2026-03-26T12:55:38.9141125Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.914112500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.914112500Z'/><EventRecordID>96300</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Inbound Default Rule
+	Name:	RemotePrivNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96300","0x8010000000000000", [0]
+2026-03-26T12:55:38.9141391Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.914139100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.914139100Z'/><EventRecordID>96301</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Outbound Default Rule
+	Name:	RemotePrivNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96301","0x8010000000000000", [0]
+2026-03-26T12:55:38.9254431Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.925443100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.925443100Z'/><EventRecordID>96303</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96303","0x8010000000000000", [0]
+2026-03-26T12:55:38.9255911Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.925591100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.925591100Z'/><EventRecordID>96304</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96304","0x8010000000000000", [0]
+2026-03-26T12:55:38.9256564Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.925656400Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.925656400Z'/><EventRecordID>96305</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Inbound Default Rule
+	Name:	RemotePrivNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96305","0x8010000000000000", [0]
+2026-03-26T12:55:38.9257093Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.925709300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.925709300Z'/><EventRecordID>96306</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Outbound Default Rule
+	Name:	RemotePrivNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96306","0x8010000000000000", [0]
+2026-03-26T12:55:38.9283895Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928389500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928389500Z'/><EventRecordID>96307</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-HTTPSTR-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (HTTP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-HTTPSTR-In-TCP-PlayToScope
+	Name:	Cast to Device streaming server (HTTP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96307","0x8010000000000000", [0]
+2026-03-26T12:55:38.9284483Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928448300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928448300Z'/><EventRecordID>96308</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTCP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-UDP-PlayToScope
+	Name:	Cast to Device streaming server (RTCP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96308","0x8010000000000000", [0]
+2026-03-26T12:55:38.9285000Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928500000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928500000Z'/><EventRecordID>96309</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-RTSP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTSP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-RTSP-PlayToScope
+	Name:	Cast to Device streaming server (RTSP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96309","0x8010000000000000", [0]
+2026-03-26T12:55:38.9286457Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928645700Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928645700Z'/><EventRecordID>96310</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-SSDP-Discovery-PlayToScope</Data><Data Name='RuleName'>Cast to Device SSDP Discovery (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-SSDP-Discovery-PlayToScope
+	Name:	Cast to Device SSDP Discovery (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96310","0x8010000000000000", [0]
+2026-03-26T12:55:38.9287859Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928785900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928785900Z'/><EventRecordID>96311</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-UPnP-Events-PlayToScope</Data><Data Name='RuleName'>Cast to Device UPnP Events (TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-UPnP-Events-PlayToScope
+	Name:	Cast to Device UPnP Events (TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96311","0x8010000000000000", [0]
+2026-03-26T12:55:38.9289843Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.928984300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.928984300Z'/><EventRecordID>96312</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-UDP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-UDP-PlayToScope
+	Name:	Cast to Device functionality (qWave-UDP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96312","0x8010000000000000", [0]
+2026-03-26T12:55:38.9290785Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.929078500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.929078500Z'/><EventRecordID>96313</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-TCP-PlayToScope
+	Name:	Cast to Device functionality (qWave-TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96313","0x8010000000000000", [0]
+2026-03-26T12:55:38.9320080Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.932008000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.932008000Z'/><EventRecordID>96314</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-Teredo-In</Data><Data Name='RuleName'>Core Networking - Teredo (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-Teredo-In
+	Name:	Core Networking - Teredo (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96314","0x8010000000000000", [0]
+2026-03-26T12:55:38.9320785Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.932078500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.932078500Z'/><EventRecordID>96315</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-IPHTTPS-In</Data><Data Name='RuleName'>Core Networking - IPHTTPS (TCP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-IPHTTPS-In
+	Name:	Core Networking - IPHTTPS (TCP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96315","0x8010000000000000", [0]
+2026-03-26T12:55:38.9753270Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975327000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975327000Z'/><EventRecordID>96316</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96316","0x8010000000000000", [0]
+2026-03-26T12:55:38.9754028Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975402800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975402800Z'/><EventRecordID>96317</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96317","0x8010000000000000", [0]
+2026-03-26T12:55:38.9754611Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975461100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975461100Z'/><EventRecordID>96318</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96318","0x8010000000000000", [0]
+2026-03-26T12:55:38.9755194Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975519400Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975519400Z'/><EventRecordID>96319</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96319","0x8010000000000000", [0]
+2026-03-26T12:55:38.9755718Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975571800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975571800Z'/><EventRecordID>96320</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96320","0x8010000000000000", [0]
+2026-03-26T12:55:38.9756232Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975623200Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975623200Z'/><EventRecordID>96321</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96321","0x8010000000000000", [0]
+2026-03-26T12:55:38.9756713Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975671300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975671300Z'/><EventRecordID>96322</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96322","0x8010000000000000", [0]
+2026-03-26T12:55:38.9757186Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:38.975718600Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:38.975718600Z'/><EventRecordID>96323</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96323","0x8010000000000000", [0]
+2026-03-26T12:55:40.2310059Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231005900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231005900Z'/><EventRecordID>96324</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Inbound Default Rule
+	Name:	PrivateNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96324","0x8010000000000000", [0]
+2026-03-26T12:55:40.2310517Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231051700Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231051700Z'/><EventRecordID>96325</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleName'>PrivateNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PrivateNetwork Outbound Default Rule
+	Name:	PrivateNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96325","0x8010000000000000", [0]
+2026-03-26T12:55:40.2310831Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231083100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231083100Z'/><EventRecordID>96326</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Inbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Inbound Default Rule
+	Name:	RemotePrivNetwork Inbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96326","0x8010000000000000", [0]
+2026-03-26T12:55:40.2311119Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231111900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231111900Z'/><EventRecordID>96327</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleName'>RemotePrivNetwork Outbound Default Rule</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	RemotePrivNetwork Outbound Default Rule
+	Name:	RemotePrivNetwork Outbound Default Rule
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96327","0x8010000000000000", [0]
+2026-03-26T12:55:40.2316783Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231678300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231678300Z'/><EventRecordID>96328</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-HTTPSTR-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (HTTP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-HTTPSTR-In-TCP-PlayToScope
+	Name:	Cast to Device streaming server (HTTP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96328","0x8010000000000000", [0]
+2026-03-26T12:55:40.2317250Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231725000Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231725000Z'/><EventRecordID>96329</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTCP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-UDP-PlayToScope
+	Name:	Cast to Device streaming server (RTCP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96329","0x8010000000000000", [0]
+2026-03-26T12:55:40.2317579Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231757900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231757900Z'/><EventRecordID>96330</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-In-RTSP-PlayToScope</Data><Data Name='RuleName'>Cast to Device streaming server (RTSP-Streaming-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-In-RTSP-PlayToScope
+	Name:	Cast to Device streaming server (RTSP-Streaming-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96330","0x8010000000000000", [0]
+2026-03-26T12:55:40.2317895Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231789500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231789500Z'/><EventRecordID>96331</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-UPnP-Events-PlayToScope</Data><Data Name='RuleName'>Cast to Device UPnP Events (TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-UPnP-Events-PlayToScope
+	Name:	Cast to Device UPnP Events (TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96331","0x8010000000000000", [0]
+2026-03-26T12:55:40.2318188Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231818800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231818800Z'/><EventRecordID>96332</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-UDP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-UDP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-UDP-PlayToScope
+	Name:	Cast to Device functionality (qWave-UDP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96332","0x8010000000000000", [0]
+2026-03-26T12:55:40.2318481Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.231848100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.231848100Z'/><EventRecordID>96333</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-QWave-In-TCP-PlayToScope</Data><Data Name='RuleName'>Cast to Device functionality (qWave-TCP-In)</Data><Data Name='RuleAttr'>Remote Addresses</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-QWave-In-TCP-PlayToScope
+	Name:	Cast to Device functionality (qWave-TCP-In)
+
+Error Information:
+	Reason:	Remote Addresses resolved to an empty set.",,"96333","0x8010000000000000", [0]
+2026-03-26T12:55:40.2327233Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232723300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232723300Z'/><EventRecordID>96334</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96334","0x8010000000000000", [0]
+2026-03-26T12:55:40.2327611Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232761100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232761100Z'/><EventRecordID>96335</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96335","0x8010000000000000", [0]
+2026-03-26T12:55:40.2327959Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232795900Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232795900Z'/><EventRecordID>96336</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96336","0x8010000000000000", [0]
+2026-03-26T12:55:40.2328413Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232841300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232841300Z'/><EventRecordID>96337</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+	Name:	Microsoft.Win32WebViewHost_cw5n1h2txyewy_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96337","0x8010000000000000", [0]
+2026-03-26T12:55:40.2328705Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232870500Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232870500Z'/><EventRecordID>96338</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96338","0x8010000000000000", [0]
+2026-03-26T12:55:40.2328981Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232898100Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232898100Z'/><EventRecordID>96339</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_Out_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96339","0x8010000000000000", [0]
+2026-03-26T12:55:40.2329256Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232925600Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232925600Z'/><EventRecordID>96340</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_notRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96340","0x8010000000000000", [0]
+2026-03-26T12:55:40.2329523Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:55:40.232952300Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:55:40.232952300Z'/><EventRecordID>96341</EventRecordID><Correlation ActivityID='{22afd636-aec1-0001-6299-2dc41fbddc01}'/><Execution ProcessID='860' ThreadID='904'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleName'>Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular</Data><Data Name='RuleAttr'>Interfaces</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+	Name:	Microsoft.Windows.NarratorQuickStart_8wekyb3d8bbwe_S-1-5-21-3127904705-1904756042-1684774287-500_In_emptyRemoteName_Cellular
+
+Error Information:
+	Reason:	Interfaces resolved to an empty set.",,"96341","0x8010000000000000", [0]
+2026-03-26T12:56:07.9648302Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:56:07.964830200Z","Microsoft-Windows-Security-Auditing","Security","amawin","5061","12290","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>5061</EventID><Version>0</Version><Level>0</Level><Task>12290</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:56:07.964830200Z'/><EventRecordID>96438</EventRecordID><Correlation ActivityID='{ed7a7547-7b03-4956-a0d4-ea66b5d74dd1}'/><Execution ProcessID='860' ThreadID='968'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='SubjectUserSid'>S-1-5-18</Data><Data Name='SubjectUserName'>amawin$</Data><Data Name='SubjectDomainName'>WORKGROUP</Data><Data Name='SubjectLogonId'>0x3e7</Data><Data Name='ProviderName'>Microsoft Software Key Storage Provider</Data><Data Name='AlgorithmName'>UNKNOWN</Data><Data Name='KeyName'>RdCertificateFactory-Key59015cee-f659-4fa6-95d0-53b36a647b0a</Data><Data Name='KeyType'>%%2499</Data><Data Name='Operation'>%%2480</Data><Data Name='ReturnCode'>0x80090016</Data></EventData></Event>","Cryptographic operation.
+
+Subject:
+	Security ID:		S-1-5-18
+	Account Name:		amawin$
+	Account Domain:		WORKGROUP
+	Logon ID:		0x3E7
+
+Cryptographic Parameters:
+	Provider Name:	Microsoft Software Key Storage Provider
+	Algorithm Name:	UNKNOWN
+	Key Name:	RdCertificateFactory-Key59015cee-f659-4fa6-95d0-53b36a647b0a
+	Key Type:	Machine key.
+
+Cryptographic Operation:
+	Operation:	Open Key.
+	Return Code:	0x80090016",,"96438","0x8010000000000000", [0]
+2026-03-26T12:57:43.0297246Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:57:43.029724600Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:57:43.029724600Z'/><EventRecordID>96586</EventRecordID><Correlation ActivityID='{bfcd75b5-5606-471e-9a6e-b25758359c55}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>PlayTo-SSDP-Discovery-PlayToScope</Data><Data Name='RuleName'>Cast to Device SSDP Discovery (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	PlayTo-SSDP-Discovery-PlayToScope
+	Name:	Cast to Device SSDP Discovery (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96586","0x8010000000000000", [0]
+2026-03-26T12:57:43.0298098Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:57:43.029809800Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:57:43.029809800Z'/><EventRecordID>96587</EventRecordID><Correlation ActivityID='{8bc7e380-7395-465f-9caa-8265c62ded11}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-Teredo-In</Data><Data Name='RuleName'>Core Networking - Teredo (UDP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-Teredo-In
+	Name:	Core Networking - Teredo (UDP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96587","0x8010000000000000", [0]
+2026-03-26T12:57:43.0298814Z,"{54849625-5478-4994-a5ba-3e3b0328c30d}","2026-03-26T12:57:43.029881400Z","Microsoft-Windows-Security-Auditing","Security","amawin","4957","13571","0","N/A","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4957</EventID><Version>0</Version><Level>0</Level><Task>13571</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime='2026-03-26T12:57:43.029881400Z'/><EventRecordID>96588</EventRecordID><Correlation ActivityID='{3dd3a6ab-d192-4097-90d5-f4da3abca610}'/><Execution ProcessID='860' ThreadID='972'/><Channel>Security</Channel><Computer>amawin</Computer><Security/></System><EventData><Data Name='RuleId'>CoreNet-IPHTTPS-In</Data><Data Name='RuleName'>Core Networking - IPHTTPS (TCP-In)</Data><Data Name='RuleAttr'>Local Port</Data></EventData></Event>","Windows Firewall did not apply the following rule:
+
+Rule Information:
+	ID:	CoreNet-IPHTTPS-In
+	Name:	Core Networking - IPHTTPS (TCP-In)
+
+Error Information:
+	Reason:	Local Port resolved to an empty set.",,"96588","0x8010000000000000", [0]
+2026-03-26T13:00:39.5819430Z,"{7d5387b0-cbe0-11da-a94d-0800200c9a66}","2026-03-26T13:00:39.581943000Z","Microsoft-Windows-TPM-WMI","System","amawin","1801","0","2","NT AUTHORITY/SYSTEM","<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-TPM-WMI' Guid='{7d5387b0-cbe0-11da-a94d-0800200c9a66}'/><EventID>1801</EventID><Version>2</Version><Level>2</Level><Task>0</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime='2026-03-26T13:00:39.581943000Z'/><EventRecordID>11942</EventRecordID><Correlation/><Execution ProcessID='4748' ThreadID='4032'/><Channel>System</Channel><Computer>amawin</Computer><Security UserID='S-1-5-18'/></System><EventData><Data Name='DeviceAttributes'>FirmwareManufacturer:Microsoft Corporation;FirmwareVersion:Hyper-V UEFI Release v4.1;OEMModelNumber:Virtual Machine;OEMManufacturerName:Microsoft Corporation;OSArchitecture:amd64;</Data><Data Name='BucketId'>4e22d051e8c143d2875b9d16ef2241c7ec548985a21e5073126d3c1f9bf53bb2</Data><Data Name='BucketConfidenceLevel'></Data><Data Name='UpdateType'></Data></EventData></Event>","Updated Secure Boot certificates are available on this device but have not yet been applied to the firmware. Review the published guidance to complete the update and maintain full protection. This device signature information is included here.
+DeviceAttributes: FirmwareManufacturer:Microsoft Corporation;FirmwareVersion:Hyper-V UEFI Release v4.1;OEMModelNumber:Virtual Machine;OEMManufacturerName:Microsoft Corporation;OSArchitecture:amd64;
+BucketId: 4e22d051e8c143d2875b9d16ef2241c7ec548985a21e5073126d3c1f9bf53bb2
+BucketConfidenceLevel: 
+UpdateType: 
+For more information, please see https://go.microsoft.com/fwlink/?linkid=2301018.",,"11942","0x8000000000000000", [0]

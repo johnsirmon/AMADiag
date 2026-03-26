@@ -1,0 +1,32 @@
+Starting external process: C:\Windows\system32\dsregcmd.exe /status
++----------------------------------------------------------------------+
+| Device State                                                         |
++----------------------------------------------------------------------+
+             AzureAdJoined : NO
+          EnterpriseJoined : NO
+              DomainJoined : NO
++----------------------------------------------------------------------+
+| User State                                                           |
++----------------------------------------------------------------------+
+                    NgcSet : NO
+           WorkplaceJoined : NO
+             WamDefaultSet : ERROR
++----------------------------------------------------------------------+
+| SSO State                                                            |
++----------------------------------------------------------------------+
+                AzureAdPrt : NO
+       AzureAdPrtAuthority : NO
+             EnterprisePrt : NO
+    EnterprisePrtAuthority : NO
++----------------------------------------------------------------------+
+| Ngc Prerequisite Check                                               |
++----------------------------------------------------------------------+
+            IsDeviceJoined : NO
+             IsUserAzureAD : NO
+             PolicyEnabled : NO
+          PostLogonEnabled : YES
+            DeviceEligible : YES
+        SessionIsNotRemote : YES
+            CertEnrollment : none
+              PreReqResult : WillNotProvision
+Execution completed in 00:00:00.5980589

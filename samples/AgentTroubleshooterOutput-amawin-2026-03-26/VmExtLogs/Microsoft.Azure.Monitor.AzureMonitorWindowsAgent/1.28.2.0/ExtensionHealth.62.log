@@ -1,0 +1,99 @@
+[2026-01-29 19:28:06.000]  [ExtensionConfiguration] ErrorCode:0 INFO: Initializing ExtensionConfiguration
+[2026-01-29 19:28:06.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2026-01-29 19:28:06.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings
+[2026-01-29 19:28:06.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2026-01-29 19:28:06.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2026-01-29 19:28:06.000]  [ParseExtensionSettingsJson] ErrorCode:0 WARN: extension settings file C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings\0.settings does not exist
+[2026-01-29 19:28:06.000]  [StatusReporting] ErrorCode:0 INFO: Status file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\0.status
+[2026-01-29 19:28:06.000]  [HeartbeatReporting] ErrorCode:0 INFO: HeartBeat file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json
+[2026-01-29 19:28:06.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType
+[2026-01-29 19:28:06.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType, Value:IAAS
+[2026-01-29 19:28:06.000]  [StatusAggregator] ErrorCode:0 INFO: StatusAggregator getting initialized
+[2026-01-29 19:28:06.000]  [StatusAggregator] ErrorCode:0 INFO: Completed Setting the event for status aggregator thread
+[2026-01-29 19:28:06.000]  [HeartbeatAggregator] ErrorCode:0 INFO: Heartbeat aggregator getting initialized
+[2026-01-29 19:28:06.000]  [HeartbeatAggregator] ErrorCode:0 INFO: Completed Setting the event for heartbeat aggregator thread
+[2026-01-29 19:28:06.000]  [ParseHealthMonitorCommand] ErrorCode:0 INFO: ShutdownEventName:Global\AMA-HealthMonitor-ShutdownEvent MaResetSignal:AzureMonitorAgent-ResetEvent Operation:enable
+[2026-01-29 19:28:06.000]  [StartSendingStatus] ErrorCode:0 INFO: Start the thread for sending constant Status
+[2026-01-29 19:28:06.000]  [StartSendingStatus] ErrorCode:0 INFO: Started the thread for sending constant Status
+[2026-01-29 19:28:06.000]  [StartSendingHeartbeat] ErrorCode:0 INFO: Start the thread for sending constant heartbeat
+[2026-01-29 19:28:06.000]  [StartSendingHeartbeat] ErrorCode:0 INFO: Started the thread for sending constant heartbeat
+[2026-01-29 19:28:06.000]  [StartAggregatingHeartbeat] ErrorCode:0 INFO: Start the thread for sending constant heartbeat aggregation
+[2026-01-29 19:28:06.000]  [StartAggregatingHeartbeat] ErrorCode:0 INFO: Started the thread for sending constant heartbeat aggregation
+[2026-01-29 19:29:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:29:06.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Start heartbeat aggregation.
+[2026-01-29 19:29:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:29:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:29:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:29:06.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess
+[2026-01-29 19:29:06.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess, Value:6028
+[2026-01-29 19:29:06.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process MonAgentLauncher.exe with ID: 6028.
+[2026-01-29 19:29:06.000]  [FindProcessById] ErrorCode:0 INFO: No Running Process MonAgentLauncher.exe found. ID: 6028.
+[2026-01-29 19:29:06.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1301 INFO: The MA process is not running based on the m_registry
+[2026-01-29 19:29:06.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:AMAMultitenantServiceProcess
+[2026-01-29 19:29:06.000]  [QueryRegValueDWORD] ErrorCode:0 ERROR: RegQueryValueExA: failed to query REG_DWORD value, Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, name=AMAMultitenantServiceProcess, error=2, type=0
+[2026-01-29 19:29:06.000]  [CheckIfMAServiceIsRunByExtension] ErrorCode:1205 INFO: Unable to read the m_registry for MA process. Assume it is not running.
+[2026-01-29 19:29:06.000]  [CheckIfMAServiceIsRunByCustomer] ErrorCode:0 INFO: MA Serivce is not run by customer.
+[2026-01-29 19:29:06.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Configured MA Service is not running on the node.
+[2026-01-29 19:29:06.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Querying IMDS information
+[2026-01-29 19:29:06.000]  [SetImdsEnvironmentVariable] ErrorCode:-1 INFO: Preparing to call IMDS
+[2026-01-29 19:29:06.000]  [QueryIMDSEndpoint] ErrorCode:0 INFO: Queried IMDS successfully.
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:location Value: westus2
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:name Value: amawin
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:subscriptionId Value: 351651ce-5feb-4e59-975d-f1f344e2b717
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmId Value: 22afd636-aec1-4782-9055-f85ea283dc20
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:vmScaleSetName Value: 
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceGroupName Value: AMAWIN_GROUP
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:osType Value: Windows
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:resourceId Value: /subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWIN_GROUP/providers/Microsoft.Compute/virtualMachines/amawin
+[2026-01-29 19:29:06.000]  [GetValueFromJsonOrDefault] ErrorCode:0 INFO: Read Imds response field with Name:azEnvironment Value: AzurePublicCloud
+[2026-01-29 19:29:06.000]  [SetImdsEnvironmentVariable] ErrorCode:0 INFO: Successfully set Environment variables from Imds
+[2026-01-29 19:29:06.000]  [StartAzureMA] ErrorCode:0 INFO: Starting agent with MCS:Monitoring\Agent\MonAgentLauncher.exe  -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName
+[2026-01-29 19:29:06.000]  [StartHealthMonitor] ErrorCode:0 ERROR: Environment variable MA_RoleEnvironment_VmScaleSetName not found.
+[2026-01-29 19:29:06.000]  [AddAgentVersionToEnvVars] ErrorCode:0 INFO: Agent version=[1.28.2.0]
+[2026-01-29 19:29:06.000]  [AddSystemUuidToEnvVars] ErrorCode:0 INFO: Env Var: 22AFD636-AEC1-4782-9055-F85EA283DC20
+[2026-01-29 19:29:06.000]  [AddSmBiosAssestTagToEnvVars] ErrorCode:0 INFO: Env Var: 7783-7084-3265-9085-8269-3286-77
+[2026-01-29 19:29:06.000]  [AddParentJobObjectLimitsEnabledToEnvVars] ErrorCode:0 INFO: Parent job cpu rate flags=0x0
+[2026-01-29 19:29:06.000]  [AddLargeEventsEnableEnvironmentVariable] ErrorCode:0 INFO: LargeEvents feature Enabled.
+[2026-01-29 19:29:06.000]  [StartAzureMA] ErrorCode:0 INFO: MCS endpoints, regional=[MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com], global=[MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com], resource=[MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/]
+[2026-01-29 19:29:06.000]  [GetArcProxyAddress] ErrorCode:0 INFO: expandedArcAgentConfigFilePath: C:\ProgramData\AzureConnectedMachineAgent\Config\localconfig.json
+[2026-01-29 19:29:06.000]  [GetArcProxyAddress] ErrorCode:0 INFO: Arc agent config file does not exist.
+[2026-01-29 19:29:06.000]  [StartProcess] ErrorCode:0 INFO: Starting the command: Monitoring\Agent\MonAgentLauncher.exe -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName.
+[2026-01-29 19:29:06.000]  [SetRegValueDWORD] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess, Value:2712
+[2026-01-29 19:29:06.000]  [SetRegValueDWORD] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess, Value:2712
+[2026-01-29 19:29:06.000]  [AggregateHeartbeat] ErrorCode:0 INFO: Completed heartbeat aggregation.
+[2026-01-29 19:29:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:29:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:29:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:29:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:30:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:30:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:30:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:30:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:30:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:30:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:30:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:30:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:06.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:06.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:36.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:36.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:40.000]  [Main] ErrorCode:0 ERROR: Shutdown of health monitor received.
+[2026-01-29 19:31:40.000]  [StopHealthMonitor] ErrorCode:0 ERROR: Stopping the health monitor.
+[2026-01-29 19:31:40.000]  [StopMAFromListeningMode] ErrorCode:0 INFO: Setting the MA shutdown event
+[2026-01-29 19:31:40.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess
+[2026-01-29 19:31:40.000]  [DeleteRegValue] ErrorCode:0 INFO: Deleted Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:MaServiceProcess
+[2026-01-29 19:31:40.000]  [StopAMAMultitenantService] ErrorCode:0 INFO: Setting the MA multitenant service shutdown event
+[2026-01-29 19:31:40.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:AMAMultitenantServiceProcess
+[2026-01-29 19:31:40.000]  [DeleteRegValue] ErrorCode:1207 ERROR: Failed to delete s_registry value, name=AMAMultitenantServiceProcess, key=SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, error=2
+[2026-01-29 19:31:40.000]  [StopSendingHeartbeat] ErrorCode:0 INFO: Stopped the thread from further processing.
+[2026-01-29 19:31:40.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2026-01-29 19:31:40.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2026-01-29 19:31:40.000]  [StopSendingStatus] ErrorCode:0 INFO: Stopped the thread from further processing.
+[2026-01-29 19:31:40.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2026-01-29 19:31:40.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2026-01-29 19:31:40.000]  [StopAggregatingStatus] ErrorCode:0 ERROR: Stopped the thread from further processing.
+[2026-01-29 19:31:40.000]  [StopAggregatingHeartbeat] ErrorCode:0 ERROR: Stopped the thread from further processing.

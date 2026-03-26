@@ -1,0 +1,12 @@
+[2026-02-23T20:23:16.225Z] Executing: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\AzureMonitorAgentExtension.exe enable 
+[2026-02-23T20:23:19.183Z] Execution Complete.
+######
+Execution Output:
+
+
+Execution Error:
+
+######
+ Number of Tries: 1
+Command C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\AzureMonitorAgentExtension.exe of Microsoft.Azure.Monitor.AzureMonitorWindowsAgent has exited with Exit code: 0
+Plugin (name: Microsoft.Azure.Monitor.AzureMonitorWindowsAgent, version: 1.39.0.0) completed successfully.

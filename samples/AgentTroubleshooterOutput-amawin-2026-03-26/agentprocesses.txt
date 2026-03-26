@@ -1,0 +1,1433 @@
+
+
+
+Agent Process Details
+---------------------
+
+
+Process name: MonAgentHost
+PID: 7120
+Parent ID: 5740
+Children: {6032}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentHost.exe
+Image version: 47.4.1.0
+Command line:  -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin" -parent 5740 -mcsmode  -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -InitializedEvent AzureMonitorAgentExtension-StartAgentEventName
+
+Process name: MonAgentLauncher
+PID: 5740
+Parent ID: 6028
+Children: {7120}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentLauncher.exe
+Image version: 47.4.1.0
+Command line: Monitoring\Agent\MonAgentLauncher.exe -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName
+
+Process name: MonAgentManager
+PID: 6032
+Parent ID: 7120
+Children: {704}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentManager.exe
+Image version: 47.4.1.0
+Command line: -serviceShutdown MonAgentShutdownEvent.7120 -parent 7120 -deploymentdir "C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent" -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin" "-mcsmode" "-ShutDownEvent" "AzureMonitorAgentExtension-ShutdownEventName" "-TotalShutDownEvent" "AzureMonitorAgentExtension-TotalShutdownEventName" "-InitializedEvent" "AzureMonitorAgentExtension-StartAgentEventName" -LogPath "C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.15.log"
+
+Process name: MonAgentCore
+PID: 704
+Parent ID: 6032
+Children: {}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentCore.exe
+Image version: 47.4.1.0
+Command line:   -deploymentdir "C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent" -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin"  -mcsmode    -InitializedEvent "AzureMonitorAgentExtension-StartAgentEventName"  -managerver 1  -parent 6032 -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName7120 -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName7120 -ConfigFile "C:\WindowsAzure\Resources\AMADataStore.amawin\mcs\mcsconfig.latest.xml" 
+
+Agent Environment Vars
+----------------------
+
+
+Process name: MonAgentHost PID: 7120
+  COMPUTERNAME=amawin
+  MA_ENABLE_LARGE_EVENTS=1
+  MA_RoleEnvironment_Location=westus2
+  MA_RoleEnvironment_OsType=Windows
+  MA_RoleEnvironment_ResourceGroupName=amawin_group
+  MA_RoleEnvironment_ResourceId=/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+  MA_RoleEnvironment_SubscriptionId=351651ce-5feb-4e59-975d-f1f344e2b717
+  MA_RoleEnvironment_VMName=amawin
+  MA_RoleEnvironment_VmId=22afd636-aec1-4782-9055-f85ea283dc20
+  MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/
+  MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com
+  MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com
+  MonAgent-Wrapper-Process-Pid=7120
+  MonAgent-Wrapper-Version=47.04.01
+  MONITORING_DATA_DIRECTORY=C:\WindowsAzure\Resources\AMADataStore.amawin\
+  MONITORING_IDENTITY=use_ip_address
+  MONITORING_MCS_MODE=1
+  MONITORING_PROCESS_START_TIME=2026-03-26T12:57:17.647Z
+  MONITORING_ROLE=amawin_group
+  MONITORING_ROLE_INSTANCE=22afd636-aec1-4782-9055-f85ea283dc20
+  MONITORING_TENANT=351651ce-5feb-4e59-975d-f1f344e2b717
+  MONITORING_VERSION=2.0
+  SMBIOS_ASSET_TAG=7783-7084-3265-9085-8269-3286-77
+  SYSTEM_UUID=22AFD636-AEC1-4782-9055-F85EA283DC20
+  SystemDrive=C:
+  SystemRoot=C:\Windows
+  windir=C:\Windows
+
+Process name: MonAgentLauncher PID: 5740
+  COMPUTERNAME=amawin
+  MA_ENABLE_LARGE_EVENTS=1
+  MA_RoleEnvironment_Location=westus2
+  MA_RoleEnvironment_OsType=Windows
+  MA_RoleEnvironment_ResourceGroupName=amawin_group
+  MA_RoleEnvironment_ResourceId=/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+  MA_RoleEnvironment_SubscriptionId=351651ce-5feb-4e59-975d-f1f344e2b717
+  MA_RoleEnvironment_VMName=amawin
+  MA_RoleEnvironment_VmId=22afd636-aec1-4782-9055-f85ea283dc20
+  MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/
+  MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com
+  MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com
+  MONITORING_DATA_DIRECTORY=C:\WindowsAzure\Resources\AMADataStore.amawin\
+  MONITORING_IDENTITY=use_ip_address
+  MONITORING_MCS_MODE=1
+  MONITORING_PROCESS_START_TIME=2026-03-26T12:57:17.647Z
+  MONITORING_ROLE=amawin_group
+  MONITORING_ROLE_INSTANCE=22afd636-aec1-4782-9055-f85ea283dc20
+  MONITORING_TENANT=351651ce-5feb-4e59-975d-f1f344e2b717
+  MONITORING_VERSION=2.0
+  SMBIOS_ASSET_TAG=7783-7084-3265-9085-8269-3286-77
+  SYSTEM_UUID=22AFD636-AEC1-4782-9055-F85EA283DC20
+  SystemDrive=C:
+  SystemRoot=C:\Windows
+  windir=C:\Windows
+
+Process name: MonAgentManager PID: 6032
+  COMPUTERNAME=amawin
+  MA_AZURE_IDENTITY=2b2fcb18-e9a5-4409-b100-09fcf38754ff
+  MA_AZURE_VM_NAME=2b2fcb18-e9a5-4409-b100-09fcf38754ff
+  MA_ENABLE_LARGE_EVENTS=1
+  MA_HEALTH_PARAM_SECTION=53dba293-2913-11f1-8b3b-002248784a84
+  MA_RoleEnvironment_Location=westus2
+  MA_RoleEnvironment_OsType=Windows
+  MA_RoleEnvironment_ResourceGroupName=amawin_group
+  MA_RoleEnvironment_ResourceId=/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+  MA_RoleEnvironment_SubscriptionId=351651ce-5feb-4e59-975d-f1f344e2b717
+  MA_RoleEnvironment_VMName=amawin
+  MA_RoleEnvironment_VmId=22afd636-aec1-4782-9055-f85ea283dc20
+  MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/
+  MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com
+  MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com
+  MonAgent-Wrapper-Process-Pid=7120
+  MonAgent-Wrapper-Version=47.04.01
+  MONITORING_DATA_DIRECTORY=C:\WindowsAzure\Resources\AMADataStore.amawin\
+  MONITORING_IDENTITY=use_ip_address
+  MONITORING_MCS_MODE=1
+  MONITORING_PROCESS_START_TIME=2026-03-26T12:57:17.647Z
+  MONITORING_ROLE=amawin_group
+  MONITORING_ROLE_INSTANCE=22afd636-aec1-4782-9055-f85ea283dc20
+  MONITORING_TENANT=351651ce-5feb-4e59-975d-f1f344e2b717
+  MONITORING_VERSION=2.0
+  SMBIOS_ASSET_TAG=7783-7084-3265-9085-8269-3286-77
+  SYSTEM_UUID=22AFD636-AEC1-4782-9055-F85EA283DC20
+  SystemDrive=C:
+  SystemRoot=C:\Windows
+  windir=C:\Windows
+
+Process name: MonAgentCore PID: 704
+  COMPUTERNAME=amawin
+  MA_AGENT_VERSION=47.04.01
+  MA_AZURE_IDENTITY=2b2fcb18-e9a5-4409-b100-09fcf38754ff
+  MA_AZURE_VM_NAME=2b2fcb18-e9a5-4409-b100-09fcf38754ff
+  MA_CONFIGFILE_MD5=7c35c8c27848eb0028b10573d7a70f97
+  MA_CONFIG_IDENTITY={"Tenant":"351651ce-5feb-4e59-975d-f1f344e2b717","Role":"amawin_group","RoleInstance":"22afd636-aec1-4782-9055-f85ea283dc20"}
+  MA_CONFIG_NAMESPACE=AzureMonitorAgent
+  MA_ENABLE_LARGE_EVENTS=1
+  MA_ENABLE_LARGE_EVENTS_SUPPRESS=1
+  MA_HEALTH_PARAM_SECTION=53dba293-2913-11f1-8b3b-002248784a84
+  MA_HEARTBEAT_IDENTITY=AzureMonitorAgent/351651ce-5feb-4e59-975d-f1f344e2b717/amawin_group/22afd636-aec1-4782-9055-f85ea283dc20
+  MA_INSTANCE_IDENTITY=AzureMonitorAgent
+  MA_RoleEnvironment_Location=westus2
+  MA_RoleEnvironment_OsType=Windows
+  MA_RoleEnvironment_ResourceGroupName=amawin_group
+  MA_RoleEnvironment_ResourceId=/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/amawin_group/providers/Microsoft.Compute/virtualMachines/amawin
+  MA_RoleEnvironment_SubscriptionId=351651ce-5feb-4e59-975d-f1f344e2b717
+  MA_RoleEnvironment_VMName=amawin
+  MA_RoleEnvironment_VmId=22afd636-aec1-4782-9055-f85ea283dc20
+  MA_ROLEINSTANCE_IDENTITY=22afd636-aec1-4782-9055-f85ea283dc20
+  MA_ROLE_IDENTITY=amawin_group
+  MA_TENANT_IDENTITY=351651ce-5feb-4e59-975d-f1f344e2b717
+  MCS_AZURE_RESOURCE_ENDPOINT=https://monitor.azure.com/
+  MCS_GLOBAL_ENDPOINT=https://global.handler.control.monitor.azure.com
+  MCS_REGIONAL_ENDPOINT=https://westus2.handler.control.monitor.azure.com
+  MonAgent-Wrapper-Process-Pid=7120
+  MonAgent-Wrapper-Version=47.04.01
+  MONITORING_DATA_DIRECTORY=C:\WindowsAzure\Resources\AMADataStore.amawin\
+  MONITORING_IDENTITY=use_ip_address
+  MONITORING_MCS_MODE=1
+  MONITORING_PROCESS_START_TIME=2026-03-26T12:57:17.647Z
+  MONITORING_ROLE=amawin_group
+  MONITORING_ROLE_INSTANCE=22afd636-aec1-4782-9055-f85ea283dc20
+  MONITORING_TENANT=351651ce-5feb-4e59-975d-f1f344e2b717
+  MONITORING_TOKENBASED_ENV=true
+  MONITORING_VERSION=2.0
+  SMBIOS_ASSET_TAG=7783-7084-3265-9085-8269-3286-77
+  SYSTEM_UUID=22AFD636-AEC1-4782-9055-F85EA283DC20
+  SystemDrive=C:
+  SystemRoot=C:\Windows
+  windir=C:\Windows
+
+
+Starting activity AllProcessDetails...
+
+
+
+All Process Details
+-------------------
+
+
+Process name: MonAgentLauncher
+PID: 5740
+Parent ID: 6028
+Children: {7120}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentLauncher.exe
+Image version: 47.4.1.0
+Command line: Monitoring\Agent\MonAgentLauncher.exe -useenv -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -StartEvent AzureMonitorAgentExtension-StartAgentEventName -StopEvent AzureMonitorAgentExtension-StopAgentEventName
+
+
+Process name: MonAgentHost
+PID: 7120
+Parent ID: 5740
+Children: {6032}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentHost.exe
+Image version: 47.4.1.0
+Command line:  -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin" -parent 5740 -mcsmode  -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName -InitializedEvent AzureMonitorAgentExtension-StartAgentEventName
+
+
+Process name: MonAgentManager
+PID: 6032
+Parent ID: 7120
+Children: {704}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentManager.exe
+Image version: 47.4.1.0
+Command line: -serviceShutdown MonAgentShutdownEvent.7120 -parent 7120 -deploymentdir "C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent" -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin" "-mcsmode" "-ShutDownEvent" "AzureMonitorAgentExtension-ShutdownEventName" "-TotalShutDownEvent" "AzureMonitorAgentExtension-TotalShutdownEventName" "-InitializedEvent" "AzureMonitorAgentExtension-StartAgentEventName" -LogPath "C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.15.log"
+
+
+Process name: MonAgentCore
+PID: 704
+Parent ID: 6032
+Children: {}
+Image file location: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent\MonAgentCore.exe
+Image version: 47.4.1.0
+Command line:   -deploymentdir "C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Monitoring\Agent" -LocalPath "C:\WindowsAzure\Resources\AMADataStore.amawin"  -mcsmode    -InitializedEvent "AzureMonitorAgentExtension-StartAgentEventName"  -managerver 1  -parent 6032 -ShutDownEvent AzureMonitorAgentExtension-ShutdownEventName7120 -TotalShutDownEvent AzureMonitorAgentExtension-TotalShutdownEventName7120 -ConfigFile "C:\WindowsAzure\Resources\AMADataStore.amawin\mcs\mcsconfig.latest.xml" 
+
+
+Handles NonPage... Paged M... Working... CPU(s)      PID  Session ID Process ...
+------- ---------- ---------- ---------- ----------- ---- ---------- -----------
+      0          0          0          8 <AccessD...    0          0 Idle
+   1857          0          0        118     216.594    4          0 System
+      0         11        154      72200       3.125   96          0 Registry
+     53          3         13       1208       0.328  408          0 smss
+    766         16        107      11120       2.297  524          0 svchost
+     53          6         91       4476       0.031  552          1 fontdrvhost
+    288         10        123       9179       1.469  608          0 svchost
+    639         21        226       5873       0.625  620          0 csrss
+    162          9        113       5357       0.203  696          1 csrss
+    618         36        209      39997     121.641  704          0 MonAgent...
+    177         11         77       7311       0.078  748          0 wininit
+    248         12        146      11194       0.203  756          1 winlogon
+    556         11        131      10993       6.625  816          0 services
+   1052         23        126      18194       3.563  860          0 lsass
+     53          6         91       4542       0.094  916          0 fontdrvhost
+    284         22        163      28446       0.250  964          0 MetricsE...
+     97          5         41       4259       0.031  980          0 svchost
+    715         15        248      15257       0.750 1004          0 svchost
+    212         38        151      11710       0.125 1052          0 NisSrv
+    489         26        533      44974       0.516 1088          1 LogonUI
+    539         22        330      39419       0.281 1096          1 dwm
+    193         14         99      11018       0.109 1160          0 svchost
+    574         20        218      14557       0.297 1208          0 svchost
+    209         11         81       9232       0.109 1244          0 svchost
+    127          7         63       5844       0.016 1340          0 svchost
+    157          9         71       8388       0.938 1400          0 svchost
+    133          8         68       6483       0.031 1408          0 svchost
+    145          8         68       6664       0.375 1416          0 svchost
+    137          8         68       6557       0.125 1460          0 svchost
+    422         15        101      19697       5.016 1552          0 svchost
+    178          9         78       7991       0.078 1672          0 svchost
+    190          9        131       8515       0.047 1680          0 svchost
+    127          7         68       6127       0.016 1688          0 svchost
+    156          8         79       8548       0.078 1696          0 svchost
+    222         12         74       7913       0.172 1752          0 svchost
+    132          7         63       5980       0.000 1788          0 svchost
+    144         19         61       9150       0.219 1860          0 svchost
+    330         11         98       9601       0.094 1888          0 svchost
+    235         13         90       8777       0.547 1896          0 svchost
+    239          9         82       8167       0.391 1904          0 svchost
+    247         13        162      10977       0.063 1984          0 svchost
+    174          9         69       7901       0.078 2020          0 svchost
+    372         17        239      15187       0.953 2024          0 svchost
+    151          9        127       7098       0.031 2052          0 svchost
+    164          9        144      13201       0.047 2072          0 conhost
+    403         32        119      17752       0.688 2092          0 svchost
+    137          7         63       6201       0.016 2124          0 svchost
+    133          7        127      11710       0.047 2136          0 conhost
+    201         10         85       8761       0.109 2184          0 svchost
+    144          7         74       6393       0.031 2244          0 svchost
+    187          9         79       8163       0.359 2292          0 svchost
+    360         14        104      12144       0.156 2316          0 svchost
+    460         15        147      20725       0.547 2448          0 MpDefend...
+    349         10         93       9371       0.203 2564          0 svchost
+    135          8        129      11231       0.047 2812          0 conhost
+    468         23        216      17575       0.234 2876          0 spoolsv
+    182          9         79       8753       0.016 2896          0 svchost
+    148          7         64       6049       0.031 3020          0 svchost
+    111          6         61       5623       0.047 3024          0 svchost
+    507         24        179      35938       3.281 3036          0 svchost
+    556       2014       2005      80490       3.219 3044          0 svchost
+    150          8         68       6742       0.063 3060          0 svchost
+    405         15        117      20819       4.875 3068          0 svchost
+    344         19        331      29495       0.625 3088          0 RunComma...
+    391         19        192      21872       0.188 3100          0 svchost
+    247         13        154      11493       0.078 3108          0 svchost
+    462         15        121      12214       0.156 3212          0 svchost
+    863         41        440      69791      12.719 3232          0 WindowsA...
+    891         42        477      74964       6.672 3288          0 WaAppAgent
+    148          8         83       7188       0.000 3324          0 svchost
+    952         43        372     144752     144.516 3388          0 MsSense
+    211         10         71       8863       0.078 3412          0 svchost
+    167          8         76       6868       0.047 3752          0 svchost
+    269         14        171      10133       0.063 3784          0 svchost
+    275         19        168      13918       0.219 4144          0 svchost
+    196         16        111      11526       0.109 4252          0 dllhost
+    137          7        131      11628       0.375 4320          0 conhost
+    219         13        112       4005       0.156 4572          0 Microsof...
+    219         12         88      12181       0.219 4620          0 WmiPrvSE
+    237         13         95      11046       0.188 4628          0 msdtc
+    498         28        333      31535       2.094 4748          0 taskhostw
+    611         30        477      73433       1.000 5036          0 powershell
+     94          5         59       4046       0.031 5584          0 cmd
+    422         23        187      37773       1.047 5672          0 AgentTro...
+    133          8        126       6897       0.016 5740          0 MonAgent...
+    168         10        141      10153       0.094 5920          0 SenseIR
+    180         10         96       9375       0.156 5952          0 svchost
+    312         15        103      18567       4.297 5956          0 svchost
+    208         13         94      12054       0.234 6028          0 AMAExtHe...
+    428         26        231      27693       0.781 6032          0 MonAgent...
+    230         12        132      13090       0.203 6068          0 svchost
+    141          8         77      10448       0.234 6076          0 svchost
+    319         20        328      32743       1.000 6252          0 AutoAsse...
+    159          8         77       7573       0.078 6344          0 svchost
+    388         19        171      24502       0.828 6384          0 svchost
+    253         13        173      16044       0.406 6488          0 SenseTVM
+     71          5         49       3764       0.016 6700          0 WaSecAge...
+    133          7        127      11575       0.047 6736          0 conhost
+    100          8        108      15376       0.750 6776          0 SenseNdr
+     98          5         59       4050       0.031 6936          0 cmd
+    236         11        120      12767       0.156 6992          0 Security...
+    840        240        815     294350      51.766 7012          0 MsMpEng
+    122          8         71       8278       0.125 7120          0 MonAgent...
+
+
+Starting activity SystemInfo...
+
+
+
+System Information
+------------------
+
+
+Starting external process: C:\Windows\system32\systeminfo.exe 
+Host Name:                 amawin
+OS Name:                   Microsoft Windows Server 2019 Datacenter
+OS Version:                10.0.17763 N/A Build 17763
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          N/A
+Registered Organization:   N/A
+Product ID:                00430-00000-00000-AA555
+Original Install Date:     7/25/2024, 6:46:43 PM
+System Boot Time:          3/26/2026, 12:55:04 PM
+System Manufacturer:       Microsoft Corporation
+System Model:              Virtual Machine
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2295 Mhz
+BIOS Version:              Microsoft Corporation Hyper-V UEFI Release v4.1, 1/8/2026
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume3
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC) Coordinated Universal Time
+Total Physical Memory:     16,379 MB
+Available Physical Memory: 14,110 MB
+Virtual Memory: Max Size:  18,811 MB
+Virtual Memory: Available: 16,766 MB
+Virtual Memory: In Use:    2,045 MB
+Page File Location(s):     D:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              N/A
+Hotfix(s):                 9 Hotfix(s) Installed.
+                           [01]: KB5066143
+                           [02]: KB4589208
+                           [03]: KB5004424
+                           [04]: KB5075904
+                           [05]: KB5040563
+                           [06]: KB5041577
+                           [07]: KB5043126
+                           [08]: KB5074222
+                           [09]: KB5075903
+Network Card(s):           2 NIC(s) Installed.
+                           [01]: Microsoft Hyper-V Network Adapter
+                                 Connection Name: Ethernet
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     168.63.129.16
+                                 IP address(es)
+                                 [01]: 10.1.0.4
+                                 [02]: fe80::2add:a8ea:1599:2c4b
+                           [02]: Mellanox ConnectX-3 Virtual Function Ethernet Adapter
+                                 Connection Name: Ethernet 10
+                                 DHCP Enabled:    No
+                                 IP address(es)
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+Execution completed in 00:00:03.5662588
+
+Starting activity NetworkConfiguration...
+
+
+
+Collect Network Configuration
+-----------------------------
+
+
+Starting external process: C:\Windows\system32\ipconfig.exe /all
+Windows IP Configuration
+   Host Name . . . . . . . . . . . . : amawin
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : i3cqswxosi3u3fotk5sdwhy2vg.xx.internal.cloudapp.net
+Ethernet adapter Ethernet:
+   Connection-specific DNS Suffix  . : i3cqswxosi3u3fotk5sdwhy2vg.xx.internal.cloudapp.net
+   Description . . . . . . . . . . . : Microsoft Hyper-V Network Adapter
+   Physical Address. . . . . . . . . : 00-22-48-78-4A-84
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::2add:a8ea:1599:2c4b%4(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.1.0.4(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, March 26, 2026 12:55:35 PM
+   Lease Expires . . . . . . . . . . : Sunday, May 2, 2162 8:16:10 PM
+   Default Gateway . . . . . . . . . : 10.1.0.1
+   DHCP Server . . . . . . . . . . . : 168.63.129.16
+   DHCPv6 IAID . . . . . . . . . . . : 100672072
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2E-33-F3-6E-00-22-48-78-4A-84
+   DNS Servers . . . . . . . . . . . : 168.63.129.16
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+Execution completed in 00:00:00.1468772
+
+Starting activity CollectTlsRegistry...
+
+
+
+Collect TLS-Related Registry Values
+-----------------------------------
+
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Client: Enabled (DWord) = 0
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Server: Enabled (DWord) = 0
+DisableRenegoOnClient does not exist under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL. Skipping collection.
+DefaultSecureProtocols does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp. Skipping collection.
+SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp does not exist. Skipping collection.
+SystemDefaultTlsVersions does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v2.0.50727. Skipping collection.
+SchUseStrongCrypto does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v2.0.50727. Skipping collection.
+SystemDefaultTlsVersions does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319. Skipping collection.
+SchUseStrongCrypto does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319. Skipping collection.
+SystemDefaultTlsVersions does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v1.0. Skipping collection.
+SchUseStrongCrypto does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v1.0. Skipping collection.
+SystemDefaultTlsVersions does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v2.0.50727. Skipping collection.
+SchUseStrongCrypto does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v2.0.50727. Skipping collection.
+SystemDefaultTlsVersions does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319. Skipping collection.
+SchUseStrongCrypto does not exist under HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319. Skipping collection.
+
+Starting activity CollectNamedPipes...
+
+
+
+Enumerate Named Pipes
+---------------------
+
+
+\\.\\pipe\\CAgentStream_CloudAgentInfo_AzureMonitorAgent
+
+Starting activity CollectMcsDir...
+
+
+
+Collecting Directory: Mcs
+-------------------------
+
+
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\agentsettings.txt
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\AuthToken-MSI.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\configtransformid.txt
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\mcsconfig.full.latest.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\mcsconfig.latest.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\mcsconfig.latest.xml
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\mcsconfig.lkg.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\mcsconfig.lkg.xml
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\monagentcore.hr.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\monagentmanager.hr.json
+C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs\configchunks\7836023744250932452.json
+
+Starting activity RemoveAuthToken...
+
+
+
+Removing Auth Token From Collected Files
+----------------------------------------
+
+
+Found authentication token in output.
+Purged token from C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Mcs\AuthToken-MSI.json.
+
+Starting activity CollectAgentTables...
+
+
+
+Collect Agent Tables
+--------------------
+
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\c7836023744250932452_546419284751770569.tsf"
+--------------------c7836023744250932452_546419284751770569.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=75
+2 schema(s) defined in table
+Total returned number of records will be 74
+first record time stamp: 1DCBD1FD7D3028E  2026-03-26T12:55:37.6838286Z
+last record time stamp: 1DCBD208BC501A6  2026-03-26T13:00:39.5819430Z
+Time elapsed: 0.039525(s), read 74 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\c7836023744250932452_546419284751770569.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.9993880
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\c7836023744250932452_546419284751770569.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\DefaultExtensionEtw.tsf"
+--------------------DefaultExtensionEtw.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=0
+1 schema(s) defined in table
+No records qualified
+Time elapsed: 0.055698(s), read 0 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\DefaultExtensionEtw.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1165804
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\DefaultExtensionEtw.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\LogAnalyticsHeartbeats.tsf"
+--------------------LogAnalyticsHeartbeats.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=50
+1 schema(s) defined in table
+Total returned number of records will be 50
+first record time stamp: 1DCBD203BDB3483  2026-03-26T12:58:25.5096963Z
+last record time stamp: 1DCBD271471A754  2026-03-26T13:47:25.8639188Z
+Time elapsed: 0.050117(s), read 50 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\LogAnalyticsHeartbeats.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1263412
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\LogAnalyticsHeartbeats.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaCounterEvent.tsf"
+--------------------MaCounterEvent.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=60 MB, Size=50844888 bytes, #records=764227
+2 schema(s) defined in table
+Total returned number of records will be 121745
+first record time stamp: 1DC915595804C6B  2026-01-29T19:29:28.0733291Z
+last record time stamp: 1DCBD2725D56A11  2026-03-26T13:47:55.0389777Z
+Time elapsed: 2.485121(s), read 121745 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaCounterEvent.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:02.5464744
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaCounterEvent.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAEventTable.tsf"
+--------------------MAEventTable.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=300 MB, Size=302503128 bytes, #records=977558
+2 schema(s) defined in table
+Total returned number of records will be 361070
+first record time stamp: 1DCA2ACDF1C9536  2026-02-20T21:07:07.5539254Z
+last record time stamp: 1DCBD27270DC871  2026-03-26T13:47:57.0861169Z
+Time elapsed: 28.272894(s), read 361070 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MAEventTable.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:28.3341202
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAEventTable.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAGenevaNotifMsgEvents.tsf"
+--------------------MAGenevaNotifMsgEvents.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=50 MB, Size=34067672 bytes, #records=0
+1 schema(s) defined in table
+No records qualified
+Time elapsed: 0.063214(s), read 0 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MAGenevaNotifMsgEvents.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1195022
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAGenevaNotifMsgEvents.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaHeartBeats.tsf"
+--------------------MaHeartBeats.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=50 MB, Size=34067672 bytes, #records=51
+1 schema(s) defined in table
+Total returned number of records will be 51
+first record time stamp: 1DCBD203BD86C2D  2026-03-26T12:58:25.4914605Z
+last record time stamp: 1DCBD273832BA3F  2026-03-26T13:48:25.8495039Z
+Time elapsed: 0.057861(s), read 51 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaHeartBeats.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1160425
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaHeartBeats.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -tail 100 -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaMetricsExtensionEtw.tsf"
+--------------------MaMetricsExtensionEtw.tsf--------------------
+Table Information: Version=3.0, retention=2505600 seconds, quota=51200 MB, Size=34067672 bytes, #records=560
+1 schema(s) defined in table
+Total returned number of records will be 560
+first record time stamp: 1DCBD20289DFB34  2026-03-26T12:57:53.2317492Z
+last record time stamp: 1DCBD27371BC964  2026-03-26T13:48:24.0214372Z
+Time elapsed: 0.052578(s), read 560 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaMetricsExtensionEtw.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:00.1193336
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaMetricsExtensionEtw.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaQosEvent.tsf"
+--------------------MaQosEvent.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=100 MB, Size=50844888 bytes, #records=364671
+2 schema(s) defined in table
+Total returned number of records will be 26344
+first record time stamp: 1DCA4F9A625C61F  2026-02-23T19:21:45.5577631Z
+last record time stamp: 1DCBD2732F89DA8  2026-03-26T13:48:17.0800552Z
+Time elapsed: 1.727941(s), read 26344 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaQosEvent.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:01.7927368
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaQosEvent.tsf
+
+Starting external process: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\table2csv.exe -showsid -path "C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables" "C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaTelemetryEvents.tsf"
+--------------------MaTelemetryEvents.tsf--------------------
+Table Information: Version=3.0, retention=31536000 seconds, quota=100 MB, Size=34067672 bytes, #records=127318
+13 schema(s) defined in table
+Total returned number of records will be 5713
+first record time stamp: 1DC915590AD5BD7  2026-01-29T19:29:19.9800279Z
+last record time stamp: 1DCBD273757622D  2026-03-26T13:48:24.4120109Z
+Time elapsed: 1.241083(s), read 5713 records
+Output file is: C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Tables\MaTelemetryEvents.csv
+Summary: 1 tables were converted
+Execution completed in 00:00:01.2944512
+Successfully collected C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaTelemetryEvents.tsf
+
+
+Starting activity CustomerTableStats...
+
+
+
+Customer Data Statistics
+------------------------
+
+
+Checking local tables...
+
+Table Name                      All Rows Count Last 24h Last 6h Last 1h Last 10m
+------------------------------- -------------- -------- ------- ------- --------
+c7836023744250932452_5464192...             74       73      73      73       73
+DefaultExtensionEtw                          0        0       0       0        0
+LogAnalyticsHeartbeats                      51       50      50      50       10
+MAGenevaNotifMsgEvents                       0        0       0       0        0
+MaHeartBeats                                51       50      50      50       10
+MaMetricsExtensionEtw                      561      561     561     561      108
+
+
+Starting activity CollectSecondaryAgentsTables...
+
+
+
+Collect Secondary Agents Tables
+-------------------------------
+
+
+
+Starting activity CheckPowershellAvailability...
+
+
+
+Checking if Powershell scripts can be executed.
+-----------------------------------------------
+
+
+
+Starting activity RunMdmDataCollectionScript...
+
+
+
+Running MDM Data Collection Script
+----------------------------------
+
+
+This activity could take up to 15 minutes to complete.
+Starting external process: C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection.ps1 -OutputDirectory C:\Windows\SystemTemp\AgentTroubleshooter -SkipAdminCheck -TimeOutSecondsSearchFiles 600 -SkipCollectionTsfLogs -SkipCollectionCertificates
+WARNING: Administrative permissions check skipped due to SkipAdminCheck being set.
+Begin - MDM Data Collection Script - 03/26/2026 13:48:38
+Script version 1.14
+Collecting general information...
+Collecting information about logical disks
+Searching the process: MetricsExtension.Native.exe
+Testing several MetricsExtension global endpoints
+Collecting time from ME client and server
+WARNING: SkipCollectionCertificates has been set, skipping the collection of certificates.
+Listing open sockets and owning processes
+WARNING: TCP connect to (2603:1030:7:5::24 : 80) failed
+WARNING: Ping to 2603:1030:7:5::24 failed
+WARNING: TCP connect to (2603:1030:7:5::24 : 443) failed
+WARNING: Ping to 2603:1030:7:5::24 failed
+Resolve-DnsName : global.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (global.metrics.nsatc.net:String) [Resolve-DnsName], Win32Exception
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+Resolve-DnsName : global.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (global.metrics.nsatc.net:String) [Resolve-DnsName], Win32Exception
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+Resolve-DnsName : azglobal.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (azglobal.metrics.nsatc.net:String) [Resolve-DnsName], Win32Excepti 
+   on
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 80) failed
+WARNING: TCP connect to (10.1.0.4 : 80) failed
+Resolve-DnsName : azglobal.metrics.nsatc.net : DNS name does not exist
+At C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Troubleshooter\tools\mdmDataCollection
+.ps1:440 char:26
++             $solvedDNS = Resolve-DnsName -Name $meFrontendUrl
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (azglobal.metrics.nsatc.net:String) [Resolve-DnsName], Win32Excepti 
+   on
+    + FullyQualifiedErrorId : DNS_ERROR_RCODE_NAME_ERROR,Microsoft.DnsClient.Commands.ResolveDnsName
+ 
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+WARNING: TCP connect to (fe80::2add:a8ea:1599:2c4b%4 : 443) failed
+WARNING: TCP connect to (10.1.0.4 : 443) failed
+Collecting application event logs for Level Error and EventID 1000 happened within last one hour...
+Collecting raw and aggregated metrics, please DO NOT press CTRL+C
+Waiting for 190 seconds, press CTRL+C to quit ...189188187186185184183182181180179178177176175174173172171170169168167166165164163162161160159158157156155154153152151150149148147146145144143142141140139138137136135134133132131130129128127126125124123122121120119118117116115114113112111110109108107106105104103102101100 99 98 97 96 95 94 93 92 91 90 89 88 87 86 85 84 83 82 81 80 79 78 77 76 75 74 73 72 71 70 69 68 67 66 65 64 63 62 61 60 59 58 57 56 55 54 53 52 51 50 49 48 47 46 45 44 43 42 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0
+WARNING: No autopilot logs were found. If this machine is not an Autopilot machine, this is not an issue.
+WARNING: D:\app\autopilot.ini was not found. If this machine is not an Autopilot machine, this is not an issue.
+Searching the process: MonAgentHost.exe
+WARNING: SkipCollectionTsfLogs has been set, skipping the collection of tsf logs.
+Compressing MDM Data Collection Output ...
+Done -^> MDM Data ready at C:\Windows\SystemTemp\AgentTroubleshooter\MdmDataCollectionOutput2026_03_26_01_48_38_random_2025558213.zip
+End - MDM Data Collection Script - 03/26/2026 13:52:40
+Execution completed in 00:04:03.5779817
+Successfully executed log collection ps script.
+
+Starting activity CollectAADLogsAndDsregcmdStatus...
+
+
+
+Collect Active Directory Status
+-------------------------------
+
+
+Starting external process: C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe 
+                if (-Not $ImportFunctions)
+                {
+                    $aadLogs = Get-WinEvent -LogName "Microsoft-Windows-AAD/Operational"
+                    $aadLogs | Export-Csv -Path (Join-Path -Path C:\Windows\SystemTemp\AgentTroubleshooter -ChildPath 'AADLogs.csv') -NoTypeInformation
+                } -SkipCollectionCertificates
+Get-WinEvent : No events were found that match the specified selection criteria.
+At line:3 char:13
++  $aadLogs = Get-WinEvent -LogName Microsoft-Windows-AAD/Operational
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-WinEvent], Exception
+    + FullyQualifiedErrorId : NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand
+ 
+-SkipCollectionCertificates : The term '-SkipCollectionCertificates' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:5 char:4
++    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (-SkipCollectionCertificates:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+Execution completed in 00:00:01.1734188
+Get-WinEvent : No events were found that match the specified selection criteria.
+At line:3 char:13
++  $aadLogs = Get-WinEvent -LogName Microsoft-Windows-AAD/Operational
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-WinEvent], Exception
+    + FullyQualifiedErrorId : NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand
+ 
+-SkipCollectionCertificates : The term '-SkipCollectionCertificates' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:5 char:4
++  } -SkipCollectionCertificates
++    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (-SkipCollectionCertificates:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+Starting external process: C:\Windows\system32\dsregcmd.exe /status
++----------------------------------------------------------------------+
+| Device State                                                         |
++----------------------------------------------------------------------+
+             AzureAdJoined : NO
+          EnterpriseJoined : NO
+              DomainJoined : NO
++----------------------------------------------------------------------+
+| User State                                                           |
++----------------------------------------------------------------------+
+                    NgcSet : NO
+           WorkplaceJoined : NO
+             WamDefaultSet : ERROR
++----------------------------------------------------------------------+
+| SSO State                                                            |
++----------------------------------------------------------------------+
+                AzureAdPrt : NO
+       AzureAdPrtAuthority : NO
+             EnterprisePrt : NO
+    EnterprisePrtAuthority : NO
++----------------------------------------------------------------------+
+| Ngc Prerequisite Check                                               |
++----------------------------------------------------------------------+
+            IsDeviceJoined : NO
+             IsUserAzureAD : NO
+             PolicyEnabled : NO
+          PostLogonEnabled : YES
+            DeviceEligible : YES
+        SessionIsNotRemote : YES
+            CertEnrollment : none
+              PreReqResult : WillNotProvision
+Execution completed in 00:00:00.5980589
+
+Starting activity CollectTimeZoneInformation...
+
+
+
+Check Local Time Zone
+---------------------
+
+
+Current local time: 3/26/2026 1:52:43 PM
+Current UTC time:   3/26/2026 1:52:43 PM
+
+Local Time Zone:            (UTC) Coordinated Universal Time
+Standard Name:              Coordinated Universal Time
+Supports Daylight Savings:  False
+
+Starting activity AmaBasicDebug...
+
+
+
+
+Starting activity CollectEnvironmentFile...
+
+
+
+Collect Environment File
+------------------------
+
+
+Copying a file from C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\environment to C:\Windows\SystemTemp\AgentTroubleshooter\environment
+
+Starting activity ImdsConnectivityCheck...
+
+
+
+IMDS Connectivity Test
+----------------------
+
+
+
+Connecting to IMDS for validation and obtaining VM metadata
+Starting external process: C:\Windows\system32\curl.exe --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+*   Trying 169.254.169.254:80...
+* Connected to 169.254.169.254 (169.254.169.254) port 80
+* using HTTP/1.x
+> GET /metadata/instance?api-version=2019-11-01&format=json HTTP/1.1
+> Host: 169.254.169.254
+> User-Agent: curl/8.13.0
+> Accept: */*
+> Metadata: true
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Server: IMDS/150.870.65.1854
+< x-ms-request-id: ead32a90-084a-47cc-ba25-7960a56f3f55
+< Date: Thu, 26 Mar 2026 13:52:43 GMT
+< Content-Length: 1679
+< 
+* Connection #0 to host 169.254.169.254 left intact
+Execution completed in 00:00:00.1372941
+Protocol auto-select test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -4 --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+*   Trying 169.254.169.254:80...
+* Connected to 169.254.169.254 (169.254.169.254) port 80
+* using HTTP/1.x
+> GET /metadata/instance?api-version=2019-11-01&format=json HTTP/1.1
+> Host: 169.254.169.254
+> User-Agent: curl/8.13.0
+> Accept: */*
+> Metadata: true
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Server: IMDS/150.870.65.1854
+< x-ms-request-id: b992a20b-48a4-44c3-801c-20170b49fb81
+< Date: Thu, 26 Mar 2026 13:52:44 GMT
+< Content-Length: 1679
+< 
+* Connection #0 to host 169.254.169.254 left intact
+Execution completed in 00:00:00.0852893
+Force IPv4 test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -6 --noproxy '*' -v -s -S -k -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2019-11-01&format=json"
+* closing connection #0
+curl: (7) Could not connect to server
+Execution completed in 00:00:00.0523492
+Force IPv6 test: FAIL
+
+IMDS Host                         Protocol Result
+169.254.169.254/metadata/instance Auto     PASS
+169.254.169.254/metadata/instance IPv4     PASS
+169.254.169.254/metadata/instance IPv6     FAIL
+
+
+Starting activity CollectAzVmExtLogs...
+
+
+
+Collecting Directory: C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent
+---------------------------------------------------------------------------------------------------
+
+
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241023050520569.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241023110521689.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241023170521339.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241023230822943.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241024050524827.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241024110524389.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241024170523777.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241024230526005.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241025050526582.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241025110524038.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241025170524771.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241025230526183.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241026050527654.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241026110529491.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241026170528406.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241026230529869.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20241027050559758.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20260129192806420.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20260129193145178.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\CommandExecution_20260129193147376.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.36.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.37.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.38.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.39.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.40.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.41.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.42.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.43.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.44.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.45.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.46.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.47.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.48.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.49.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.50.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.51.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.52.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.53.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.54.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.55.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Extension.56.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.42.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.43.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.44.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.45.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.46.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.47.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.48.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.49.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.50.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.51.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.52.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.53.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.54.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.55.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.56.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.57.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.58.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.59.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.60.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.61.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\ExtensionHealth.62.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223190136588.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223191424359.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223202319199.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223202406390.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223202506886.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223232946226.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223233049078.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223233133677.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223233220559.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260223233251542.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260224000527297.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260224023848671.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326125617983.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326132554207.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134409665.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134456294.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134542879.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134629769.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134700818.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\CommandExecution_20260326134745452.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.13.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.14.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.15.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.16.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.17.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.18.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.19.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.20.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.21.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.22.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.23.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.24.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.25.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.26.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.27.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.28.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.29.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.30.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.31.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.32.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\Extension.33.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.1.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.2.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.3.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.4.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.5.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.6.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.7.log
+C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\ExtensionHealth.8.log
+
+Starting activity CollectRuntimeSettings...
+
+
+
+Collecting Directory: RuntimeSettings
+-------------------------------------
+
+
+
+Starting activity CollectAggregateStatus...
+
+
+
+Collecting Directory: C:\WindowsAzure\Logs\AggregateStatus
+----------------------------------------------------------
+
+
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135023621.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135038646.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135053671.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135108708.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135123724.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135138743.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135153773.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135208820.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135223836.json
+C:\WindowsAzure\Logs\AggregateStatus\aggregatestatus_20260326135238852.json
+
+Starting activity ParseMcsConfig...
+
+
+
+Parse MCS Configuration
+-----------------------
+
+
+Parsing C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Mcs\mcsconfig.lkg.json.
+Parsing C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Mcs\configchunks\7836023744250932452.json.
+
+Configured ingestion endpoints:
+Host                                                          Protocol
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com ods
+
+
+Starting activity CollectConfigurationDir...
+
+
+
+Collecting Directory: Configuration
+-----------------------------------
+
+
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\AgentIdentity.manager.cache.txt
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\AgentManagerTable.bin
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\CheckPointTable.bin
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.11.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.12.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.13.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.14.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentHost.15.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentLauncher.11.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentLauncher.12.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentLauncher.13.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentLauncher.14.log
+C:\WindowsAzure\Resources\AMADataStore.amawin\Configuration\MonAgentLauncher.15.log
+
+Starting activity ParseHostLogs...
+
+
+
+Parse Console Logs
+------------------
+
+
+Examining 10 log files for service hosts.
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentHost.11.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentHost.12.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentHost.13.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentHost.14.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentHost.15.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentLauncher.11.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentLauncher.12.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentLauncher.13.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentLauncher.14.log
+C:\Windows\SystemTemp\AgentTroubleshooter\AgentDataStore\Configuration\MonAgentLauncher.15.log
+
+GCS Hosts:
+<none>
+
+GIG Hosts:
+<none>
+
+MCS Hosts:
+westus2-5w48.westus2-1.handler.control.monitor.azure.com
+
+Starting activity CheckAmpls...
+
+
+
+Checking Endpoints for AMPLS
+----------------------------
+
+
+AMPLS check complete for d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+	Host: ipv4-wus2-oi-ods-cses-b.westus2.cloudapp.azure.com
+	IP Addresses:
+		40.78.253.213
+	AMPLS Enabled: False
+AMPLS check complete for westus2-5w48.westus2-1.handler.control.monitor.azure.com
+	Host: amcs-prod-wus2-1-handler.westus2.cloudapp.azure.com
+	IP Addresses:
+		40.64.132.133
+	AMPLS Enabled: False
+Name                                                          AMPLS Enabled
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com False
+westus2-5w48.westus2-1.handler.control.monitor.azure.com      False
+
+
+Starting activity ParseAmaVmExtSettings...
+
+
+
+Parse VM Extension Settings
+---------------------------
+
+
+No settings files were found in the RuntimeSettings folder. Skipping the VM Extension settings parsing.
+No settings file was found in the expected format. Skipping the VM Extension settings parsing.
+
+Starting activity McsConnectivityCheckVmExt...
+
+
+
+MCS Connectivity Test
+---------------------
+
+
+MCS hosts for validation:
+westus2-5w48.westus2-1.handler.control.monitor.azure.com
+
+Attempting to resolve host westus2-5w48.westus2-1.handler.control.monitor.azure.com:
+Starting external process: C:\Windows\system32\nslookup.exe westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    amcs-prod-wus2-1-handler.westus2.cloudapp.azure.com
+Address:  40.64.132.133
+Aliases:  westus2-5w48.westus2-1.handler.control.monitor.azure.com
+	  westus2.handler.control.monitor.azure.com
+	  amcs-prod-wus2-handler.trafficmanager.net
+Execution completed in 00:00:00.2740250
+
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Host westus2-5w48.westus2-1.handler.control.monitor.azure.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 40.64.132.133
+*   Trying 40.64.132.133:443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Connected to westus2-5w48.westus2-1.handler.control.monitor.azure.com (40.64.132.133) port 443
+* using HTTP/1.x
+> GET /ping HTTP/1.1
+> Host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Healthy
+> User-Agent: curl/8.13.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Cache-Control: no-store, no-cache
+< Pragma: no-cache
+< Transfer-Encoding: chunked
+< Content-Type: text/plain
+< Expires: Thu, 01 Jan 1970 00:00:00 GMT
+< Server: Microsoft-HTTPAPI/2.0
+< Request-Context: appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3
+< Date: Thu, 26 Mar 2026 13:52:52 GMT
+< 
+* Connection #0 to host westus2-5w48.westus2-1.handler.control.monitor.azure.com left intact
+Execution completed in 00:00:00.1328730
+Protocol auto-select test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Host westus2-5w48.westus2-1.handler.control.monitor.azure.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 40.64.132.133
+*   Trying 40.64.132.133:443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Connected to westus2-5w48.westus2-1.handler.control.monitor.azure.com (40.64.132.133) port 443
+* using HTTP/1.x
+> GET /ping HTTP/1.1
+Healthy
+> Host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+> User-Agent: curl/8.13.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Cache-Control: no-store, no-cache
+< Pragma: no-cache
+< Transfer-Encoding: chunked
+< Content-Type: text/plain
+< Expires: Thu, 01 Jan 1970 00:00:00 GMT
+< Server: Microsoft-HTTPAPI/2.0
+< Request-Context: appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3
+< Date: Thu, 26 Mar 2026 13:52:53 GMT
+< 
+* Connection #0 to host westus2-5w48.westus2-1.handler.control.monitor.azure.com left intact
+Execution completed in 00:00:00.1120986
+Force IPv4 test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com/ping
+* Could not resolve host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+* shutting down connection #0
+curl: (6) Could not resolve host: westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0647837
+Force IPv6 test: FAIL
+
+MCS Host                                                 Protocol Result
+westus2-5w48.westus2-1.handler.control.monitor.azure.com Auto     PASS
+westus2-5w48.westus2-1.handler.control.monitor.azure.com IPv4     PASS
+westus2-5w48.westus2-1.handler.control.monitor.azure.com IPv6     FAIL
+
+
+Starting activity OdsConnectivityCheckVmExt...
+
+
+
+ODS Connectivity Test
+---------------------
+
+
+ODS hosts for validation:
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+
+Attempting to resolve host d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com:
+Starting external process: C:\Windows\system32\nslookup.exe d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    ipv4-wus2-oi-ods-cses-d.westus2.cloudapp.azure.com
+Address:  40.78.243.19
+Aliases:  d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com
+	  wus2-oi-ods.trafficmanager.net
+Execution completed in 00:00:00.1401057
+
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.1125621
+Protocol auto-select test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.0822633
+Force IPv4 test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com/ping
+Execution completed in 00:00:00.0624450
+Force IPv6 test: FAIL
+
+ODS Host                                                      Protocol Result
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com Auto     PASS
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com IPv4     PASS
+d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com IPv6     FAIL
+
+
+Starting activity GigLaConnectivityCheckVmExt...
+
+
+
+GigLa Connectivity Test
+-----------------------
+
+
+No GigLa hosts found in agent logs.
+
+Starting activity TokenEndpointConnectivityCheckVmExt...
+
+
+
+Token Endpoint Connectivity Test
+--------------------------------
+
+
+Token endpoint hosts for validation:
+westus2-5w48.westus2-1.handler.control.monitor.azure.com
+
+Attempting to resolve host westus2-5w48.westus2-1.handler.control.monitor.azure.com:
+Starting external process: C:\Windows\system32\nslookup.exe westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Non-authoritative answer:
+Server:  UnKnown
+Address:  168.63.129.16
+Name:    amcs-prod-wus2-1-handler.westus2.cloudapp.azure.com
+Address:  40.64.132.133
+Aliases:  westus2-5w48.westus2-1.handler.control.monitor.azure.com
+	  westus2.handler.control.monitor.azure.com
+	  amcs-prod-wus2-handler.trafficmanager.net
+Execution completed in 00:00:00.1791369
+
+Starting external process: C:\Windows\system32\curl.exe -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.1196488
+Protocol auto-select test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -4 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0925689
+Force IPv4 test: PASS
+
+Starting external process: C:\Windows\system32\curl.exe -6 -v -s -S -k  https://westus2-5w48.westus2-1.handler.control.monitor.azure.com
+Execution completed in 00:00:00.0649918
+Force IPv6 test: FAIL
+
+Token Endpoint Host                                      Protocol Result
+westus2-5w48.westus2-1.handler.control.monitor.azure.com Auto     PASS
+westus2-5w48.westus2-1.handler.control.monitor.azure.com IPv4     PASS
+westus2-5w48.westus2-1.handler.control.monitor.azure.com IPv6     FAIL
+
+
+Starting activity AmaAzVmDebug...
+
+
+
+Completed diagnosing Azure Monitor Agent for Azure VM
+
+
+
+Diagnostic Summary
+Check                                                                    Result
+------------------------------------------------------------------------ -------
+Collecting Directory: C:\WindowsAzure\Resources\AMADataStore.amawin\C... PASS
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... PASS
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... WARNING
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... PASS
+Collecting Directory: C:\WindowsAzure\Resources\AMADataStore.amawin\Mcs  PASS
+Connection to d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azu... PASS
+Connection to d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azu... WARNING
+Connection to d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azu... PASS
+Systeminfo.exe Execution                                                 PASS
+Environment file collection                                              PASS
+Connection to 169.254.169.254/metadata/instance [IPv4]                   PASS
+Connection to 169.254.169.254/metadata/instance [IPv6]                   WARNING
+Connection to 169.254.169.254/metadata/instance [Auto]                   PASS
+Ipconfig.exe Execution                                                   PASS
+Collecting Directory: C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Mo... PASS
+Collecting Directory: C:\WindowsAzure\Logs\AggregateStatus               PASS
+Collecting Directory: C:\Packages\Plugins\Microsoft.Azure.Monitor.Azu... WARNING
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\c7836023... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\DefaultE... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\LogAnaly... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaCounte... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAEventT... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MAGeneva... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaHeartB... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaMetric... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaQosEve... PASS
+Collect C:\WindowsAzure\Resources\AMADataStore.amawin\Tables\MaTeleme... PASS
+Running MDM Data Collection Script                                       PASS
+Settings File Found                                                      WARNING
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... PASS
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... WARNING
+Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.co... PASS
+Collect Active Directory Status                                          WARNING
+dsregcmd/status Execution                                                PASS
+
+
+
+Found 27 passes
+
+
+Found 7 warnings
+
+[MCS Connectivity Test] Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.com [IPv6]: curl.exe failed to connect to the endpoint
+[ODS Connectivity Test] Connection to d1521c3b-0bd3-4d94-a6ed-22c3170a6b74.ods.opinsights.azure.com [IPv6]: curl.exe failed to connect to the endpoint
+[IMDS Connectivity Test] Connection to 169.254.169.254/metadata/instance [IPv6]: curl.exe failed to connect to the endpoint
+[Collecting Directory: RuntimeSettings] Collecting Directory: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.39.0.0\RuntimeSettings: 
+[Parse VM Extension Settings] Settings File Found: No settings file was found in the expected format. Skipping the VM Extension settings parsing.
+[Token Endpoint Connectivity Test] Connection to westus2-5w48.westus2-1.handler.control.monitor.azure.com [IPv6]: curl.exe failed to connect to the endpoint
+[Collect Active Directory Status] Collect Active Directory Status: Failed to execute log collection PowerShell script: 1
+
+
+Found 0 fails
+
+
+Compressing collected data.

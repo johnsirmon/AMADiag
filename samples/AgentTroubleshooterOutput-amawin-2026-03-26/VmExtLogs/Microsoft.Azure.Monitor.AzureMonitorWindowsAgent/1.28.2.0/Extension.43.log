@@ -1,0 +1,44 @@
+[2024-10-24 17:05:20.000]  [ExtensionConfiguration] ErrorCode:0 INFO: Initializing ExtensionConfiguration
+[2024-10-24 17:05:20.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2024-10-24 17:05:20.000]  [ParseExtensionSettingsJson] ErrorCode:0 WARN: extension settings file C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings\0.settings does not exist
+[2024-10-24 17:05:20.000]  [StatusReporting] ErrorCode:0 INFO: Status file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\0.status
+[2024-10-24 17:05:20.000]  [HeartbeatReporting] ErrorCode:0 INFO: HeartBeat file :C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json
+[2024-10-24 17:05:20.000]  [Extension] ErrorCode:0 INFO: LogFolder: C:\WindowsAzure\Logs\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0, ConfigFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings, StatusFolder: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status, HeartbeatFile: C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\Status\HeartBeat.Json, DeploymentId: 7ece9028-6c4b-452a-a9a1-f6e07d35e94b, RoleName: _amawin, Instance: _amawin, ExtensionVersion: 46.19.3.0
+[2024-10-24 17:05:20.000]  [ParseExtensionCommand] ErrorCode:0 INFO: Command Received : enable
+[2024-10-24 17:05:20.000]  [Main] ErrorCode:0 INFO: 2024-10-16 23:07:47.000
+[2024-10-24 17:05:20.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType
+[2024-10-24 17:05:20.000]  [QueryRegValueString] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure, Name:VMType, Value:IAAS
+[2024-10-24 17:05:20.000]  [HandleCommand] ErrorCode:0 INFO: Handling Command: enable
+[2024-10-24 17:05:20.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2024-10-24 17:05:20.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2024-10-24 17:05:20.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2024-10-24 17:05:20.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2024-10-24 17:05:20.000]  [HandleEnableCommand] ErrorCode:0 INFO: Starting Extension Enable
+[2024-10-24 17:05:20.000]  [FindConfigSequenceNumber] ErrorCode:1110 WARN: Unable to read ConfigSequenceNumber environment variable for extension, 0
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Looking in folder C:\Packages\Plugins\Microsoft.Azure.Monitor.AzureMonitorWindowsAgent\1.28.2.0\RuntimeSettings
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 WARN: No config file found. Assuming 0
+[2024-10-24 17:05:20.000]  [FindLatestSettingsFileNumber] ErrorCode:0 INFO: Config File:0
+[2024-10-24 17:05:20.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorConfigSequenceNumber
+[2024-10-24 17:05:20.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorConfigSequenceNumber, Value:0
+[2024-10-24 17:05:20.000]  [StartHealthMonitor] ErrorCode:0 INFO: ConfigSequenceNumber found current:0, new:0
+[2024-10-24 17:05:20.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Check to see if health monitor is running based on m_registry.
+[2024-10-24 17:05:20.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess
+[2024-10-24 17:05:20.000]  [QueryRegValueDWORD] ErrorCode:0 INFO: Query Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:HealthMonitorProcess, Value:4512
+[2024-10-24 17:05:20.000]  [FindProcessById] ErrorCode:0 INFO: Attempt to find the process AMAExtHealthMonitor.exe with ID: 4512.
+[2024-10-24 17:05:20.000]  [FindProcessById] ErrorCode:0 INFO: Running Process AMAExtHealthMonitor.exe found. ID: 4512.
+[2024-10-24 17:05:20.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Health monitor is running. Id:4512
+[2024-10-24 17:05:20.000]  [IsHealthMonitorRunning] ErrorCode:0 INFO: Health Monitor Status based on m_registry: 1.
+[2024-10-24 17:05:20.000]  [StartHealthMonitor] ErrorCode:0 ERROR: Health monitor process is already running. Return
+[2024-10-24 17:05:20.000]  [SetRegValueString] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus, Value:Enabled
+[2024-10-24 17:05:20.000]  [SetRegValueString] ErrorCode:0 INFO: Set Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionStatus, Value:Enabled
+[2024-10-24 17:05:20.000]  [DeleteRegValue] ErrorCode:0 INFO: Delete Registry for Key:SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, Name:ExtensionIsInUpdate
+[2024-10-24 17:05:20.000]  [DeleteRegValue] ErrorCode:1207 ERROR: Failed to delete s_registry value, name=ExtensionIsInUpdate, key=SOFTWARE\Microsoft\Windows Azure\CurrentVersion\AzureMonitorAgentExtension\46.19.3.0, error=2
+[2024-10-24 17:05:20.000]  [HandleEnableCommand] ErrorCode:0 INFO: Completed Extension Enable
+[2024-10-24 17:05:20.000]  [WriteStatusToFile] ErrorCode:0 INFO: Sending the status.
+[2024-10-24 17:05:20.000]  [WriteStatusToFile] ErrorCode:0 INFO: Done Sending the status.
+[2024-10-24 17:05:20.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Sending the heartbeat.
+[2024-10-24 17:05:20.000]  [WriteHeartbeatToFile] ErrorCode:0 INFO: Done Sending the heartbeat.
+[2024-10-24 17:05:20.000]  [Main] ErrorCode:0 ERROR: Operation Complete.

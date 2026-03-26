@@ -1,0 +1,26 @@
+Starting external process: C:\Windows\system32\ipconfig.exe /all
+Windows IP Configuration
+   Host Name . . . . . . . . . . . . : amawin
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : i3cqswxosi3u3fotk5sdwhy2vg.xx.internal.cloudapp.net
+Ethernet adapter Ethernet:
+   Connection-specific DNS Suffix  . : i3cqswxosi3u3fotk5sdwhy2vg.xx.internal.cloudapp.net
+   Description . . . . . . . . . . . : Microsoft Hyper-V Network Adapter
+   Physical Address. . . . . . . . . : 00-22-48-78-4A-84
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::2add:a8ea:1599:2c4b%4(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.1.0.4(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, March 26, 2026 12:55:35 PM
+   Lease Expires . . . . . . . . . . : Sunday, May 2, 2162 8:16:10 PM
+   Default Gateway . . . . . . . . . : 10.1.0.1
+   DHCP Server . . . . . . . . . . . : 168.63.129.16
+   DHCPv6 IAID . . . . . . . . . . . : 100672072
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2E-33-F3-6E-00-22-48-78-4A-84
+   DNS Servers . . . . . . . . . . . : 168.63.129.16
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+Execution completed in 00:00:00.1468772

@@ -1,0 +1,90 @@
+{
+  "compute": {
+    "azEnvironment": "AzurePublicCloud",
+    "customData": "",
+    "location": "westus2",
+    "name": "amawin",
+    "offer": "WindowsServer",
+    "osType": "Windows",
+    "placementGroupId": "",
+    "plan": {
+      "name": "",
+      "product": "",
+      "publisher": ""
+    },
+    "platformFaultDomain": "0",
+    "platformUpdateDomain": "0",
+    "provider": "Microsoft.Compute",
+    "publicKeys": [],
+    "publisher": "MicrosoftWindowsServer",
+    "resourceGroupName": "AMAWin_group",
+    "resourceId": "/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWin_group/providers/Microsoft.Compute/virtualMachines/amawin",
+    "sku": "2019-datacenter-gensecond",
+    "storageProfile": {
+      "dataDisks": [],
+      "imageReference": {
+        "id": "",
+        "offer": "WindowsServer",
+        "publisher": "MicrosoftWindowsServer",
+        "sku": "2019-datacenter-gensecond",
+        "version": "latest"
+      },
+      "osDisk": {
+        "caching": "ReadWrite",
+        "createOption": "FromImage",
+        "diffDiskSettings": {
+          "option": ""
+        },
+        "diskSizeGB": "127",
+        "encryptionSettings": {
+          "enabled": "false"
+        },
+        "image": {
+          "uri": ""
+        },
+        "managedDisk": {
+          "id": "/subscriptions/351651ce-5feb-4e59-975d-f1f344e2b717/resourceGroups/AMAWIN_GROUP/providers/Microsoft.Compute/disks/amawin_OsDisk_1_912bd6667465475db5d4dfb37708d459",
+          "storageAccountType": "Standard_LRS"
+        },
+        "name": "amawin_OsDisk_1_912bd6667465475db5d4dfb37708d459",
+        "osType": "Windows",
+        "vhd": {
+          "uri": ""
+        },
+        "writeAcceleratorEnabled": "false"
+      }
+    },
+    "subscriptionId": "351651ce-5feb-4e59-975d-f1f344e2b717",
+    "tags": "",
+    "tagsList": [],
+    "version": "17763.6054.240703",
+    "vmId": "22afd636-aec1-4782-9055-f85ea283dc20",
+    "vmScaleSetName": "",
+    "vmSize": "Standard_D4s_v3",
+    "zone": ""
+  },
+  "network": {
+    "interface": [
+      {
+        "ipv4": {
+          "ipAddress": [
+            {
+              "privateIpAddress": "10.1.0.4",
+              "publicIpAddress": ""
+            }
+          ],
+          "subnet": [
+            {
+              "address": "10.1.0.0",
+              "prefix": "24"
+            }
+          ]
+        },
+        "ipv6": {
+          "ipAddress": []
+        },
+        "macAddress": "002248784A84"
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+Starting external process: C:\Windows\system32\systeminfo.exe 
+Host Name:                 amawin
+OS Name:                   Microsoft Windows Server 2019 Datacenter
+OS Version:                10.0.17763 N/A Build 17763
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          N/A
+Registered Organization:   N/A
+Product ID:                00430-00000-00000-AA555
+Original Install Date:     7/25/2024, 6:46:43 PM
+System Boot Time:          3/26/2026, 12:55:04 PM
+System Manufacturer:       Microsoft Corporation
+System Model:              Virtual Machine
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2295 Mhz
+BIOS Version:              Microsoft Corporation Hyper-V UEFI Release v4.1, 1/8/2026
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume3
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC) Coordinated Universal Time
+Total Physical Memory:     16,379 MB
+Available Physical Memory: 14,110 MB
+Virtual Memory: Max Size:  18,811 MB
+Virtual Memory: Available: 16,766 MB
+Virtual Memory: In Use:    2,045 MB
+Page File Location(s):     D:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              N/A
+Hotfix(s):                 9 Hotfix(s) Installed.
+                           [01]: KB5066143
+                           [02]: KB4589208
+                           [03]: KB5004424
+                           [04]: KB5075904
+                           [05]: KB5040563
+                           [06]: KB5041577
+                           [07]: KB5043126
+                           [08]: KB5074222
+                           [09]: KB5075903
+Network Card(s):           2 NIC(s) Installed.
+                           [01]: Microsoft Hyper-V Network Adapter
+                                 Connection Name: Ethernet
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     168.63.129.16
+                                 IP address(es)
+                                 [01]: 10.1.0.4
+                                 [02]: fe80::2add:a8ea:1599:2c4b
+                           [02]: Mellanox ConnectX-3 Virtual Function Ethernet Adapter
+                                 Connection Name: Ethernet 10
+                                 DHCP Enabled:    No
+                                 IP address(es)
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+Execution completed in 00:00:03.5662588
