@@ -1,0 +1,77 @@
+- id: LCOL-001
+  name: Fluentbit Cannot Tail Log File
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    Fluentbit reported an error attempting to open or tail a configured log
+    file. The file may not exist, may have incorrect permissions, or the
+    path in the DCR may be wrong.
+  detection:
+    file_pattern: "fluentbit"
+    condition: content_match
+    content_regex: "(?i)\\[error\\].*(file.*not found|cannot open|permission denied|no such file)"
+  remediation: >
+    Verify the log file path exists on the VM and is readable by the AMA
+    service account. Check the DCR custom log data source path matches the
+    actual file location. Review Fluentbit config at
+    /etc/opt/microsoft/azuremonitoragent/config-cache/fluentbit/td-agent.conf.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-collection-log-text
+
+- id: LCOL-002
+  name: Fluentbit Output to MDSD Failing
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    Fluentbit is unable to flush collected log data to the mdsd daemon via
+    the TCP socket. This prevents text and JSON logs from reaching the
+    upload pipeline.
+  detection:
+    file_pattern: "fluentbit"
+    condition: content_match
+    content_regex: "(?i)\\[error\\].*(output|tcp|socket).*(refused|fail|broken pipe|reset|timeout)"
+  remediation: >
+    Verify mdsd is running: systemctl status azuremonitoragent.
+    Check that mdsd is listening on port 28330: ss -tlnp | grep 28330.
+    Restart AMA: systemctl restart azuremonitoragent.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm
+
+- id: LCOL-003
+  name: JSON Log Schema Mismatch
+  severity: warning
+  category: dcr
+  platforms: [linux]
+  description: >
+    JSON log collection errors suggest a mismatch between the JSON log
+    structure and the custom table schema. Starting with AMA Linux 1.31.0,
+    JSON is auto-parsed into columns matching tag names — the custom table
+    must have a matching schema.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(schema|column|field).*(mismatch|missing|invalid|not found|unexpected)"
+  remediation: >
+    Verify the custom table schema matches the JSON tag names in the log
+    file. For AMA >= 1.31.0, JSON fields are auto-parsed into columns.
+    Update the custom table to match the actual JSON structure.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-collection-log-json
+
+- id: LCOL-004
+  name: MDSD Configuration Parse Error
+  severity: critical
+  category: dcr
+  platforms: [linux]
+  description: >
+    The mdsd daemon encountered errors parsing its configuration file
+    (mdsd.xml). This prevents the agent from processing data collection
+    rules and collecting any data.
+  detection:
+    file_pattern: "mdsd"
+    condition: content_match
+    content_regex: "(?i)(config|xml).*(parse|load|read).*(fail|error|invalid|corrupt)"
+  remediation: >
+    Review /etc/opt/microsoft/azuremonitoragent/mdsd.xml for XML errors.
+    Check mdsd.err for specific parsing error messages. Try restarting the
+    agent to force a fresh config download: systemctl restart azuremonitoragent.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm

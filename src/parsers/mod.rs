@@ -1,12 +1,29 @@
 pub mod common;
 pub mod event_table;
+pub mod fluentbit_config;
 pub mod linux;
+pub mod mdsd_qos;
 pub mod windows;
 pub mod xml_config;
 
 use crate::analyzers::finding::Platform;
 use std::collections::HashMap;
 use std::path::Path;
+
+/// Linux-specific parsed data extracted from a troubleshooter bundle.
+#[derive(Debug, Clone, Default)]
+pub struct LinuxData {
+    /// Parsed mdsd.qos upload metrics per blob type.
+    pub mdsd_qos_entries: Vec<mdsd_qos::MdsdQosEntry>,
+    /// Parsed Fluentbit td-agent.conf configuration.
+    pub fluentbit_config: Option<fluentbit_config::FluentbitConfig>,
+    /// Parsed rsyslog forwarding rules for AMA.
+    pub rsyslog_rules: Vec<linux::RsyslogForwardRule>,
+    /// Parsed /etc/os-release fields.
+    pub os_release: Option<linux::OsRelease>,
+    /// Raw proxy.conf content if present.
+    pub proxy_config: Option<String>,
+}
 
 /// Parsed data extracted from an AMA troubleshooter bundle.
 #[derive(Debug, Default)]
@@ -20,6 +37,8 @@ pub struct ParsedBundle {
     pub event_entries: Vec<event_table::EventEntry>,
     /// Log lines with matched severity/content
     pub log_lines: Vec<common::LogLine>,
+    /// Linux-specific parsed data (populated only for Linux bundles).
+    pub linux_data: Option<LinuxData>,
 }
 
 /// Parse all relevant files from an extracted bundle directory.
@@ -80,7 +99,18 @@ fn detect_platform(dir: &Path) -> Option<Platform> {
         "mcsconfig.lkg.xml",
     ];
     // Linux indicators
-    let linux_indicators = ["mdsd", "AzureMonitorLinuxAgent", "rsyslog", "waagent"];
+    let linux_indicators = [
+        "mdsd",
+        "AzureMonitorLinuxAgent",
+        "rsyslog",
+        "waagent",
+        "fluentbit",
+        "amacoreagent",
+        "telegraf",
+        "td-agent.conf",
+        "os-release",
+        "azuremonitoragent",
+    ];
 
     let mut win_score = 0;
     let mut linux_score = 0;
@@ -123,6 +153,13 @@ fn is_log_file(rel_path: &str) -> bool {
     let lower = rel_path.to_lowercase();
     lower.ends_with(".log")
         || lower.ends_with(".txt")
-        || lower.contains("mdsd.")
+        || lower.contains("mdsd.err")
+        || lower.contains("mdsd.warn")
+        || lower.contains("mdsd.info")
+        || lower.contains("mdsd.qos")
+        || lower.contains("fluentbit.log")
+        || lower.contains("amaca")
+        || lower.contains("waagent.log")
+        || lower.contains("extension.log")
         || lower.contains("troubleshooter")
 }
