@@ -15,6 +15,9 @@
 
 ---
 
+<img width="1263" height="663" alt="image" src="https://github.com/user-attachments/assets/96bcab00-8aff-4bfc-9d57-2aa13182a5d2" />
+
+
 ## 💡 Why AMADiag?
 
 When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes silent — diagnosing the cause means manually sifting through extension logs, DCR configs, IMDS responses, and MetricsExtension traces across multiple Microsoft Learn guides.
