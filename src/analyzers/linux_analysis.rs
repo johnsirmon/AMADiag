@@ -171,7 +171,8 @@ fn check_fluentbit_config(data: &LinuxData, findings: &mut Vec<Finding>) {
                 high log volume and may impact performance. Disable after troubleshooting."
                 .to_string(),
             evidence: vec!["td-agent.conf [SERVICE] Log_Level = debug".to_string()],
-            remediation: "Set Log_Level back to 'info' in td-agent.conf and restart AMA.".to_string(),
+            remediation: "Set Log_Level back to 'info' in td-agent.conf and restart AMA."
+                .to_string(),
             doc_link: None,
         });
     }
@@ -228,12 +229,7 @@ mod tests {
     use crate::parsers::linux::RsyslogForwardRule;
     use crate::parsers::mdsd_qos::MdsdQosEntry;
 
-    fn make_qos_entry(
-        blob_type: &str,
-        total: u64,
-        success: u64,
-        fail: u64,
-    ) -> MdsdQosEntry {
+    fn make_qos_entry(blob_type: &str, total: u64, success: u64, fail: u64) -> MdsdQosEntry {
         MdsdQosEntry {
             blob_type: blob_type.to_string(),
             total_count: total,

@@ -1,9 +1,10 @@
 pub mod finding;
+pub mod linux_analysis;
 pub mod rules;
 pub mod sizing;
 
 use crate::parsers::ParsedBundle;
-use finding::{DiagnosticReport, Finding};
+use finding::{DiagnosticReport, Finding, Platform};
 
 /// Run all analysis rules against a parsed bundle and produce findings.
 pub fn analyze(bundle: &ParsedBundle, report: &mut DiagnosticReport) -> anyhow::Result<()> {
@@ -14,6 +15,14 @@ pub fn analyze(bundle: &ParsedBundle, report: &mut DiagnosticReport) -> anyhow::
     // Run sizing analysis
     let sizing_findings = sizing::check_sizing(bundle);
     findings.extend(sizing_findings);
+
+    // Run Linux-specific analysis if Linux data is available
+    if bundle.platform == Some(Platform::Linux) {
+        if let Some(linux_data) = &bundle.linux_data {
+            let linux_findings = linux_analysis::check_linux(linux_data);
+            findings.extend(linux_findings);
+        }
+    }
 
     // Sort findings: Critical first, then Warning, then Info
     findings.sort_by(|a, b| b.severity.cmp(&a.severity));
