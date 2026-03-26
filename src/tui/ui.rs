@@ -759,11 +759,17 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
                 Block::bordered()
                     .border_type(BorderType::Rounded)
                     .title("Output Path (editable)")
-                    .border_style(Style::default().fg(Color::Cyan)),
+                    .border_style(theme::focused_border()),
             )
             .wrap(Wrap { trim: false }),
         path_area,
     );
+
+    // Show cursor at end of export path
+    let cursor_offset = app.export_path().len() as u16;
+    let cursor_x = (path_area.x + 1 + cursor_offset).min(path_area.right().saturating_sub(2));
+    let cursor_y = path_area.y + 1;
+    frame.set_cursor_position(Position::new(cursor_x, cursor_y));
 
     // Hint
     let default_dir = app
@@ -771,17 +777,28 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
         .and_then(|p| p.parent())
         .map(|p| p.display().to_string())
         .unwrap_or_else(|| ".".to_string());
-    let hint_lines = vec![
+    let mut hint_lines = vec![
         Line::from(Span::styled(
             format!("  Default directory: {default_dir}"),
-            Style::default().fg(Color::DarkGray),
+            Style::default().fg(theme::MUTED),
         )),
         Line::from(""),
         Line::from(Span::styled(
             "  Report will be written when you press Enter.",
-            Style::default().fg(Color::DarkGray),
+            Style::default().fg(theme::MUTED),
         )),
     ];
+    if app.export_overwrite_pending() {
+        hint_lines.insert(
+            0,
+            Line::from(Span::styled(
+                "  \u{26a0} File already exists!",
+                Style::default()
+                    .fg(theme::WARNING)
+                    .add_modifier(Modifier::BOLD),
+            )),
+        );
+    }
     frame.render_widget(
         Paragraph::new(Text::from(hint_lines)).block(
             Block::bordered()
@@ -792,14 +809,29 @@ fn draw_export(frame: &mut Frame, app: &mut App) {
     );
 
     // Footer
-    let footer_line = Line::from(vec![
-        key_badge("Enter"),
-        key_desc("Generate  "),
-        key_badge("Tab"),
-        key_desc("Toggle format  "),
-        key_badge("Esc"),
-        key_desc("Cancel"),
-    ]);
+    let footer_line = if app.export_overwrite_pending() {
+        Line::from(vec![
+            Span::styled(
+                " \u{26a0} File exists! ",
+                Style::default()
+                    .fg(theme::WARNING)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            key_badge("Enter"),
+            key_desc("Overwrite  "),
+            key_badge("Esc"),
+            key_desc("Cancel"),
+        ])
+    } else {
+        Line::from(vec![
+            key_badge("Enter"),
+            key_desc("Generate  "),
+            key_badge("Tab"),
+            key_desc("Toggle format  "),
+            key_badge("Esc"),
+            key_desc("Cancel"),
+        ])
+    };
     frame.render_widget(
         Paragraph::new(footer_line).block(Block::bordered().border_type(BorderType::Rounded)),
         footer_area,
@@ -816,9 +848,9 @@ fn severity_badge(severity: crate::analyzers::finding::Severity) -> &'static str
 
 fn severity_style(severity: crate::analyzers::finding::Severity) -> Style {
     match severity {
-        crate::analyzers::finding::Severity::Critical => Style::default().fg(Color::Red),
-        crate::analyzers::finding::Severity::Warning => Style::default().fg(Color::Yellow),
-        crate::analyzers::finding::Severity::Info => Style::default().fg(Color::Blue),
+        crate::analyzers::finding::Severity::Critical => Style::default().fg(theme::SEVERITY_CRITICAL),
+        crate::analyzers::finding::Severity::Warning => Style::default().fg(theme::SEVERITY_WARNING),
+        crate::analyzers::finding::Severity::Info => Style::default().fg(theme::SEVERITY_INFO),
     }
 }
 
@@ -906,13 +938,27 @@ fn key_badge(label: &str) -> Span<'_> {
     Span::styled(
         format!(" {label} "),
         Style::default()
-            .bg(Color::DarkGray)
-            .fg(Color::White)
+            .bg(theme::MUTED)
+            .fg(theme::TEXT)
             .add_modifier(Modifier::BOLD),
     )
 }
 
 /// Render a key description in muted text.
 fn key_desc(desc: &str) -> Span<'_> {
-    Span::styled(desc, Style::default().fg(Color::Gray))
+    Span::styled(desc, Style::default().fg(theme::TEXT_DIM))
+}
+
+/// Render a severity filter pill with active/inactive state.
+fn severity_pill(level: u8, label: &str, filter: u8, color: Color) -> Span<'static> {
+    let active = filter >= level;
+    let dot = if active { "\u{25cf}" } else { "\u{25cb}" };
+    Span::styled(
+        format!(" {level}{dot}{label} "),
+        if active {
+            Style::default().fg(color).add_modifier(Modifier::BOLD)
+        } else {
+            Style::default().fg(theme::MUTED)
+        },
+    )
 }
