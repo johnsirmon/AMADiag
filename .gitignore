@@ -11,3 +11,4 @@ samples/amalogs-ama-ubuntu22.tgz
 samples/**/MAEventTable.csv
 dist/amadiag-windows-x86_64-v0.2.0/quickstart.md
 dist/amadiag-windows-x86_64-v0.2.0/README.md
+feature-add.md
