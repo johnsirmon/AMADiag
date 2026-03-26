@@ -381,6 +381,13 @@ mod tests {
     }
 
     #[test]
+    fn dcr_error_matches() {
+        assert!(Patterns::dcr_error().is_match("DCR not found for workspace"));
+        assert!(Patterns::dcr_error().is_match("data collection rule invalid"));
+        assert!(!Patterns::dcr_error().is_match("DCR applied successfully"));
+    }
+
+    #[test]
     fn syslog_error_matches() {
         assert!(Patterns::syslog_error().is_match("rsyslog not running"));
         assert!(Patterns::syslog_error().is_match("syslog-ng stopped"));
@@ -391,6 +398,8 @@ mod tests {
     fn metrics_extension_error_matches() {
         assert!(Patterns::metrics_extension_error().is_match("MetricsExtension error in upload"));
         assert!(!Patterns::metrics_extension_error().is_match("MetricsExtension healthy"));
+        assert!(!Patterns::metrics_extension_error()
+            .is_match("[StartMetricsExtension] ErrorCode:0 INFO: MetricsExtension launch"));
     }
 
     #[test]
