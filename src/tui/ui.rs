@@ -131,7 +131,10 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
                         .add_modifier(Modifier::BOLD),
                 )
             } else {
-                (file_icon(&entry.name), Style::default().fg(theme::FILE_COLOR))
+                (
+                    file_icon(&entry.name),
+                    Style::default().fg(theme::FILE_COLOR),
+                )
             };
 
             let mut spans = vec![
