@@ -197,10 +197,7 @@ impl Patterns {
 
     pub fn cgroup_oom() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)",
-            )
-            .unwrap()
+            Regex::new(r"(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)").unwrap()
         });
         &RE
     }

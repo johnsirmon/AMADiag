@@ -143,6 +143,38 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             Severity::Warning,
             "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
         ),
+        (
+            Patterns::guest_agent_error(),
+            "GUEST-001",
+            "Linux Guest Agent Error",
+            Category::Installation,
+            Severity::Warning,
+            "https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux",
+        ),
+        (
+            Patterns::systemd_service_failure(),
+            "SERVICE-001",
+            "AMA Systemd Service Failure",
+            Category::AgentNotRunning,
+            Severity::Critical,
+            "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm",
+        ),
+        (
+            Patterns::disk_full(),
+            "DISK-001",
+            "Disk Space Exhaustion",
+            Category::Sizing,
+            Severity::Critical,
+            "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
+        ),
+        (
+            Patterns::cgroup_oom(),
+            "CGROUP-001",
+            "Memory Cgroup OOM Kill",
+            Category::Sizing,
+            Severity::Critical,
+            "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
+        ),
     ];
 
     for (pattern, rule_id, name, category, severity, doc_link) in &pattern_checks {
