@@ -61,7 +61,7 @@
   detection:
     file_pattern: ".log"
     condition: content_match
-    content_regex: "(?i)proxy.*(fail|error|refused|timeout|unreachable|authentication)"
+    content_regex: "(?i)proxy.*(\\bfailed\\b|\\bfailure\\b|\\brefused\\b|\\btimeout\\b|\\bunreachable\\b|authentication.*(fail|error)|connection.*refused)"
   remediation: >
     Verify the proxy configuration in /etc/opt/microsoft/azuremonitoragent/proxy.conf
     (Linux) or the agent proxy settings (Windows). Test connectivity through the

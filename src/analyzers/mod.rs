@@ -38,6 +38,12 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
 
     let mut findings = Vec::new();
 
+    // Regex to detect IPv6 context — lines about IPv6-only failures are benign
+    // on most Azure VMs and should not trigger connectivity/IMDS alerts.
+    static IPV6_RE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"(?i)(IPv6|fe80::|::[\da-f]{2,}|\[2[0-9a-f]{3}:)").unwrap()
+    });
+
     struct PatternCheck {
         pattern: &'static regex::Regex,
         rule_id: &'static str,
@@ -46,6 +52,8 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         severity: Severity,
         doc_link: &'static str,
         platform: Option<Platform>,
+        /// If true, skip lines containing IPv6 indicators.
+        exclude_ipv6: bool,
     }
 
     let pattern_checks = vec![
@@ -58,6 +66,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#verify-imds-connectivity",
             platform: None,
+            exclude_ipv6: true,
         },
         PatternCheck {
             pattern: Patterns::auth_token_error(),
@@ -68,6 +77,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::connectivity_error(),
@@ -78,6 +88,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration",
             platform: None,
+            exclude_ipv6: true,
         },
         PatternCheck {
             pattern: Patterns::service_crash(),
@@ -88,6 +99,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::dcr_error(),
@@ -98,6 +110,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::extension_error(),
@@ -108,6 +121,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#step-1-verify-that-the-extension-was-installed-properly",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::syslog_error(),
@@ -118,6 +132,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::metrics_extension_error(),
@@ -128,6 +143,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::arc_agent_error(),
@@ -138,6 +154,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-arc",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::oom_killer(),
@@ -148,6 +165,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::fluentbit_error(),
@@ -158,6 +176,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::mdsd_qos_failure(),
@@ -168,6 +187,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::throttling(),
@@ -178,6 +198,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::guest_agent_error(),
@@ -187,6 +208,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             severity: Severity::Warning,
             doc_link: "https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::systemd_service_failure(),
@@ -197,6 +219,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::disk_full(),
@@ -207,6 +230,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
             platform: None,
+            exclude_ipv6: false,
         },
         PatternCheck {
             pattern: Patterns::cgroup_oom(),
@@ -217,6 +241,7 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             doc_link:
                 "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
             platform: Some(Platform::Linux),
+            exclude_ipv6: false,
         },
     ];
 
@@ -230,6 +255,10 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         let mut evidence = Vec::new();
         for line in &bundle.log_lines {
             if check.pattern.is_match(&line.content) {
+                // Skip IPv6-only failures for connectivity/IMDS checks
+                if check.exclude_ipv6 && IPV6_RE.is_match(&line.content) {
+                    continue;
+                }
                 evidence.push(format!("{}:{}: {}", line.file, line.line_num, line.content));
                 if evidence.len() >= 5 {
                     break; // Cap evidence per finding

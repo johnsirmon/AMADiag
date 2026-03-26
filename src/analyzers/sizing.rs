@@ -63,7 +63,7 @@ fn check_resource_constraints(bundle: &ParsedBundle, findings: &mut Vec<Finding>
     });
 
     static DISK_RE: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?i)(disk.full|no.space|insufficient.disk|disk.space|write.fail.*disk)")
+        Regex::new(r"(?i)(disk.?(full|exhausted)|no.space.left|insufficient.disk.space|disk.space.*(low|critical|warning|insufficient)|write.fail.*disk)")
             .unwrap()
     });
 

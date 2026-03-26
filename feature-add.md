@@ -128,3 +128,11 @@ src/parser/ (Split into windows.rs, linux.rs, normalize.rs)
 src/model/ (diagnostic.rs, filter.rs, finding.rs)
 src/store/ (event_store.rs, grouping.rs, timeline.rs)
 src/widgets/ (overview.rs, findings_table.rs, detail.rs, raw_logs.rs)
+
+Phase 5.5
+add simple functionality to identify date range of the files, then extract only files from a date range based on size of bundle.  This functionality will have the ability to ignore logs, files older than 6 months.  Provide user ability to export a bundle that captures specific dates
+
+Phase 6.  Implement updated AMA for windows parsing logic to include feedback on how to actually parse data "C:\source\AMADiag\private\ReviewingAMATroubleshooterOutput.md"
+
+Phase 7.  add usability recommendations for reviewing AMA bundles based on evidence from this exa search here are results "C:\source\AMADiag\private\exarecommendation.md"
+

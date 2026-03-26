@@ -122,7 +122,7 @@ pub struct Patterns;
 impl Patterns {
     pub fn imds_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|fail|error|refused)")
+            Regex::new(r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|\bfail(ed|ure)?\b|\berror\b|refused)")
                 .unwrap()
         });
         &RE
@@ -140,7 +140,7 @@ impl Patterns {
 
     pub fn connectivity_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(connect|network|endpoint|AMCS|ingestion).*(fail|error|refused|timeout|unreachable)")
+            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler).*(\bfail(ed|ure)?\b|\berror\b|refused|timeout|unreachable)")
                 .unwrap()
         });
         &RE
@@ -149,7 +149,7 @@ impl Patterns {
     pub fn service_crash() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
             Regex::new(
-                r"(?i)(crash|terminated unexpectedly|service.stopped|not.running|process.exited)",
+                r"(?i)(crash(ed|ing)?|terminated unexpectedly|service.*(stopped|failed|dead)|process.exited.*(error|abnormal|unexpected))",
             )
             .unwrap()
         });
@@ -166,7 +166,7 @@ impl Patterns {
 
     pub fn extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(extension|provisioning).*(fail|error|timeout|not.installed)").unwrap()
+            Regex::new(r"(?i)(extension|provisioning).*(\bfailed\b|\bfailure\b|\btimeout\b|not.installed|provision.*(error|fail))").unwrap()
         });
         &RE
     }
@@ -183,7 +183,7 @@ impl Patterns {
 
     pub fn metrics_extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(MetricsExtension|ME\b).*(error|fail|Level\s*2)").unwrap()
+            Regex::new(r"(?i)(MetricsExtension|ME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)").unwrap()
         });
         &RE
     }

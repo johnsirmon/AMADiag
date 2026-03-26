@@ -26,7 +26,7 @@
   detection:
     file_pattern: "extension"
     condition: content_match
-    content_regex: "(?i)(provisioning|install|enable).*(fail|error|timeout)"
+    content_regex: "(?i)(provisioning|install(ation)?|enable)\\s.{0,80}(\\bfailed\\b|\\bfailure\\b|\\btimeout\\b|exit.code.(?!0\\b)\\d+)"
   remediation: >
     Check the extension status in the Azure portal. Common causes include
     blocked network endpoints, insufficient permissions, or OS compatibility issues.

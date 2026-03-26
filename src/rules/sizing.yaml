@@ -45,7 +45,7 @@
   detection:
     file_pattern: ".log"
     condition: content_match
-    content_regex: "(?i)(disk.full|no.space|insufficient.disk|disk.space)"
+    content_regex: "(?i)(disk.?(full|exhausted)|no.space.left|insufficient.disk.space|disk.space.*(low|critical|warning|insufficient))"
   remediation: >
     Free disk space on the partition where AMA stores its data. On Windows this
     is typically C:\\WindowsAzure\\Resources\\AMADataStore. On Linux, check

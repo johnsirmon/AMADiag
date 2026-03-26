@@ -151,10 +151,25 @@ fn evaluate_single_rule(rule: &RuleDefinition, bundle: &ParsedBundle) -> Option<
         "file_missing" => {
             if let Some(pattern) = &rule.detection.file_pattern {
                 let pat_lower = pattern.to_lowercase();
-                !bundle
+                let file_missing = !bundle
                     .files
                     .keys()
-                    .any(|k| k.to_lowercase().contains(&pat_lower))
+                    .any(|k| k.to_lowercase().contains(&pat_lower));
+
+                // For identity checks: if the auth token file is missing but
+                // IMDS metadata response is present, the VM has working identity
+                // via IMDS. Don't flag as missing identity.
+                if file_missing && pat_lower.contains("authtoken") {
+                    let has_imds = bundle
+                        .files
+                        .keys()
+                        .any(|k| k.to_lowercase().contains("imdsmetadata"));
+                    if has_imds {
+                        return None;
+                    }
+                }
+
+                file_missing
             } else {
                 false
             }
@@ -196,7 +211,21 @@ fn evaluate_single_rule(rule: &RuleDefinition, bundle: &ParsedBundle) -> Option<
                 } else {
                     match elem_lower.as_str() {
                         "counterset" => {
-                            bundle.xml_configs.iter().all(|c| c.counter_sets.is_empty())
+                            // If there are JSON-based DCR configs (modern AMA),
+                            // CounterSets in XML may legitimately be absent.
+                            let has_json_config = bundle
+                                .files
+                                .keys()
+                                .any(|k| {
+                                    let lk = k.to_lowercase();
+                                    lk.contains("mcsconfig") && lk.ends_with(".json")
+                                        || lk.contains("configchunks")
+                                });
+                            if has_json_config {
+                                false
+                            } else {
+                                bundle.xml_configs.iter().all(|c| c.counter_sets.is_empty())
+                            }
                         }
                         "subscription" => bundle
                             .xml_configs
