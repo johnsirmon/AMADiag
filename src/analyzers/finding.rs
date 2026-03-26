@@ -138,3 +138,87 @@ impl DiagnosticReport {
             .count()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn sample_finding(severity: Severity) -> Finding {
+        Finding {
+            rule_id: "TEST-001".to_string(),
+            name: "Test Finding".to_string(),
+            severity,
+            category: Category::Connectivity,
+            description: "A test finding".to_string(),
+            evidence: vec!["test evidence".to_string()],
+            remediation: "Fix it".to_string(),
+            doc_link: None,
+        }
+    }
+
+    #[test]
+    fn finding_is_critical() {
+        assert!(sample_finding(Severity::Critical).is_critical());
+        assert!(!sample_finding(Severity::Warning).is_critical());
+        assert!(!sample_finding(Severity::Info).is_critical());
+    }
+
+    #[test]
+    fn severity_ordering() {
+        assert!(Severity::Info < Severity::Warning);
+        assert!(Severity::Warning < Severity::Critical);
+    }
+
+    #[test]
+    fn report_has_critical_findings() {
+        let mut report = DiagnosticReport::new("test".to_string());
+        assert!(!report.has_critical_findings());
+
+        report.findings.push(sample_finding(Severity::Warning));
+        assert!(!report.has_critical_findings());
+
+        report.findings.push(sample_finding(Severity::Critical));
+        assert!(report.has_critical_findings());
+    }
+
+    #[test]
+    fn report_count_by_severity() {
+        let mut report = DiagnosticReport::new("test".to_string());
+        report.findings.push(sample_finding(Severity::Critical));
+        report.findings.push(sample_finding(Severity::Critical));
+        report.findings.push(sample_finding(Severity::Warning));
+        report.findings.push(sample_finding(Severity::Info));
+
+        assert_eq!(report.finding_count_by_severity(Severity::Critical), 2);
+        assert_eq!(report.finding_count_by_severity(Severity::Warning), 1);
+        assert_eq!(report.finding_count_by_severity(Severity::Info), 1);
+    }
+
+    #[test]
+    fn severity_display() {
+        assert_eq!(Severity::Critical.to_string(), "Critical");
+        assert_eq!(Severity::Warning.to_string(), "Warning");
+        assert_eq!(Severity::Info.to_string(), "Info");
+    }
+
+    #[test]
+    fn category_display() {
+        assert_eq!(Category::Installation.to_string(), "Installation");
+        assert_eq!(Category::Dcr.to_string(), "DCR Configuration");
+        assert_eq!(Category::Syslog.to_string(), "Syslog/CEF Forwarding");
+    }
+
+    #[test]
+    fn platform_display() {
+        assert_eq!(Platform::Windows.to_string(), "Windows");
+        assert_eq!(Platform::Linux.to_string(), "Linux");
+    }
+
+    #[test]
+    fn empty_report_no_critical() {
+        let report = DiagnosticReport::new("empty".to_string());
+        assert!(!report.has_critical_findings());
+        assert_eq!(report.findings.len(), 0);
+        assert_eq!(report.finding_count_by_severity(Severity::Critical), 0);
+    }
+}

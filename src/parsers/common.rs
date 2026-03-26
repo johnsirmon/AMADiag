@@ -138,3 +138,110 @@ impl Patterns {
         &RE
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn classify_error_lines() {
+        assert_eq!(classify_line("FATAL: disk full"), LogLevel::Error);
+        assert_eq!(classify_line("Operation failed"), LogLevel::Error);
+        assert_eq!(classify_line("exception occurred"), LogLevel::Error);
+    }
+
+    #[test]
+    fn classify_warning_lines() {
+        assert_eq!(classify_line("WARNING: low disk"), LogLevel::Warning);
+        assert_eq!(classify_line("caution: retry"), LogLevel::Warning);
+    }
+
+    #[test]
+    fn classify_unknown_lines() {
+        assert_eq!(classify_line("all systems nominal"), LogLevel::Unknown);
+        assert_eq!(classify_line(""), LogLevel::Unknown);
+    }
+
+    #[test]
+    fn parse_log_lines_basic() {
+        let content = "line one\nerror occurred\nwarning low memory\ninfo line";
+        let lines = parse_log_lines(content, "test.log");
+        assert_eq!(lines.len(), 4);
+        assert_eq!(lines[0].level, LogLevel::Unknown);
+        assert_eq!(lines[1].level, LogLevel::Error);
+        assert_eq!(lines[2].level, LogLevel::Warning);
+        assert_eq!(lines[0].line_num, 1);
+        assert_eq!(lines[0].file, "test.log");
+    }
+
+    #[test]
+    fn imds_error_matches() {
+        assert!(Patterns::imds_error().is_match("IMDS endpoint unreachable"));
+        assert!(Patterns::imds_error().is_match("169.254.169.254 timeout"));
+        assert!(!Patterns::imds_error().is_match("all systems normal"));
+    }
+
+    #[test]
+    fn auth_token_error_matches() {
+        assert!(Patterns::auth_token_error().is_match("managed identity token failed"));
+        assert!(Patterns::auth_token_error().is_match("MSI auth token expired"));
+        assert!(!Patterns::auth_token_error().is_match("token refresh succeeded"));
+    }
+
+    #[test]
+    fn connectivity_error_matches() {
+        assert!(Patterns::connectivity_error().is_match("AMCS endpoint connection refused"));
+        assert!(Patterns::connectivity_error().is_match("network timeout on ingestion"));
+        assert!(!Patterns::connectivity_error().is_match("connected successfully"));
+    }
+
+    #[test]
+    fn service_crash_matches() {
+        assert!(Patterns::service_crash().is_match("process exited unexpectedly"));
+        assert!(Patterns::service_crash().is_match("service stopped"));
+        assert!(!Patterns::service_crash().is_match("service started"));
+    }
+
+    #[test]
+    fn dcr_error_matches() {
+        assert!(Patterns::dcr_error().is_match("DCR not found for workspace"));
+        assert!(Patterns::dcr_error().is_match("data collection rule invalid"));
+        assert!(!Patterns::dcr_error().is_match("DCR applied successfully"));
+    }
+
+    #[test]
+    fn extension_error_matches() {
+        assert!(Patterns::extension_error().is_match("extension provisioning failed"));
+        assert!(!Patterns::extension_error().is_match("extension installed"));
+    }
+
+    #[test]
+    fn syslog_error_matches() {
+        assert!(Patterns::syslog_error().is_match("rsyslog not running"));
+        assert!(Patterns::syslog_error().is_match("syslog-ng stopped"));
+        assert!(!Patterns::syslog_error().is_match("rsyslog is active"));
+    }
+
+    #[test]
+    fn metrics_extension_error_matches() {
+        assert!(Patterns::metrics_extension_error().is_match("MetricsExtension error in upload"));
+        assert!(!Patterns::metrics_extension_error().is_match("MetricsExtension healthy"));
+    }
+
+    #[test]
+    fn arc_agent_error_matches() {
+        assert!(Patterns::arc_agent_error().is_match("azcmagent not running"));
+        assert!(Patterns::arc_agent_error().is_match("connected machine agent failed"));
+        assert!(!Patterns::arc_agent_error().is_match("arc agent connected"));
+    }
+
+    #[test]
+    fn version_pattern_matches() {
+        let re = Patterns::version_pattern();
+        let caps = re.captures("Version: 1.24.3.0").unwrap();
+        assert_eq!(&caps[1], "1.24.3.0");
+
+        let caps = re.captures("ver: 2.0.1").unwrap();
+        assert_eq!(&caps[1], "2.0.1");
+    }
+}

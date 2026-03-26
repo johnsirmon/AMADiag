@@ -62,6 +62,10 @@ fn extract_tar_gz(path: &Path) -> Result<(PathBuf, Option<tempdir::TempDir>)> {
         std::fs::File::open(path).with_context(|| format!("Failed to open {}", path.display()))?;
     let gz = flate2::read::GzDecoder::new(file);
     let mut archive = tar::Archive::new(gz);
+    // SAFETY: tar::Archive::unpack() (since v0.4.16) rejects absolute paths and
+    // path components containing `..`, providing built-in protection against
+    // path-traversal (Zip Slip) attacks. The ZIP extraction path uses
+    // `enclosed_name()` for the same purpose.
     archive
         .unpack(tmp.path())
         .with_context(|| format!("Failed to extract tar.gz: {}", path.display()))?;
@@ -193,5 +197,88 @@ mod tempdir {
         fn drop(&mut self) {
             let _ = std::fs::remove_dir_all(&self.path);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    #[test]
+    fn detect_directory_format() {
+        let dir = std::env::temp_dir();
+        let fmt = detect_format(&dir).unwrap();
+        assert!(matches!(fmt, BundleFormat::Directory));
+    }
+
+    #[test]
+    fn detect_tgz_by_extension() {
+        let fmt = detect_format(Path::new("bundle.tgz"));
+        // File doesn't exist, but format detection for dirs happens first;
+        // for non-existent files we get an error about path not existing.
+        assert!(fmt.is_err());
+    }
+
+    #[test]
+    fn detect_tar_gz_extension() {
+        // Create a temp file with .tar.gz extension
+        let tmp = tempdir::TempDir::new("amadiag-test").unwrap();
+        let p = tmp.path().join("bundle.tar.gz");
+        std::fs::write(&p, b"not-a-real-archive").unwrap();
+        let fmt = detect_format(&p).unwrap();
+        assert!(matches!(fmt, BundleFormat::TarGz));
+    }
+
+    #[test]
+    fn detect_zip_extension() {
+        let tmp = tempdir::TempDir::new("amadiag-test").unwrap();
+        let p = tmp.path().join("bundle.zip");
+        std::fs::write(&p, b"not-a-real-archive").unwrap();
+        let fmt = detect_format(&p).unwrap();
+        assert!(matches!(fmt, BundleFormat::Zip));
+    }
+
+    #[test]
+    fn reject_unknown_extension() {
+        let tmp = tempdir::TempDir::new("amadiag-test").unwrap();
+        let p = tmp.path().join("bundle.txt");
+        std::fs::write(&p, b"hello").unwrap();
+        assert!(detect_format(&p).is_err());
+    }
+
+    #[test]
+    fn reject_nonexistent_path() {
+        assert!(detect_format(Path::new("/no/such/path/bundle.zip")).is_err());
+    }
+
+    #[test]
+    fn format_size_bytes() {
+        assert_eq!(format_size(500), "500 B");
+    }
+
+    #[test]
+    fn format_size_kb() {
+        assert_eq!(format_size(2048), "2.0 KB");
+    }
+
+    #[test]
+    fn format_size_mb() {
+        assert_eq!(format_size(5 * 1024 * 1024), "5.0 MB");
+    }
+
+    #[test]
+    fn bundle_format_display() {
+        assert_eq!(BundleFormat::Directory.to_string(), "Directory");
+        assert_eq!(BundleFormat::TarGz.to_string(), "tar.gz archive");
+        assert_eq!(BundleFormat::Zip.to_string(), "ZIP archive");
+    }
+
+    #[test]
+    fn extract_directory_returns_same_path() {
+        let dir = std::env::temp_dir();
+        let (path, tmp) = extract_bundle(&dir).unwrap();
+        assert_eq!(path, dir);
+        assert!(tmp.is_none());
     }
 }

@@ -1,0 +1,47 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+env:
+    CARGO_TERM_COLOR: always
+
+jobs:
+    check:
+        name: Check (${{ matrix.rust }})
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                rust: [stable, "1.80"]
+        steps:
+            - uses: actions/checkout@v4
+            - uses: dtolnay/rust-toolchain@master
+              with:
+                  toolchain: ${{ matrix.rust }}
+                  components: clippy, rustfmt
+            - uses: Swatinem/rust-cache@v2
+
+            - name: Check formatting
+              if: matrix.rust == 'stable'
+              run: cargo fmt --check
+
+            - name: Clippy
+              run: cargo clippy --all-targets --all-features -- -D warnings
+
+            - name: Build
+              run: cargo build --all-features
+
+            - name: Test
+              run: cargo test --all-features
+
+    # Run on stable only — advisory DB may not resolve on MSRV
+    deny:
+        name: cargo-deny
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: EmbarkStudios/cargo-deny-action@v2

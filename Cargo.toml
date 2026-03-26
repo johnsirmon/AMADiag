@@ -2,6 +2,7 @@
 name = "amadiag"
 version = "0.2.0"
 edition = "2021"
+rust-version = "1.80"
 description = "Diagnostic analyzer for Azure Monitor Agent (AMA) troubleshooter output"
 license = "MIT"
 repository = "https://github.com/johnsirmon/AMADiag"
@@ -49,10 +50,46 @@ tui-big-text = { version = "0.7", optional = true }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
-# Parallelism
-rayon = "1"
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Allow common pedantic lints that are too noisy for this codebase
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+doc_markdown = "allow"
+too_many_lines = "allow"
+cast_precision_loss = "allow"
+cast_possible_truncation = "allow"
+single_match_else = "allow"
+manual_let_else = "allow"
+redundant_closure_for_method_calls = "allow"
+struct_excessive_bools = "allow"
+return_self_not_must_use = "allow"
+match_same_arms = "allow"
+# Temporarily allowed — plan to fix iteratively
+assigning_clones = "allow"
+case_sensitive_file_extension_comparisons = "allow"
+comparison_chain = "allow"
+format_push_string = "allow"
+if_not_else = "allow"
+if_same_then_else = "allow"
+inefficient_to_string = "allow"
+map_unwrap_or = "allow"
+stable_sort_primitive = "allow"
+unnested_or_patterns = "allow"
+unused_enumerate_index = "allow"
 
 [profile.release]
 lto = true
 codegen-units = 1
 strip = true
+overflow-checks = true

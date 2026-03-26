@@ -265,3 +265,217 @@ pub fn print_rules_table(rules: &[RuleDefinition]) {
 
     println!("{table}");
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parsers::ParsedBundle;
+    use std::collections::HashMap;
+
+    #[test]
+    fn load_all_builtin_rules() {
+        let rules = load_builtin_rules().unwrap();
+        assert!(!rules.is_empty(), "Should load at least one rule");
+        // Verify each rule has required fields
+        for rule in &rules {
+            assert!(!rule.id.is_empty(), "Rule ID must not be empty");
+            assert!(!rule.name.is_empty(), "Rule name must not be empty");
+            assert!(
+                !rule.platforms.is_empty(),
+                "Rule {} must have platforms",
+                rule.id
+            );
+            assert!(
+                !rule.description.is_empty(),
+                "Rule {} must have description",
+                rule.id
+            );
+            assert!(
+                !rule.remediation.is_empty(),
+                "Rule {} must have remediation",
+                rule.id
+            );
+        }
+    }
+
+    #[test]
+    fn rule_ids_are_unique() {
+        let rules = load_builtin_rules().unwrap();
+        let mut ids: Vec<&str> = rules.iter().map(|r| r.id.as_str()).collect();
+        ids.sort();
+        let before_dedup = ids.len();
+        ids.dedup();
+        assert_eq!(ids.len(), before_dedup, "Rule IDs must be unique");
+    }
+
+    #[test]
+    fn content_match_rule_fires_on_matching_content() {
+        let rule = RuleDefinition {
+            id: "TEST-001".to_string(),
+            name: "Test Rule".to_string(),
+            severity: RuleSeverity::Warning,
+            category: RuleCategory::Connectivity,
+            platforms: vec!["windows".to_string()],
+            description: "Test".to_string(),
+            detection: Detection {
+                file_pattern: Some(".log".to_string()),
+                condition: "content_match".to_string(),
+                content_regex: Some(r"(?i)AMCS.*refused".to_string()),
+                xml_element: None,
+            },
+            remediation: "Fix".to_string(),
+            doc_link: None,
+        };
+
+        let mut files = HashMap::new();
+        files.insert(
+            "agent.log".to_string(),
+            "AMCS endpoint connection refused".to_string(),
+        );
+        let bundle = ParsedBundle {
+            platform: Some(crate::analyzers::finding::Platform::Windows),
+            files,
+            ..Default::default()
+        };
+
+        let finding = evaluate_single_rule(&rule, &bundle);
+        assert!(finding.is_some(), "Rule should fire on matching content");
+        assert_eq!(finding.unwrap().rule_id, "TEST-001");
+    }
+
+    #[test]
+    fn content_match_rule_does_not_fire_on_clean_content() {
+        let rule = RuleDefinition {
+            id: "TEST-002".to_string(),
+            name: "Test Rule".to_string(),
+            severity: RuleSeverity::Critical,
+            category: RuleCategory::Connectivity,
+            platforms: vec!["windows".to_string()],
+            description: "Test".to_string(),
+            detection: Detection {
+                file_pattern: Some(".log".to_string()),
+                condition: "content_match".to_string(),
+                content_regex: Some(r"(?i)AMCS.*refused".to_string()),
+                xml_element: None,
+            },
+            remediation: "Fix".to_string(),
+            doc_link: None,
+        };
+
+        let mut files = HashMap::new();
+        files.insert(
+            "agent.log".to_string(),
+            "AMCS endpoint connected successfully".to_string(),
+        );
+        let bundle = ParsedBundle {
+            platform: Some(crate::analyzers::finding::Platform::Windows),
+            files,
+            ..Default::default()
+        };
+
+        assert!(
+            evaluate_single_rule(&rule, &bundle).is_none(),
+            "Rule should not fire on clean content"
+        );
+    }
+
+    #[test]
+    fn file_missing_rule_fires_when_absent() {
+        let rule = RuleDefinition {
+            id: "TEST-003".to_string(),
+            name: "Missing Config".to_string(),
+            severity: RuleSeverity::Critical,
+            category: RuleCategory::Dcr,
+            platforms: vec!["windows".to_string()],
+            description: "Test".to_string(),
+            detection: Detection {
+                file_pattern: Some("mcsconfig".to_string()),
+                condition: "file_missing".to_string(),
+                content_regex: None,
+                xml_element: None,
+            },
+            remediation: "Fix".to_string(),
+            doc_link: None,
+        };
+
+        let bundle = ParsedBundle {
+            platform: Some(crate::analyzers::finding::Platform::Windows),
+            files: HashMap::new(), // no files at all
+            ..Default::default()
+        };
+
+        assert!(
+            evaluate_single_rule(&rule, &bundle).is_some(),
+            "file_missing rule should fire when file is absent"
+        );
+    }
+
+    #[test]
+    fn file_missing_rule_silent_when_present() {
+        let rule = RuleDefinition {
+            id: "TEST-004".to_string(),
+            name: "Missing Config".to_string(),
+            severity: RuleSeverity::Critical,
+            category: RuleCategory::Dcr,
+            platforms: vec!["windows".to_string()],
+            description: "Test".to_string(),
+            detection: Detection {
+                file_pattern: Some("mcsconfig".to_string()),
+                condition: "file_missing".to_string(),
+                content_regex: None,
+                xml_element: None,
+            },
+            remediation: "Fix".to_string(),
+            doc_link: None,
+        };
+
+        let mut files = HashMap::new();
+        files.insert("mcsconfig.lkg.xml".to_string(), "<xml/>".to_string());
+        let bundle = ParsedBundle {
+            platform: Some(crate::analyzers::finding::Platform::Windows),
+            files,
+            ..Default::default()
+        };
+
+        assert!(
+            evaluate_single_rule(&rule, &bundle).is_none(),
+            "file_missing rule should not fire when file is present"
+        );
+    }
+
+    #[test]
+    fn platform_filter_skips_non_matching_rules() {
+        let rules = vec![RuleDefinition {
+            id: "LINUX-001".to_string(),
+            name: "Linux Only".to_string(),
+            severity: RuleSeverity::Warning,
+            category: RuleCategory::Syslog,
+            platforms: vec!["linux".to_string()],
+            description: "Test".to_string(),
+            detection: Detection {
+                file_pattern: Some(".log".to_string()),
+                condition: "content_match".to_string(),
+                content_regex: Some(r"always-match".to_string()),
+                xml_element: None,
+            },
+            remediation: "Fix".to_string(),
+            doc_link: None,
+        }];
+
+        let mut files = HashMap::new();
+        files.insert("test.log".to_string(), "always-match".to_string());
+        let bundle = ParsedBundle {
+            platform: Some(crate::analyzers::finding::Platform::Windows),
+            files,
+            ..Default::default()
+        };
+
+        let findings = evaluate_rules(&rules, &bundle);
+        // The rule targets linux only, bundle is windows — rule should be skipped
+        // (but log pattern scanning may still produce findings)
+        assert!(
+            !findings.iter().any(|f| f.rule_id == "LINUX-001"),
+            "Linux rule should not fire on Windows bundle"
+        );
+    }
+}
