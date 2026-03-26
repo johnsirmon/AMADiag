@@ -1,9 +1,13 @@
 use super::app::{App, Focus, Screen, StatusKind};
+use super::theme;
 use ratatui::{
-    layout::{Constraint, Direction, Layout, Rect},
+    layout::{Constraint, Direction, Layout, Position, Rect},
     style::{Color, Modifier, Style},
     text::{Line, Span, Text},
-    widgets::{Block, BorderType, Clear, List, ListItem, Paragraph, Wrap},
+    widgets::{
+        Block, BorderType, Clear, List, ListItem, Paragraph, Scrollbar, ScrollbarOrientation,
+        ScrollbarState, Wrap,
+    },
     Frame,
 };
 use tui_big_text::{BigText, PixelSize};
