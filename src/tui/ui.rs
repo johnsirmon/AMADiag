@@ -106,34 +106,32 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
             body,
         );
     } else {
-        let dir_count = app.dir_count();
         let mut items: Vec<ListItem> = Vec::new();
 
-        for (i, entry) in app.browser_entries().iter().enumerate() {
-            // Insert separator between dirs and files
-            if i == dir_count && dir_count > 0 {
-                items.push(ListItem::new(Line::from(Span::styled(
-                    " ─────────────────────────────────",
-                    Style::default().fg(Color::DarkGray),
-                ))));
-            }
-
-            let (icon, style) = if entry.is_dir {
+        for (_i, entry) in app.browser_entries().iter().enumerate() {
+            let (icon, style) = if entry.name == ".." {
+                (
+                    "↩ ",
+                    Style::default()
+                        .fg(theme::DIR_COLOR)
+                        .add_modifier(Modifier::BOLD),
+                )
+            } else if entry.is_dir {
                 (
                     "📁 ",
                     Style::default()
-                        .fg(Color::Cyan)
+                        .fg(theme::DIR_COLOR)
                         .add_modifier(Modifier::BOLD),
                 )
             } else if entry.is_bundle {
                 (
                     "🔍 ",
                     Style::default()
-                        .fg(Color::Green)
+                        .fg(theme::BUNDLE_COLOR)
                         .add_modifier(Modifier::BOLD),
                 )
             } else {
-                (file_icon(&entry.name), Style::default().fg(Color::DarkGray))
+                (file_icon(&entry.name), Style::default().fg(theme::FILE_COLOR))
             };
 
             let mut spans = vec![
@@ -157,27 +155,21 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
             items.push(ListItem::new(Line::from(spans)));
         }
 
-        // No bundles hint
+        let title = format!("Files ({entry_count} items)");
+        let mut block = Block::bordered()
+            .border_type(BorderType::Rounded)
+            .title(title);
+
         if !has_bundles {
-            items.push(ListItem::new(Line::from(Span::styled(
-                " 💡 No AMA bundles (.zip, .tgz) found in this directory",
-                Style::default().fg(Color::Yellow),
-            ))));
+            block = block.title_bottom(Line::from(Span::styled(
+                " 💡 No AMA bundles (.zip, .tgz) found in this directory ",
+                Style::default().fg(theme::WARNING),
+            )));
         }
 
-        let title = format!("Files ({entry_count} items)");
         let list = List::new(items)
-            .block(
-                Block::bordered()
-                    .border_type(BorderType::Rounded)
-                    .title(title),
-            )
-            .highlight_style(
-                Style::default()
-                    .bg(Color::Blue)
-                    .fg(Color::White)
-                    .add_modifier(Modifier::BOLD),
-            )
+            .block(block)
+            .highlight_style(theme::highlight())
             .highlight_symbol("▶ ");
 
         frame.render_stateful_widget(list, body, app.browser_state());
@@ -261,10 +253,17 @@ fn draw_path_input(frame: &mut Frame, app: &mut App) {
         .block(
             Block::bordered()
                 .border_type(BorderType::Rounded)
-                .title("Input path (.zip, .tgz, .tar.gz, or extracted folder)"),
+                .title("Input path (.zip, .tgz, .tar.gz, or extracted folder)")
+                .border_style(theme::focused_border()),
         )
         .wrap(Wrap { trim: false });
     frame.render_widget(input, input_area);
+
+    // Show cursor at end of input text
+    let cursor_offset = app.input_path().len() as u16;
+    let cursor_x = (input_area.x + 1 + cursor_offset).min(input_area.right().saturating_sub(2));
+    let cursor_y = input_area.y + 1;
+    frame.set_cursor_position(Position::new(cursor_x, cursor_y));
 
     let mut lines = vec![
         Line::from("Type or paste a path, then press Enter to start analysis."),
@@ -304,7 +303,7 @@ fn draw_analyzing(frame: &mut Frame, app: &mut App) {
     let popup = centered_rect(60, 20, frame.area());
     frame.render_widget(Clear, popup);
 
-    let spinner = ["|", "/", "-", "\\"];
+    let spinner = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
     let current = spinner[app.tick() % spinner.len()];
     let text = Text::from(vec![
         Line::from(Span::styled(
