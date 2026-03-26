@@ -32,12 +32,10 @@ static RFC3339_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?P<ts>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))")
         .unwrap()
 });
-static SPACE_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?P<ts>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap()
-});
-static SLASH_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?P<ts>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap()
-});
+static SPACE_TS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?P<ts>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap());
+static SLASH_TS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?P<ts>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap());
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TimestampKind {
@@ -323,7 +321,10 @@ mod tests {
                 TimestampKind::DateTime(ts) => ts,
             })
             .unwrap();
-        assert_eq!(timestamp.format("%Y-%m-%d %H:%M:%S").to_string(), "2026-03-26 10:15:00");
+        assert_eq!(
+            timestamp.format("%Y-%m-%d %H:%M:%S").to_string(),
+            "2026-03-26 10:15:00"
+        );
     }
 
     #[test]
@@ -333,7 +334,10 @@ mod tests {
                 TimestampKind::DateTime(ts) => ts,
             })
             .unwrap();
-        assert_eq!(timestamp.format("%Y/%m/%d %H:%M:%S").to_string(), "2026/03/26 10:15:00");
+        assert_eq!(
+            timestamp.format("%Y/%m/%d %H:%M:%S").to_string(),
+            "2026/03/26 10:15:00"
+        );
     }
 
     #[test]

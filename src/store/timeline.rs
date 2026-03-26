@@ -23,7 +23,10 @@ pub fn build_timeline(events: &[DiagnosticEvent], bucket_minutes: i64) -> Vec<Ti
             - Duration::seconds(i64::from(ts.second()))
             - Duration::nanoseconds(i64::from(ts.nanosecond()));
 
-        if let Some(bucket) = buckets.iter_mut().find(|bucket| bucket.start == bucket_start) {
+        if let Some(bucket) = buckets
+            .iter_mut()
+            .find(|bucket| bucket.start == bucket_start)
+        {
             if event.severity >= Severity::Medium {
                 bucket.warning_or_higher += 1;
             }
@@ -43,4 +46,3 @@ pub fn build_timeline(events: &[DiagnosticEvent], bucket_minutes: i64) -> Vec<Ti
     buckets.sort_by_key(|bucket| bucket.start);
     buckets
 }
-

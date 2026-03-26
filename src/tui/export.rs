@@ -159,7 +159,9 @@ fn render_dashboard_markdown(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::model::diagnostic::{Category, EvidenceRef, FindingGroup, Severity as UiSeverity, Status};
+    use crate::model::diagnostic::{
+        Category, EvidenceRef, FindingGroup, Severity as UiSeverity, Status,
+    };
     use chrono::Utc;
 
     #[test]

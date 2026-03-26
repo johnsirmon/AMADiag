@@ -47,7 +47,9 @@ pub fn analyze_bundle(path: &Path) -> Result<DiagnosticReport> {
 
     // Enrich with platform-specific data
     match bundle.platform {
-        Some(Platform::Windows) => parsers::windows::enrich_windows_data(&mut bundle, extracted.path()),
+        Some(Platform::Windows) => {
+            parsers::windows::enrich_windows_data(&mut bundle, extracted.path())
+        }
         Some(Platform::Linux) => parsers::linux::enrich_linux_data(&mut bundle, extracted.path()),
         None => tracing::warn!("Could not detect platform — running generic analysis"),
     }
@@ -64,15 +66,14 @@ pub fn analyze_bundle_for_tui(path: &Path) -> Result<TuiAnalysis> {
         Some(Platform::Windows) => {
             parsers::windows::enrich_windows_data(&mut bundle, extracted_bundle.path())
         }
-        Some(Platform::Linux) => parsers::linux::enrich_linux_data(&mut bundle, extracted_bundle.path()),
+        Some(Platform::Linux) => {
+            parsers::linux::enrich_linux_data(&mut bundle, extracted_bundle.path())
+        }
         None => tracing::warn!("Could not detect platform — running generic analysis"),
     }
 
     let report = finalize_report(path, &bundle)?;
-    let os = bundle
-        .platform
-        .map(OsKind::from)
-        .unwrap_or(OsKind::Linux);
+    let os = bundle.platform.map(OsKind::from).unwrap_or(OsKind::Linux);
     let event_store = EventStore::from_bundle_dir(extracted_bundle.path(), os)?;
 
     let mut events = event_store.events().to_vec();

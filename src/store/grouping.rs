@@ -77,7 +77,13 @@ pub fn group_events(events: &[DiagnosticEvent], indices: &[usize]) -> Vec<Findin
 fn sanitize_key(value: &str) -> String {
     value
         .chars()
-        .map(|ch| if ch.is_ascii_alphanumeric() { ch.to_ascii_lowercase() } else { '-' })
+        .map(|ch| {
+            if ch.is_ascii_alphanumeric() {
+                ch.to_ascii_lowercase()
+            } else {
+                '-'
+            }
+        })
         .collect()
 }
 
@@ -132,13 +138,11 @@ pub fn advice_for_event(event: &DiagnosticEvent) -> Advice {
                 "IMDS access may be unavailable or blocked.".to_string(),
             ],
             suggested_actions: vec![
-                "Verify managed identity assignment and IMDS connectivity.".to_string(),
+                "Verify managed identity assignment and IMDS connectivity.".to_string()
             ],
         },
         Category::Service | Category::Install => Advice {
-            likely_causes: vec![
-                "AMA service or extension installation is unhealthy.".to_string(),
-            ],
+            likely_causes: vec!["AMA service or extension installation is unhealthy.".to_string()],
             suggested_actions: vec![
                 "Review extension/service logs and restart or reinstall if necessary.".to_string(),
             ],
@@ -147,13 +151,13 @@ pub fn advice_for_event(event: &DiagnosticEvent) -> Advice {
             likely_causes: vec![
                 "The host is experiencing resource pressure that impacts AMA.".to_string(),
             ],
-            suggested_actions: vec![
-                "Inspect disk, CPU, and memory usage on the host.".to_string(),
-            ],
+            suggested_actions: vec!["Inspect disk, CPU, and memory usage on the host.".to_string()],
         },
         _ => Advice {
             likely_causes: vec!["Repeated AMA-related log signals were observed.".to_string()],
-            suggested_actions: vec!["Inspect the supporting evidence lines for context.".to_string()],
+            suggested_actions: vec![
+                "Inspect the supporting evidence lines for context.".to_string()
+            ],
         },
     }
 }

@@ -103,7 +103,11 @@ impl EventStore {
             }
 
             let line = line?;
-            let marker = if evidence.line_range.contains(&line_number) { '>' } else { ' ' };
+            let marker = if evidence.line_range.contains(&line_number) {
+                '>'
+            } else {
+                ' '
+            };
             lines.push(format!("{marker} {line_number:>6}  {line}"));
         }
 
@@ -135,12 +139,16 @@ impl EventStore {
     }
 }
 
-fn classify_line(file_id: &str, line_number: usize, line: &str, os: OsKind) -> Option<DiagnosticEvent> {
+fn classify_line(
+    file_id: &str,
+    line_number: usize,
+    line: &str,
+    os: OsKind,
+) -> Option<DiagnosticEvent> {
     let log_level = common::classify_line(line);
-    let timestamp = common::extract_timestamp(line)
-        .and_then(|candidate| match candidate.kind {
-            TimestampKind::DateTime(value) => Some(value),
-        });
+    let timestamp = common::extract_timestamp(line).and_then(|candidate| match candidate.kind {
+        TimestampKind::DateTime(value) => Some(value),
+    });
 
     let mut category = Category::Other;
     let mut title = match log_level {

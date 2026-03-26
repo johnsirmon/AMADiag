@@ -3,6 +3,7 @@ mod event;
 mod export;
 mod theme;
 mod ui;
+mod widgets;
 
 use crate::detect::TuiAnalysis;
 use anyhow::Result;

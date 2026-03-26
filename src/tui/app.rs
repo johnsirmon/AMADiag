@@ -303,7 +303,8 @@ impl App {
     pub fn selected_category_label(&self) -> String {
         let items = self.navigator_items();
         let selected = self.navigator_state.selected().unwrap_or(0);
-        items.get(selected)
+        items
+            .get(selected)
             .map(|(label, _)| label.clone())
             .unwrap_or_else(|| "All categories".to_string())
     }
@@ -359,9 +360,8 @@ impl App {
                 self.evidence_scroll = 0;
                 self.severity_filter = 3;
                 self.navigator_state.select(Some(0));
-                self.findings_state.select(
-                    (self.grouped_finding_count() > 0).then_some(0),
-                );
+                self.findings_state
+                    .select((self.grouped_finding_count() > 0).then_some(0));
                 self.refresh_evidence();
                 self.set_info_status(format!(
                     "Analysis complete: {finding_count} grouped finding(s)"
@@ -900,7 +900,8 @@ impl App {
                     return;
                 }
                 let current = self.navigator_state.selected().unwrap_or(0);
-                self.navigator_state.select(Some(usize::min(current + 1, count - 1)));
+                self.navigator_state
+                    .select(Some(usize::min(current + 1, count - 1)));
                 self.apply_category_filter();
             }
             Focus::Findings => {
@@ -909,7 +910,8 @@ impl App {
                     return;
                 }
                 let current = self.findings_state.selected().unwrap_or(0);
-                self.findings_state.select(Some(usize::min(current + 1, count - 1)));
+                self.findings_state
+                    .select(Some(usize::min(current + 1, count - 1)));
                 self.detail_scroll = 0;
                 self.evidence_scroll = 0;
                 self.refresh_evidence();
@@ -1140,7 +1142,8 @@ mod tests {
         });
 
         assert_eq!(
-            app.primary_finding().map(|finding| finding.rule_id.as_str()),
+            app.primary_finding()
+                .map(|finding| finding.rule_id.as_str()),
             Some("CRIT-1")
         );
     }

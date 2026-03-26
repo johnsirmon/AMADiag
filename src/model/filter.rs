@@ -20,7 +20,11 @@ impl TimeFilter {
             Self::LastMinutes(value) => format!("Last {value}m"),
             Self::LastHours(value) => format!("Last {value}h"),
             Self::Custom { start, end } => {
-                format!("{} - {}", start.format("%Y-%m-%d %H:%M"), end.format("%H:%M"))
+                format!(
+                    "{} - {}",
+                    start.format("%Y-%m-%d %H:%M"),
+                    end.format("%H:%M")
+                )
             }
             Self::All => "All".to_string(),
         }

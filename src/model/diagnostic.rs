@@ -198,10 +198,7 @@ impl From<crate::analyzers::finding::Category> for Category {
 }
 
 impl DiagnosticEvent {
-    pub fn from_legacy_finding(
-        finding: &crate::analyzers::finding::Finding,
-        os: OsKind,
-    ) -> Self {
+    pub fn from_legacy_finding(finding: &crate::analyzers::finding::Finding, os: OsKind) -> Self {
         let severity = Severity::from(finding.severity);
         let status = match severity {
             Severity::Critical | Severity::High => Status::Fail,
