@@ -167,6 +167,43 @@ impl Patterns {
             LazyLock::new(|| Regex::new(r"(?i)Throttling ingestion").unwrap());
         &RE
     }
+
+    pub fn guest_agent_error() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?i)(walinuxagent|waagent|guest.agent).*(fail|error|stopped|not.running|dead)",
+            )
+            .unwrap()
+        });
+        &RE
+    }
+
+    pub fn systemd_service_failure() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?i)(azuremonitoragent|azuremonitor-coreagent).*(failed|inactive|dead|not.running)",
+            )
+            .unwrap()
+        });
+        &RE
+    }
+
+    pub fn disk_full() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"(?i)(no space left|disk full|cannot write|ENOSPC)").unwrap()
+        });
+        &RE
+    }
+
+    pub fn cgroup_oom() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)",
+            )
+            .unwrap()
+        });
+        &RE
+    }
 }
 
 #[cfg(test)]
