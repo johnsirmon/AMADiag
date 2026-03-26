@@ -1,4 +1,4 @@
-use chrono::{DateTime, NaiveDateTime, Utc};
+use chrono::{DateTime, Datelike, NaiveDateTime, Utc};
 use regex::Regex;
 use std::sync::LazyLock;
 
@@ -85,9 +85,12 @@ pub fn extract_timestamp(line: &str) -> Option<ExtractedTimestamp> {
     if let Some(captures) = RFC3339_TS_RE.captures(line) {
         let timestamp = captures.name("ts")?.as_str();
         if let Ok(parsed) = DateTime::parse_from_rfc3339(timestamp) {
-            return Some(ExtractedTimestamp {
-                kind: TimestampKind::DateTime(parsed.with_timezone(&Utc)),
-            });
+            let parsed = parsed.with_timezone(&Utc);
+            if is_plausible_log_timestamp(parsed) {
+                return Some(ExtractedTimestamp {
+                    kind: TimestampKind::DateTime(parsed),
+                });
+            }
         }
     }
 
@@ -95,9 +98,12 @@ pub fn extract_timestamp(line: &str) -> Option<ExtractedTimestamp> {
         let timestamp = captures.name("ts")?.as_str();
         for format in ["%Y-%m-%d %H:%M:%S%.f", "%Y-%m-%d %H:%M:%S"] {
             if let Ok(parsed) = NaiveDateTime::parse_from_str(timestamp, format) {
-                return Some(ExtractedTimestamp {
-                    kind: TimestampKind::DateTime(parsed.and_utc()),
-                });
+                let parsed = parsed.and_utc();
+                if is_plausible_log_timestamp(parsed) {
+                    return Some(ExtractedTimestamp {
+                        kind: TimestampKind::DateTime(parsed),
+                    });
+                }
             }
         }
     }
@@ -106,14 +112,22 @@ pub fn extract_timestamp(line: &str) -> Option<ExtractedTimestamp> {
         let timestamp = captures.name("ts")?.as_str();
         for format in ["%Y/%m/%d %H:%M:%S%.f", "%Y/%m/%d %H:%M:%S"] {
             if let Ok(parsed) = NaiveDateTime::parse_from_str(timestamp, format) {
-                return Some(ExtractedTimestamp {
-                    kind: TimestampKind::DateTime(parsed.and_utc()),
-                });
+                let parsed = parsed.and_utc();
+                if is_plausible_log_timestamp(parsed) {
+                    return Some(ExtractedTimestamp {
+                        kind: TimestampKind::DateTime(parsed),
+                    });
+                }
             }
         }
     }
 
     None
+}
+
+fn is_plausible_log_timestamp(ts: DateTime<Utc>) -> bool {
+    let current_year = Utc::now().year();
+    (2000..=current_year + 1).contains(&ts.year())
 }
 
 // ── Raw pattern strings (single source of truth) ────────────────────────────
@@ -345,6 +359,12 @@ mod tests {
             timestamp.format("%Y/%m/%d %H:%M:%S").to_string(),
             "2026/03/26 10:15:00"
         );
+    }
+
+    #[test]
+    fn reject_implausible_timestamp_years() {
+        assert!(extract_timestamp("0001-01-01 00:00:00 warning").is_none());
+        assert!(extract_timestamp("9999-12-31 23:59:59 warning").is_none());
     }
 
     #[test]

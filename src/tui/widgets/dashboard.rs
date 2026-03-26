@@ -18,7 +18,7 @@ pub(crate) fn draw(frame: &mut Frame, app: &mut App) {
     let [summary_area, body_area, footer_area] = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(5),
+            Constraint::Length(6),
             Constraint::Min(10),
             Constraint::Length(3),
         ])
@@ -96,17 +96,24 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
             )),
         ]),
         Line::from(vec![
+            Span::styled("Bundle span: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(app.bundle_span_label()),
+            Span::raw("  "),
+            Span::styled("Active span: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(app.analyzed_span_label()),
+        ]),
+        Line::from(vec![
             Span::styled("Window: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw(app.current_time_filter_label()),
             Span::raw("  "),
             Span::styled("Category: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw(app.selected_category_label()),
             Span::raw("  "),
-            Span::styled(
-                "Visible groups: ",
-                Style::default().add_modifier(Modifier::BOLD),
-            ),
+            Span::styled("Visible groups: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw(app.grouped_finding_count().to_string()),
+            Span::raw("  "),
+            Span::styled("Skipped stale logs: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(app.stale_log_files_skipped().to_string()),
         ]),
     ];
 

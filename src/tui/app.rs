@@ -3,6 +3,7 @@ use crate::detect::TuiAnalysis;
 use crate::input;
 use crate::model::diagnostic::{Category as UiCategory, FindingGroup, Severity as UiSeverity};
 use crate::reporters::OutputFormat;
+use crate::store::event_store::TimeRange;
 use ratatui::widgets::{ListState, TableState};
 use std::collections::BTreeSet;
 use std::path::PathBuf;
@@ -345,6 +346,27 @@ impl App {
             .as_ref()
             .map(|analysis| analysis.filter.time_filter.label())
             .unwrap_or_else(|| "All".to_string())
+    }
+
+    pub fn bundle_span_label(&self) -> String {
+        self.analysis
+            .as_ref()
+            .map(|analysis| format_time_range(analysis.event_store.date_summary().discovered_range()))
+            .unwrap_or_else(|| "Unknown".to_string())
+    }
+
+    pub fn analyzed_span_label(&self) -> String {
+        self.analysis
+            .as_ref()
+            .map(|analysis| format_time_range(analysis.event_store.date_summary().analyzed_range()))
+            .unwrap_or_else(|| "Unknown".to_string())
+    }
+
+    pub fn stale_log_files_skipped(&self) -> usize {
+        self.analysis
+            .as_ref()
+            .map(|analysis| analysis.event_store.date_summary().stale_log_files_skipped())
+            .unwrap_or(0)
     }
 
     pub fn finish_analysis(&mut self, result: std::result::Result<TuiAnalysis, String>) {
@@ -1102,6 +1124,17 @@ fn is_dir_writable(path: &std::path::Path) -> bool {
             true
         }
         Err(_) => false,
+    }
+}
+
+fn format_time_range(range: TimeRange) -> String {
+    match (range.start(), range.end()) {
+        (Some(start), Some(end)) => format!(
+            "{} -> {}",
+            start.format("%Y-%m-%d %H:%M"),
+            end.format("%Y-%m-%d %H:%M")
+        ),
+        _ => "Unknown".to_string(),
     }
 }
 

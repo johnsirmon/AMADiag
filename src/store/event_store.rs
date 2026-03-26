@@ -3,24 +3,125 @@ use crate::model::filter::FilterState;
 use crate::parsers::common::{self, LogLevel, TimestampKind};
 use crate::store::timeline::{build_timeline, TimelineBucket};
 use anyhow::Result;
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Duration, Utc};
 use std::collections::BTreeMap;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
+
+pub const DEFAULT_STALE_LOG_AGE_DAYS: i64 = 180;
+
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct TimeRange {
+    start: Option<DateTime<Utc>>,
+    end: Option<DateTime<Utc>>,
+}
+
+impl TimeRange {
+    pub fn start(self) -> Option<DateTime<Utc>> {
+        self.start
+    }
+
+    pub fn end(self) -> Option<DateTime<Utc>> {
+        self.end
+    }
+
+    pub fn is_known(self) -> bool {
+        self.start.is_some() && self.end.is_some()
+    }
+
+    fn include(&mut self, ts: DateTime<Utc>) {
+        self.start = Some(self.start.map_or(ts, |current| current.min(ts)));
+        self.end = Some(self.end.map_or(ts, |current| current.max(ts)));
+    }
+
+    fn include_range(&mut self, other: Self) {
+        if let Some(start) = other.start {
+            self.include(start);
+        }
+        if let Some(end) = other.end {
+            self.include(end);
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct EventStoreOptions {
+    stale_log_cutoff: Option<DateTime<Utc>>,
+}
+
+impl Default for EventStoreOptions {
+    fn default() -> Self {
+        Self::last_days(DEFAULT_STALE_LOG_AGE_DAYS)
+    }
+}
+
+impl EventStoreOptions {
+    pub fn last_days(days: i64) -> Self {
+        Self {
+            stale_log_cutoff: (days > 0).then(|| Utc::now() - Duration::days(days)),
+        }
+    }
+
+    fn should_skip_timestamped_file(self, latest_file_ts: DateTime<Utc>) -> bool {
+        self.stale_log_cutoff
+            .is_some_and(|cutoff| latest_file_ts < cutoff)
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct BundleDateSummary {
+    discovered_range: TimeRange,
+    analyzed_range: TimeRange,
+    candidate_log_files: usize,
+    timestamped_log_files: usize,
+    stale_log_files_skipped: usize,
+}
+
+impl BundleDateSummary {
+    pub fn discovered_range(&self) -> TimeRange {
+        self.discovered_range
+    }
+
+    pub fn analyzed_range(&self) -> TimeRange {
+        self.analyzed_range
+    }
+
+    pub fn candidate_log_files(&self) -> usize {
+        self.candidate_log_files
+    }
+
+    pub fn timestamped_log_files(&self) -> usize {
+        self.timestamped_log_files
+    }
+
+    pub fn stale_log_files_skipped(&self) -> usize {
+        self.stale_log_files_skipped
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct EventStore {
     events: Vec<DiagnosticEvent>,
     time_index: BTreeMap<i64, Vec<usize>>,
     source_dir: PathBuf,
+    date_summary: BundleDateSummary,
 }
 
 impl EventStore {
     pub fn from_bundle_dir(bundle_dir: &Path, os: OsKind) -> Result<Self> {
+        Self::from_bundle_dir_with_options(bundle_dir, os, EventStoreOptions::default())
+    }
+
+    pub fn from_bundle_dir_with_options(
+        bundle_dir: &Path,
+        os: OsKind,
+        options: EventStoreOptions,
+    ) -> Result<Self> {
         let mut store = Self {
             events: Vec::new(),
             time_index: BTreeMap::new(),
             source_dir: bundle_dir.to_path_buf(),
+            date_summary: BundleDateSummary::default(),
         };
 
         for entry in ignore::WalkBuilder::new(bundle_dir)
@@ -40,7 +141,7 @@ impl EventStore {
                 continue;
             }
 
-            store.ingest_file(path, &relative_path, os)?;
+            store.ingest_file(path, &relative_path, os, options)?;
         }
 
         Ok(store)
@@ -52,6 +153,10 @@ impl EventStore {
 
     pub fn source_dir(&self) -> &Path {
         &self.source_dir
+    }
+
+    pub fn date_summary(&self) -> &BundleDateSummary {
+        &self.date_summary
     }
 
     pub fn latest_timestamp(&self) -> Option<DateTime<Utc>> {
@@ -115,28 +220,82 @@ impl EventStore {
         Ok(lines)
     }
 
-    fn ingest_file(&mut self, path: &Path, relative_path: &str, os: OsKind) -> Result<()> {
+    fn ingest_file(
+        &mut self,
+        path: &Path,
+        relative_path: &str,
+        os: OsKind,
+        options: EventStoreOptions,
+    ) -> Result<()> {
         let file = std::fs::File::open(path)?;
         let reader = BufReader::new(file);
+        let event_start = self.events.len();
+        let mut touched_minutes = Vec::new();
+        let mut file_range = TimeRange::default();
 
         for (index, line) in reader.lines().enumerate() {
             let line_number = index + 1;
             let line = line?;
+            if let Some(candidate) = common::extract_timestamp(&line) {
+                match candidate.kind {
+                    TimestampKind::DateTime(value) => file_range.include(value),
+                }
+            }
             let Some(event) = classify_line(relative_path, line_number, &line, os) else {
                 continue;
             };
 
             let event_index = self.events.len();
             if let Some(ts) = event.ts {
+                let minute = ts.timestamp() / 60;
                 self.time_index
-                    .entry(ts.timestamp() / 60)
+                    .entry(minute)
                     .or_default()
                     .push(event_index);
+                touched_minutes.push(minute);
             }
             self.events.push(event);
         }
 
+        self.date_summary.candidate_log_files += 1;
+        if file_range.is_known() {
+            self.date_summary.timestamped_log_files += 1;
+            self.date_summary.discovered_range.include_range(file_range);
+        }
+
+        if let Some(latest_file_ts) = file_range.end() {
+            if options.should_skip_timestamped_file(latest_file_ts) {
+                self.rollback_file_events(event_start, &touched_minutes);
+                self.date_summary.stale_log_files_skipped += 1;
+                return Ok(());
+            }
+
+            self.date_summary.analyzed_range.include_range(file_range);
+        }
+
         Ok(())
+    }
+
+    fn rollback_file_events(&mut self, event_start: usize, touched_minutes: &[i64]) {
+        self.events.truncate(event_start);
+
+        let mut unique_minutes = touched_minutes.to_vec();
+        unique_minutes.sort_unstable();
+        unique_minutes.dedup();
+
+        let mut empty_minutes = Vec::new();
+        for minute in unique_minutes {
+            if let Some(indices) = self.time_index.get_mut(&minute) {
+                indices.retain(|index| *index < event_start);
+                if indices.is_empty() {
+                    empty_minutes.push(minute);
+                }
+            }
+        }
+
+        for minute in empty_minutes {
+            self.time_index.remove(&minute);
+        }
     }
 }
 
@@ -294,6 +453,18 @@ fn is_candidate_log(relative_path: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    fn create_temp_dir() -> PathBuf {
+        let mut path = std::env::temp_dir();
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_nanos();
+        path.push(format!("amadiag-event-store-{unique}"));
+        std::fs::create_dir_all(&path).unwrap();
+        path
+    }
 
     #[test]
     fn warning_and_error_lines_are_indexed() {
@@ -308,5 +479,60 @@ mod tests {
         assert_eq!(event.category, Category::Connectivity);
         assert_eq!(event.status, Status::Fail);
         assert!(event.ts.is_some());
+    }
+
+    #[test]
+    fn stale_timestamped_logs_are_skipped_by_default() {
+        let dir = create_temp_dir();
+        let old_ts = (Utc::now() - Duration::days(DEFAULT_STALE_LOG_AGE_DAYS + 30))
+            .format("%Y-%m-%dT%H:%M:%SZ");
+        let recent_ts = (Utc::now() - Duration::days(1)).format("%Y-%m-%dT%H:%M:%SZ");
+
+        std::fs::write(
+            dir.join("old.log"),
+            format!("{old_ts} ERROR old endpoint unreachable\n"),
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("recent.log"),
+            format!("{recent_ts} ERROR recent endpoint unreachable\n"),
+        )
+        .unwrap();
+
+        let store = EventStore::from_bundle_dir(&dir, OsKind::Linux).unwrap();
+        let summary = store.date_summary();
+
+        assert_eq!(summary.candidate_log_files(), 2);
+        assert_eq!(summary.timestamped_log_files(), 2);
+        assert_eq!(summary.stale_log_files_skipped(), 1);
+        assert_eq!(store.events().len(), 1);
+        assert_eq!(
+            store.date_summary().analyzed_range().start(),
+            store.date_summary().analyzed_range().end()
+        );
+        assert!(
+            summary
+                .discovered_range()
+                .start()
+                .zip(summary.analyzed_range().start())
+                .is_some_and(|(discovered, analyzed)| discovered < analyzed)
+        );
+
+        let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn untimestamped_logs_remain_available() {
+        let dir = create_temp_dir();
+        std::fs::write(dir.join("untimestamped.log"), "ERROR ingestion endpoint unreachable\n")
+            .unwrap();
+
+        let store = EventStore::from_bundle_dir(&dir, OsKind::Linux).unwrap();
+
+        assert_eq!(store.events().len(), 1);
+        assert_eq!(store.date_summary().stale_log_files_skipped(), 0);
+        assert!(!store.date_summary().discovered_range().is_known());
+
+        let _ = std::fs::remove_dir_all(dir);
     }
 }

@@ -1,4 +1,6 @@
 use anyhow::{bail, Context, Result};
+use crate::model::diagnostic::OsKind;
+use crate::store::event_store::{EventStore, TimeRange, DEFAULT_STALE_LOG_AGE_DAYS};
 use std::fmt;
 use std::path::{Path, PathBuf};
 
@@ -162,6 +164,9 @@ pub fn validate_bundle(path: &Path) -> Result<String> {
         }
     }
 
+    let date_store = EventStore::from_bundle_dir(&dir, OsKind::Linux)?;
+    let date_summary = date_store.date_summary();
+
     Ok(format!(
         "Bundle Validation\n\
          ─────────────────\n\
@@ -172,9 +177,18 @@ pub fn validate_bundle(path: &Path) -> Result<String> {
          XML files:  {xml_count}\n\
          Log files:  {log_count}\n\
          CSV files:  {csv_count}\n\
+         Timestamped log files: {}\n\
+         Bundle span: {}\n\
+         Active span: {}\n\
+         Stale log files skipped (>{}d): {}\n\
          Status:     {}",
         path.display(),
         format_size(total_size),
+        date_summary.timestamped_log_files(),
+        format_time_range(date_summary.discovered_range()),
+        format_time_range(date_summary.analyzed_range()),
+        DEFAULT_STALE_LOG_AGE_DAYS,
+        date_summary.stale_log_files_skipped(),
         if file_count > 0 {
             "OK"
         } else {
@@ -190,6 +204,17 @@ fn format_size(bytes: u64) -> String {
         format!("{:.1} KB", bytes as f64 / 1024.0)
     } else {
         format!("{:.1} MB", bytes as f64 / (1024.0 * 1024.0))
+    }
+}
+
+fn format_time_range(range: TimeRange) -> String {
+    match (range.start(), range.end()) {
+        (Some(start), Some(end)) => format!(
+            "{} -> {}",
+            start.format("%Y-%m-%d %H:%M UTC"),
+            end.format("%Y-%m-%d %H:%M UTC")
+        ),
+        _ => "Unknown".to_string(),
     }
 }
 
@@ -301,6 +326,11 @@ mod tests {
         assert_eq!(BundleFormat::Directory.to_string(), "Directory");
         assert_eq!(BundleFormat::TarGz.to_string(), "tar.gz archive");
         assert_eq!(BundleFormat::Zip.to_string(), "ZIP archive");
+    }
+
+    #[test]
+    fn format_time_range_unknown() {
+        assert_eq!(format_time_range(TimeRange::default()), "Unknown");
     }
 
     #[test]
