@@ -183,7 +183,8 @@ impl Patterns {
 
     pub fn metrics_extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(MetricsExtension|ME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)").unwrap()
+            Regex::new(r"(?i)(MetricsExtension|ME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)")
+                .unwrap()
         });
         &RE
     }
