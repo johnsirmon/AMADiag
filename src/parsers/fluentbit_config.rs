@@ -18,7 +18,8 @@
 ///     Match        *
 ///     Host         127.0.0.1
 ///     Port         28330
-/// `$([Environment]::NewLine)/// Parsed Fluentbit configuration.
+/// `
+/// Parsed Fluentbit configuration.
 #[derive(Debug, Clone, Default)]
 pub struct FluentbitConfig {
     pub service: FluentbitService,
