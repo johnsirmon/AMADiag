@@ -1,4 +1,4 @@
-use crate::analyzers::finding::{DiagnosticReport, Finding, Severity};
+use crate::analyzers::finding::DiagnosticReport;
 use crate::detect::TuiAnalysis;
 use crate::input;
 use crate::model::diagnostic::{Category as UiCategory, FindingGroup, Severity as UiSeverity};
@@ -273,7 +273,7 @@ impl App {
     }
 
     #[cfg(test)]
-    pub fn primary_finding(&self) -> Option<&Finding> {
+    pub fn primary_finding(&self) -> Option<&crate::analyzers::finding::Finding> {
         self.report
             .as_ref()?
             .findings
@@ -1084,11 +1084,11 @@ impl App {
 }
 
 #[cfg(test)]
-fn severity_rank(severity: Severity) -> usize {
+fn severity_rank(severity: crate::analyzers::finding::Severity) -> usize {
     match severity {
-        Severity::Critical => 3,
-        Severity::Warning => 2,
-        Severity::Info => 1,
+        crate::analyzers::finding::Severity::Critical => 3,
+        crate::analyzers::finding::Severity::Warning => 2,
+        crate::analyzers::finding::Severity::Info => 1,
     }
 }
 
@@ -1106,7 +1106,7 @@ fn is_dir_writable(path: &std::path::Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::analyzers::finding::{Category, EnvironmentInfo, Severity};
+    use crate::analyzers::finding::{Category, EnvironmentInfo, Finding, Severity};
 
     #[test]
     fn primary_finding_prefers_highest_severity() {
