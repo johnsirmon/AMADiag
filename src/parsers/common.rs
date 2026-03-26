@@ -1,3 +1,4 @@
+use chrono::{DateTime, NaiveDateTime, Utc};
 use regex::Regex;
 use std::sync::LazyLock;
 
@@ -7,6 +8,7 @@ pub struct LogLine {
     pub file: String,
     pub line_num: usize,
     pub level: LogLevel,
+    pub timestamp: Option<DateTime<Utc>>,
     pub content: String,
 }
 
@@ -23,6 +25,29 @@ static ERROR_RE: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"(?i)\b(error|fatal|fail(ed|ure)?|exception)\b").unwrap());
 static WARN_RE: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"(?i)\b(warn(ing)?|caution)\b").unwrap());
+static INFO_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)\b(info|information)\b").unwrap());
+static DEBUG_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)\bdebug\b").unwrap());
+static RFC3339_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?P<ts>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))")
+        .unwrap()
+});
+static SPACE_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?P<ts>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap()
+});
+static SLASH_TS_RE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?P<ts>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)").unwrap()
+});
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TimestampKind {
+    DateTime(DateTime<Utc>),
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ExtractedTimestamp {
+    pub kind: TimestampKind,
+}
 
 /// Parse raw text into classified log lines.
 pub fn parse_log_lines(content: &str, file_name: &str) -> Vec<LogLine> {
@@ -35,20 +60,62 @@ pub fn parse_log_lines(content: &str, file_name: &str) -> Vec<LogLine> {
                 file: file_name.to_string(),
                 line_num: i + 1,
                 level,
+                timestamp: extract_timestamp(line).map(|value| match value.kind {
+                    TimestampKind::DateTime(ts) => ts,
+                }),
                 content: line.to_string(),
             }
         })
         .collect()
 }
 
-fn classify_line(line: &str) -> LogLevel {
+pub fn classify_line(line: &str) -> LogLevel {
     if ERROR_RE.is_match(line) {
         LogLevel::Error
     } else if WARN_RE.is_match(line) {
         LogLevel::Warning
+    } else if INFO_RE.is_match(line) {
+        LogLevel::Info
+    } else if DEBUG_RE.is_match(line) {
+        LogLevel::Debug
     } else {
         LogLevel::Unknown
     }
+}
+
+pub fn extract_timestamp(line: &str) -> Option<ExtractedTimestamp> {
+    if let Some(captures) = RFC3339_TS_RE.captures(line) {
+        let timestamp = captures.name("ts")?.as_str();
+        if let Ok(parsed) = DateTime::parse_from_rfc3339(timestamp) {
+            return Some(ExtractedTimestamp {
+                kind: TimestampKind::DateTime(parsed.with_timezone(&Utc)),
+            });
+        }
+    }
+
+    if let Some(captures) = SPACE_TS_RE.captures(line) {
+        let timestamp = captures.name("ts")?.as_str();
+        for format in ["%Y-%m-%d %H:%M:%S%.f", "%Y-%m-%d %H:%M:%S"] {
+            if let Ok(parsed) = NaiveDateTime::parse_from_str(timestamp, format) {
+                return Some(ExtractedTimestamp {
+                    kind: TimestampKind::DateTime(parsed.and_utc()),
+                });
+            }
+        }
+    }
+
+    if let Some(captures) = SLASH_TS_RE.captures(line) {
+        let timestamp = captures.name("ts")?.as_str();
+        for format in ["%Y/%m/%d %H:%M:%S%.f", "%Y/%m/%d %H:%M:%S"] {
+            if let Ok(parsed) = NaiveDateTime::parse_from_str(timestamp, format) {
+                return Some(ExtractedTimestamp {
+                    kind: TimestampKind::DateTime(parsed.and_utc()),
+                });
+            }
+        }
+    }
+
+    None
 }
 
 /// Common regex patterns for AMA diagnostic log analysis.
@@ -236,6 +303,37 @@ mod tests {
         assert_eq!(lines[2].level, LogLevel::Warning);
         assert_eq!(lines[0].line_num, 1);
         assert_eq!(lines[0].file, "test.log");
+        assert!(lines[0].timestamp.is_none());
+    }
+
+    #[test]
+    fn extract_rfc3339_timestamp() {
+        let timestamp = extract_timestamp("2026-03-26T10:15:00Z error")
+            .map(|value| match value.kind {
+                TimestampKind::DateTime(ts) => ts,
+            })
+            .unwrap();
+        assert_eq!(timestamp.to_rfc3339(), "2026-03-26T10:15:00+00:00");
+    }
+
+    #[test]
+    fn extract_space_separated_timestamp() {
+        let timestamp = extract_timestamp("2026-03-26 10:15:00.123 warning")
+            .map(|value| match value.kind {
+                TimestampKind::DateTime(ts) => ts,
+            })
+            .unwrap();
+        assert_eq!(timestamp.format("%Y-%m-%d %H:%M:%S").to_string(), "2026-03-26 10:15:00");
+    }
+
+    #[test]
+    fn extract_slash_separated_timestamp() {
+        let timestamp = extract_timestamp("2026/03/26 10:15:00 warning")
+            .map(|value| match value.kind {
+                TimestampKind::DateTime(ts) => ts,
+            })
+            .unwrap();
+        assert_eq!(timestamp.format("%Y/%m/%d %H:%M:%S").to_string(), "2026/03/26 10:15:00");
     }
 
     #[test]

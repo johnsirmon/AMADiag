@@ -1,7 +1,9 @@
 pub mod analyzers;
 pub mod detect;
 pub mod input;
+pub mod model;
 pub mod parsers;
 pub mod reporters;
+pub mod store;
 #[cfg(feature = "tui")]
 pub mod tui;

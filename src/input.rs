@@ -20,6 +20,21 @@ impl fmt::Display for BundleFormat {
     }
 }
 
+pub struct ExtractedBundle {
+    dir: PathBuf,
+    _tmp: Option<tempdir::TempDir>,
+}
+
+impl ExtractedBundle {
+    pub fn path(&self) -> &Path {
+        &self.dir
+    }
+
+    pub fn into_parts(self) -> (PathBuf, Option<tempdir::TempDir>) {
+        (self.dir, self._tmp)
+    }
+}
+
 /// Detect the format of the input bundle.
 pub fn detect_format(path: &Path) -> Result<BundleFormat> {
     if path.is_dir() {
@@ -47,13 +62,26 @@ pub fn detect_format(path: &Path) -> Result<BundleFormat> {
     }
 }
 
+pub fn prepare_bundle(path: &Path) -> Result<ExtractedBundle> {
+    match detect_format(path)? {
+        BundleFormat::Directory => Ok(ExtractedBundle {
+            dir: path.to_path_buf(),
+            _tmp: None,
+        }),
+        BundleFormat::TarGz => {
+            let (dir, tmp) = extract_tar_gz(path)?;
+            Ok(ExtractedBundle { dir, _tmp: tmp })
+        }
+        BundleFormat::Zip => {
+            let (dir, tmp) = extract_zip(path)?;
+            Ok(ExtractedBundle { dir, _tmp: tmp })
+        }
+    }
+}
+
 /// Extract a bundle to a temporary directory, or return the path if already a directory.
 pub fn extract_bundle(path: &Path) -> Result<(PathBuf, Option<tempdir::TempDir>)> {
-    match detect_format(path)? {
-        BundleFormat::Directory => Ok((path.to_path_buf(), None)),
-        BundleFormat::TarGz => extract_tar_gz(path),
-        BundleFormat::Zip => extract_zip(path),
-    }
+    prepare_bundle(path).map(ExtractedBundle::into_parts)
 }
 
 fn extract_tar_gz(path: &Path) -> Result<(PathBuf, Option<tempdir::TempDir>)> {

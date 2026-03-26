@@ -65,6 +65,7 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::Home => Some(Action::Home),
                 KeyCode::End => Some(Action::End),
                 KeyCode::Char('r') => Some(Action::Retry),
+                KeyCode::Char('t') => Some(Action::CycleTimeFilter),
                 KeyCode::Char('m') => Some(Action::ExportMarkdown),
                 KeyCode::Char('j') => Some(Action::ExportJson),
                 KeyCode::Char('1') => Some(Action::SeverityFilter(1)),

@@ -1,7 +1,10 @@
 use crate::analyzers::finding::{DiagnosticReport, Finding, Severity};
+use crate::detect::TuiAnalysis;
 use crate::input;
+use crate::model::diagnostic::{Category as UiCategory, FindingGroup, Severity as UiSeverity};
 use crate::reporters::OutputFormat;
-use ratatui::widgets::ListState;
+use ratatui::widgets::{ListState, TableState};
+use std::collections::BTreeSet;
 use std::path::PathBuf;
 use std::time::{Duration, Instant};
 
@@ -16,8 +19,10 @@ pub enum Screen {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Focus {
+    Navigator,
     Findings,
     Details,
+    Evidence,
 }
 
 #[derive(Debug, Clone)]
@@ -42,6 +47,7 @@ pub enum Action {
     ToggleView,
     BrowserParent,
     SeverityFilter(u8),
+    CycleTimeFilter,
     ExportConfirm,
     ExportCancel,
     ExportToggleFormat,
@@ -99,26 +105,24 @@ pub struct App {
     input_hint: Option<String>,
     input_error: Option<String>,
     report: Option<DiagnosticReport>,
-    findings_state: ListState,
+    analysis: Option<TuiAnalysis>,
+    findings_state: TableState,
+    navigator_state: ListState,
     detail_scroll: u16,
+    evidence_scroll: u16,
+    evidence_lines: Vec<String>,
     status: Option<StatusMessage>,
     pending_analysis: Option<PathBuf>,
     last_path: Option<PathBuf>,
     tick: usize,
-    // File browser state
     browser_path: PathBuf,
     browser_entries: Vec<BrowserEntry>,
     browser_state: ListState,
-    // Severity filter: 1=Critical only, 2=Critical+Warning, 3=all
     severity_filter: u8,
-    // Export screen state
     export_format: OutputFormat,
     export_path: String,
-    // Hidden files toggle
     show_hidden: bool,
-    // Number of directories (for separator rendering)
     dir_count: usize,
-    // Export overwrite confirmation pending
     export_overwrite_pending: bool,
 }
 
@@ -136,7 +140,6 @@ impl App {
         };
 
         let browser_path = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-
         let mut app = Self {
             screen,
             focus: Focus::Findings,
@@ -144,8 +147,12 @@ impl App {
             input_hint: None,
             input_error: None,
             report: None,
-            findings_state: ListState::default(),
+            analysis: None,
+            findings_state: TableState::default(),
+            navigator_state: ListState::default(),
             detail_scroll: 0,
+            evidence_scroll: 0,
+            evidence_lines: Vec::new(),
             status: None,
             pending_analysis,
             last_path: initial_path,
@@ -161,6 +168,7 @@ impl App {
             export_overwrite_pending: false,
         };
         app.findings_state.select(None);
+        app.navigator_state.select(Some(0));
         app.refresh_input_validation();
         if app.screen == Screen::FileBrowser {
             app.load_browser_dir(&browser_path);
@@ -192,32 +200,32 @@ impl App {
         self.report.as_ref()
     }
 
-    pub fn findings_state(&mut self) -> &mut ListState {
+    pub fn analysis(&self) -> Option<&TuiAnalysis> {
+        self.analysis.as_ref()
+    }
+
+    pub fn findings_state(&mut self) -> &mut TableState {
         &mut self.findings_state
+    }
+
+    pub fn navigator_state(&mut self) -> &mut ListState {
+        &mut self.navigator_state
     }
 
     pub fn selected_index(&self) -> Option<usize> {
         self.findings_state.selected()
     }
 
-    #[allow(dead_code)]
-    pub fn finding_count(&self) -> usize {
-        self.report
-            .as_ref()
-            .map(|report| report.findings.len())
-            .unwrap_or_default()
-    }
-
-    pub fn primary_finding(&self) -> Option<&Finding> {
-        self.report
-            .as_ref()?
-            .findings
-            .iter()
-            .max_by_key(|finding| severity_rank(finding.severity))
-    }
-
     pub fn detail_scroll(&self) -> u16 {
         self.detail_scroll
+    }
+
+    pub fn evidence_scroll(&self) -> u16 {
+        self.evidence_scroll
+    }
+
+    pub fn evidence_lines(&self) -> &[String] {
+        &self.evidence_lines
     }
 
     pub fn status(&self) -> Option<&StatusMessage> {
@@ -264,7 +272,6 @@ impl App {
         self.show_hidden
     }
 
-    #[allow(dead_code)]
     pub fn dir_count(&self) -> usize {
         self.dir_count
     }
@@ -273,30 +280,130 @@ impl App {
         self.export_overwrite_pending
     }
 
-    /// Returns findings filtered by the current severity filter.
-    pub fn filtered_findings(&self) -> Vec<&Finding> {
-        let Some(report) = self.report.as_ref() else {
-            return Vec::new();
-        };
-        report
+    pub fn primary_finding(&self) -> Option<&Finding> {
+        self.report
+            .as_ref()?
             .findings
             .iter()
-            .filter(|f| match self.severity_filter {
-                1 => f.severity == Severity::Critical,
-                2 => f.severity == Severity::Critical || f.severity == Severity::Warning,
-                _ => true,
+            .max_by_key(|finding| severity_rank(finding.severity))
+    }
+
+    pub fn navigator_items(&self) -> Vec<(String, Option<UiCategory>)> {
+        let Some(analysis) = self.analysis.as_ref() else {
+            return vec![("All categories".to_string(), None)];
+        };
+
+        let mut categories = BTreeSet::new();
+        for event in &analysis.events {
+            categories.insert(event.category);
+        }
+
+        let mut items = vec![("All categories".to_string(), None)];
+        items.extend(
+            categories
+                .into_iter()
+                .map(|category| (category.to_string(), Some(category))),
+        );
+        items
+    }
+
+    pub fn selected_category_label(&self) -> String {
+        let items = self.navigator_items();
+        let selected = self.navigator_state.selected().unwrap_or(0);
+        items.get(selected)
+            .map(|(label, _)| label.clone())
+            .unwrap_or_else(|| "All categories".to_string())
+    }
+
+    pub fn selected_group(&self) -> Option<&FindingGroup> {
+        let analysis = self.analysis.as_ref()?;
+        let selected = self.findings_state.selected()?;
+        analysis.grouped_findings.get(selected)
+    }
+
+    pub fn grouped_findings(&self) -> &[FindingGroup] {
+        self.analysis
+            .as_ref()
+            .map(|analysis| analysis.grouped_findings.as_slice())
+            .unwrap_or(&[])
+    }
+
+    pub fn grouped_finding_count(&self) -> usize {
+        self.grouped_findings().len()
+    }
+
+    pub fn timeline_points(&self) -> Vec<u64> {
+        self.analysis
+            .as_ref()
+            .map(|analysis| {
+                analysis
+                    .event_store
+                    .timeline(&analysis.filter)
+                    .into_iter()
+                    .map(|bucket| u64::try_from(bucket.warning_or_higher).unwrap_or(u64::MAX))
+                    .collect()
             })
-            .collect()
+            .unwrap_or_default()
     }
 
-    pub fn filtered_finding_count(&self) -> usize {
-        self.filtered_findings().len()
+    pub fn current_time_filter_label(&self) -> String {
+        self.analysis
+            .as_ref()
+            .map(|analysis| analysis.filter.time_filter.label())
+            .unwrap_or_else(|| "All".to_string())
     }
 
-    pub fn selected_filtered_finding(&self) -> Option<&Finding> {
-        let filtered = self.filtered_findings();
-        let index = self.findings_state.selected()?;
-        filtered.get(index).copied()
+    pub fn finish_analysis(&mut self, result: std::result::Result<TuiAnalysis, String>) {
+        match result {
+            Ok(analysis) => {
+                let report = analysis.report.clone();
+                let finding_count = analysis.grouped_findings.len();
+                self.analysis = Some(analysis);
+                self.report = Some(report);
+                self.screen = Screen::Dashboard;
+                self.focus = Focus::Findings;
+                self.detail_scroll = 0;
+                self.evidence_scroll = 0;
+                self.severity_filter = 3;
+                self.navigator_state.select(Some(0));
+                self.findings_state.select(
+                    (self.grouped_finding_count() > 0).then_some(0),
+                );
+                self.refresh_evidence();
+                self.set_info_status(format!(
+                    "Analysis complete: {finding_count} grouped finding(s)"
+                ));
+            }
+            Err(err) => {
+                self.screen = Screen::FileBrowser;
+                self.analysis = None;
+                self.report = None;
+                self.set_error_status(format!("Analysis failed: {err}"));
+            }
+        }
+    }
+
+    pub fn set_info_status(&mut self, text: impl Into<String>) {
+        self.status = Some(StatusMessage::new(
+            StatusKind::Info,
+            text,
+            Some(Duration::from_secs(5)),
+        ));
+    }
+
+    pub fn set_error_status(&mut self, text: impl Into<String>) {
+        self.status = Some(StatusMessage::new(StatusKind::Error, text, None));
+    }
+
+    pub fn return_to_dashboard(&mut self) {
+        self.screen = Screen::Dashboard;
+    }
+
+    pub fn on_tick(&mut self) {
+        self.tick = self.tick.wrapping_add(1);
+        if self.status.as_ref().is_some_and(StatusMessage::is_expired) {
+            self.status = None;
+        }
     }
 
     pub fn handle_action(&mut self, action: Action) -> ActionResult {
@@ -354,8 +461,21 @@ impl App {
             Action::FocusPrevious => {
                 if self.screen == Screen::Dashboard {
                     self.focus = match self.focus {
-                        Focus::Findings => Focus::Details,
+                        Focus::Navigator => Focus::Evidence,
+                        Focus::Findings => Focus::Navigator,
                         Focus::Details => Focus::Findings,
+                        Focus::Evidence => Focus::Details,
+                    };
+                }
+                ActionResult::None
+            }
+            Action::FocusNext => {
+                if self.screen == Screen::Dashboard {
+                    self.focus = match self.focus {
+                        Focus::Navigator => Focus::Findings,
+                        Focus::Findings => Focus::Details,
+                        Focus::Details => Focus::Evidence,
+                        Focus::Evidence => Focus::Navigator,
                     };
                 }
                 ActionResult::None
@@ -384,13 +504,13 @@ impl App {
             },
             Action::PageDown => {
                 if self.screen == Screen::Dashboard {
-                    self.scroll_details(8);
+                    self.scroll_active_panel(8);
                 }
                 ActionResult::None
             }
             Action::PageUp => {
                 if self.screen == Screen::Dashboard {
-                    self.detail_scroll = self.detail_scroll.saturating_sub(8);
+                    self.scroll_active_panel(-8);
                 }
                 ActionResult::None
             }
@@ -419,18 +539,8 @@ impl App {
                 }
                 _ => ActionResult::None,
             },
-            Action::FocusNext => {
-                if self.screen == Screen::Dashboard {
-                    self.focus = match self.focus {
-                        Focus::Findings => Focus::Details,
-                        Focus::Details => Focus::Findings,
-                    };
-                }
-                ActionResult::None
-            }
             Action::EditPath => match self.screen {
-                Screen::PathInput => ActionResult::Quit,
-                Screen::FileBrowser => ActionResult::Quit,
+                Screen::PathInput | Screen::FileBrowser => ActionResult::Quit,
                 Screen::Analyzing => ActionResult::None,
                 Screen::Export => {
                     self.screen = Screen::Dashboard;
@@ -439,6 +549,7 @@ impl App {
                 Screen::Dashboard => {
                     self.screen = Screen::FileBrowser;
                     self.detail_scroll = 0;
+                    self.evidence_scroll = 0;
                     let path = self.browser_path.clone();
                     self.load_browser_dir(&path);
                     ActionResult::None
@@ -454,18 +565,14 @@ impl App {
             Action::ExportMarkdown => {
                 if self.screen == Screen::Dashboard && self.report.is_some() {
                     self.enter_export_screen(OutputFormat::Markdown);
-                    ActionResult::None
-                } else {
-                    ActionResult::None
                 }
+                ActionResult::None
             }
             Action::ExportJson => {
                 if self.screen == Screen::Dashboard && self.report.is_some() {
                     self.enter_export_screen(OutputFormat::Json);
-                    ActionResult::None
-                } else {
-                    ActionResult::None
                 }
+                ActionResult::None
             }
             Action::ToggleView => match self.screen {
                 Screen::FileBrowser => {
@@ -489,15 +596,25 @@ impl App {
             Action::SeverityFilter(level) => {
                 if self.screen == Screen::Dashboard {
                     self.severity_filter = level.clamp(1, 3);
-                    // Reset selection to stay in bounds
-                    let count = self.filtered_finding_count();
-                    if count > 0 {
-                        let selected = self.findings_state.selected().unwrap_or(0).min(count - 1);
-                        self.findings_state.select(Some(selected));
-                    } else {
-                        self.findings_state.select(None);
+                    if let Some(analysis) = self.analysis.as_mut() {
+                        analysis.filter.min_severity = match self.severity_filter {
+                            1 => UiSeverity::Critical,
+                            2 => UiSeverity::Medium,
+                            _ => UiSeverity::Info,
+                        };
+                        analysis.refresh_groups();
                     }
-                    self.detail_scroll = 0;
+                    self.sync_dashboard_state();
+                }
+                ActionResult::None
+            }
+            Action::CycleTimeFilter => {
+                if self.screen == Screen::Dashboard {
+                    if let Some(analysis) = self.analysis.as_mut() {
+                        analysis.filter.cycle_time_filter();
+                        analysis.refresh_groups();
+                    }
+                    self.sync_dashboard_state();
                 }
                 ActionResult::None
             }
@@ -521,7 +638,6 @@ impl App {
                         OutputFormat::Markdown => OutputFormat::Json,
                         OutputFormat::Json => OutputFormat::Markdown,
                     };
-                    // Update extension in export path
                     self.refresh_export_path_extension();
                 }
                 ActionResult::None
@@ -534,57 +650,6 @@ impl App {
                 }
                 ActionResult::None
             }
-        }
-    }
-
-    pub fn finish_analysis(&mut self, result: std::result::Result<DiagnosticReport, String>) {
-        match result {
-            Ok(report) => {
-                self.report = Some(report);
-                self.screen = Screen::Dashboard;
-                self.focus = Focus::Findings;
-                self.detail_scroll = 0;
-                self.severity_filter = 3;
-                self.findings_state.select(
-                    self.report
-                        .as_ref()
-                        .and_then(|report| (!report.findings.is_empty()).then_some(0)),
-                );
-
-                let finding_count = self
-                    .report
-                    .as_ref()
-                    .map(|report| report.findings.len())
-                    .unwrap_or_default();
-                self.set_info_status(format!("Analysis complete: {finding_count} finding(s)"));
-            }
-            Err(err) => {
-                self.screen = Screen::FileBrowser;
-                self.set_error_status(format!("Analysis failed: {err}"));
-            }
-        }
-    }
-
-    pub fn set_info_status(&mut self, text: impl Into<String>) {
-        self.status = Some(StatusMessage::new(
-            StatusKind::Info,
-            text,
-            Some(Duration::from_secs(5)),
-        ));
-    }
-
-    pub fn set_error_status(&mut self, text: impl Into<String>) {
-        self.status = Some(StatusMessage::new(StatusKind::Error, text, None));
-    }
-
-    pub fn return_to_dashboard(&mut self) {
-        self.screen = Screen::Dashboard;
-    }
-
-    pub fn on_tick(&mut self) {
-        self.tick = self.tick.wrapping_add(1);
-        if self.status.as_ref().is_some_and(StatusMessage::is_expired) {
-            self.status = None;
         }
     }
 
@@ -617,10 +682,9 @@ impl App {
         self.input_error = None;
         self.status = None;
         self.detail_scroll = 0;
+        self.evidence_scroll = 0;
         ActionResult::Analyze(path)
     }
-
-    // --- File browser methods ---
 
     pub fn load_browser_dir(&mut self, path: &std::path::Path) {
         let canonical = std::fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
@@ -643,21 +707,18 @@ impl App {
 
         for entry in entries.flatten() {
             let name = entry.file_name().to_string_lossy().to_string();
-
-            // Filter hidden files (dotfiles) unless show_hidden is enabled
             if !self.show_hidden && name.starts_with('.') {
                 continue;
             }
 
             let is_dir = entry.file_type().map(|ft| ft.is_dir()).unwrap_or(false);
             let is_bundle = Self::is_bundle_entry(&entry);
-
             let (size, child_count) = if is_dir {
                 let count = entry.path().read_dir().map(|rd| rd.count()).ok();
                 (None, count)
             } else {
-                let sz = entry.metadata().map(|m| m.len()).ok();
-                (sz, None)
+                let size = entry.metadata().map(|metadata| metadata.len()).ok();
+                (size, None)
             };
 
             let entry = BrowserEntry {
@@ -675,10 +736,9 @@ impl App {
             }
         }
 
-        dirs.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
-        files.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+        dirs.sort_by(|left, right| left.name.to_lowercase().cmp(&right.name.to_lowercase()));
+        files.sort_by(|left, right| left.name.to_lowercase().cmp(&right.name.to_lowercase()));
 
-        // Add parent directory entry
         if let Some(parent) = self.browser_path.parent() {
             if parent != self.browser_path.as_path() {
                 dirs.insert(
@@ -707,10 +767,7 @@ impl App {
 
     fn is_bundle_entry(entry: &std::fs::DirEntry) -> bool {
         let name = entry.file_name().to_string_lossy().to_lowercase();
-        if name.ends_with(".tgz") || name.ends_with(".tar.gz") || name.ends_with(".zip") {
-            return true;
-        }
-        false
+        name.ends_with(".tgz") || name.ends_with(".tar.gz") || name.ends_with(".zip")
     }
 
     fn browser_select(&mut self) -> ActionResult {
@@ -722,22 +779,17 @@ impl App {
         };
 
         let full_path = self.browser_path.join(&entry.name);
-
-        // Handle parent directory entry
         if entry.name == ".." {
             self.browser_parent();
             return ActionResult::None;
         }
 
         if entry.is_dir {
-            // Check if it's a valid bundle directory
             if input::detect_format(&full_path).is_ok() {
                 self.input_path = full_path.display().to_string();
                 return self.start_analysis(full_path);
             }
-            // Otherwise navigate into it
-            let path = full_path.clone();
-            self.load_browser_dir(&path);
+            self.load_browser_dir(&full_path);
             ActionResult::None
         } else if entry.is_bundle {
             self.input_path = full_path.display().to_string();
@@ -749,7 +801,7 @@ impl App {
     }
 
     fn browser_parent(&mut self) {
-        if let Some(parent) = self.browser_path.parent().map(|p| p.to_path_buf()) {
+        if let Some(parent) = self.browser_path.parent().map(|path| path.to_path_buf()) {
             self.load_browser_dir(&parent);
         }
     }
@@ -768,18 +820,14 @@ impl App {
         self.browser_state.select(Some(current.saturating_sub(1)));
     }
 
-    // --- Export screen methods ---
-
     fn enter_export_screen(&mut self, format: OutputFormat) {
         self.export_format = format;
-        // Derive default export path from the original bundle path
         let source = self
             .last_path
             .as_deref()
             .unwrap_or_else(|| std::path::Path::new("."));
         let parent = source.parent().unwrap_or_else(|| std::path::Path::new("."));
 
-        // Check if parent is writable; fall back to CWD
         let export_dir = if parent.exists() && is_dir_writable(parent) {
             parent.to_path_buf()
         } else {
@@ -788,17 +836,16 @@ impl App {
 
         let stem = source
             .file_stem()
-            .and_then(|v| v.to_str())
-            .filter(|v| !v.is_empty())
+            .and_then(|value| value.to_str())
+            .filter(|value| !value.is_empty())
             .unwrap_or("amadiag-report");
-
-        let ext = match format {
+        let extension = match format {
             OutputFormat::Markdown => "md",
             OutputFormat::Json => "json",
         };
 
         self.export_path = export_dir
-            .join(format!("{stem}.amadiag.{ext}"))
+            .join(format!("{stem}.amadiag.{extension}"))
             .display()
             .to_string();
         self.export_overwrite_pending = false;
@@ -810,11 +857,13 @@ impl App {
             self.set_error_status("Export path cannot be empty.");
             return ActionResult::None;
         }
+
         let path = PathBuf::from(self.export_path.trim());
         if path.exists() && !self.export_overwrite_pending {
             self.export_overwrite_pending = true;
             return ActionResult::None;
         }
+
         self.export_overwrite_pending = false;
         ActionResult::ShowExport(self.export_format)
     }
@@ -824,7 +873,6 @@ impl App {
             OutputFormat::Markdown => ".md",
             OutputFormat::Json => ".json",
         };
-        // Replace the trailing extension
         if let Some(pos) = self.export_path.rfind(".amadiag.") {
             self.export_path.truncate(pos);
             self.export_path.push_str(&format!(".amadiag{new_ext}"));
@@ -852,72 +900,193 @@ impl App {
     }
 
     fn move_next(&mut self) {
-        if self.focus == Focus::Details {
-            self.scroll_details(1);
-            return;
+        match self.focus {
+            Focus::Navigator => {
+                let count = self.navigator_items().len();
+                if count == 0 {
+                    return;
+                }
+                let current = self.navigator_state.selected().unwrap_or(0);
+                self.navigator_state.select(Some(usize::min(current + 1, count - 1)));
+                self.apply_category_filter();
+            }
+            Focus::Findings => {
+                let count = self.grouped_finding_count();
+                if count == 0 {
+                    return;
+                }
+                let current = self.findings_state.selected().unwrap_or(0);
+                self.findings_state.select(Some(usize::min(current + 1, count - 1)));
+                self.detail_scroll = 0;
+                self.evidence_scroll = 0;
+                self.refresh_evidence();
+            }
+            Focus::Details => self.scroll_active_panel(1),
+            Focus::Evidence => self.scroll_active_panel(1),
         }
-
-        let count = self.filtered_finding_count();
-        if count == 0 {
-            return;
-        }
-
-        let current = self.findings_state.selected().unwrap_or(0);
-        let next = usize::min(current + 1, count - 1);
-        self.findings_state.select(Some(next));
-        self.detail_scroll = 0;
     }
 
     fn move_previous(&mut self) {
-        if self.focus == Focus::Details {
-            self.detail_scroll = self.detail_scroll.saturating_sub(1);
-            return;
+        match self.focus {
+            Focus::Navigator => {
+                let current = self.navigator_state.selected().unwrap_or(0);
+                self.navigator_state.select(Some(current.saturating_sub(1)));
+                self.apply_category_filter();
+            }
+            Focus::Findings => {
+                let current = self.findings_state.selected().unwrap_or(0);
+                self.findings_state.select(Some(current.saturating_sub(1)));
+                self.detail_scroll = 0;
+                self.evidence_scroll = 0;
+                self.refresh_evidence();
+            }
+            Focus::Details => self.scroll_active_panel(-1),
+            Focus::Evidence => self.scroll_active_panel(-1),
         }
-
-        let current = self.findings_state.selected().unwrap_or(0);
-        let previous = current.saturating_sub(1);
-        self.findings_state.select(Some(previous));
-        self.detail_scroll = 0;
     }
 
     fn move_home(&mut self) {
-        if self.focus == Focus::Details {
-            self.detail_scroll = 0;
-            return;
-        }
-
-        if self.filtered_finding_count() > 0 {
-            self.findings_state.select(Some(0));
-            self.detail_scroll = 0;
+        match self.focus {
+            Focus::Navigator => {
+                self.navigator_state.select(Some(0));
+                self.apply_category_filter();
+            }
+            Focus::Findings => {
+                if self.grouped_finding_count() > 0 {
+                    self.findings_state.select(Some(0));
+                    self.refresh_evidence();
+                }
+            }
+            Focus::Details => self.detail_scroll = 0,
+            Focus::Evidence => self.evidence_scroll = 0,
         }
     }
 
     fn move_end(&mut self) {
-        if self.focus == Focus::Details {
-            self.detail_scroll = self.detail_max_scroll();
+        match self.focus {
+            Focus::Navigator => {
+                let count = self.navigator_items().len();
+                if count > 0 {
+                    self.navigator_state.select(Some(count - 1));
+                    self.apply_category_filter();
+                }
+            }
+            Focus::Findings => {
+                let count = self.grouped_finding_count();
+                if count > 0 {
+                    self.findings_state.select(Some(count - 1));
+                    self.refresh_evidence();
+                }
+            }
+            Focus::Details => self.detail_scroll = self.detail_max_scroll(),
+            Focus::Evidence => self.evidence_scroll = self.evidence_max_scroll(),
+        }
+    }
+
+    fn apply_category_filter(&mut self) {
+        let selected = self.navigator_state.selected().unwrap_or(0);
+        let category = self
+            .navigator_items()
+            .get(selected)
+            .and_then(|(_, category)| *category);
+
+        if let Some(analysis) = self.analysis.as_mut() {
+            analysis.filter.categories = category.into_iter().collect::<BTreeSet<_>>();
+            analysis.refresh_groups();
+        }
+
+        self.sync_dashboard_state();
+    }
+
+    fn sync_dashboard_state(&mut self) {
+        let count = self.grouped_finding_count();
+        if count > 0 {
+            let selected = self.findings_state.selected().unwrap_or(0).min(count - 1);
+            self.findings_state.select(Some(selected));
+        } else {
+            self.findings_state.select(None);
+        }
+        self.detail_scroll = 0;
+        self.evidence_scroll = 0;
+        self.refresh_evidence();
+    }
+
+    fn refresh_evidence(&mut self) {
+        let Some(group) = self.selected_group() else {
+            self.evidence_lines = vec!["No evidence available.".to_string()];
+            return;
+        };
+
+        let Some(evidence) = group.evidence.first() else {
+            self.evidence_lines = vec!["No direct evidence lines captured.".to_string()];
+            return;
+        };
+
+        if evidence.file_id == "legacy" {
+            self.evidence_lines = group
+                .evidence
+                .iter()
+                .map(|item| item.preview.clone())
+                .collect();
             return;
         }
 
-        let count = self.filtered_finding_count();
-        if count > 0 {
-            self.findings_state.select(Some(count - 1));
-            self.detail_scroll = 0;
-        }
+        self.evidence_lines = self
+            .analysis
+            .as_ref()
+            .and_then(|analysis| {
+                analysis
+                    .event_store
+                    .load_evidence_context(evidence, 2, 2)
+                    .ok()
+            })
+            .unwrap_or_else(|| vec![evidence.preview.clone()]);
     }
 
     fn detail_max_scroll(&self) -> u16 {
-        let Some(finding) = self
-            .selected_filtered_finding()
-            .or_else(|| self.primary_finding())
-        else {
+        let Some(group) = self.selected_group() else {
             return 0;
         };
-        15u16.saturating_add(finding.evidence.len() as u16)
+        16u16
+            .saturating_add(group.evidence.len() as u16)
+            .saturating_add(group.likely_causes.len() as u16)
+            .saturating_add(group.suggested_actions.len() as u16)
+            .saturating_add(group.doc_links.len() as u16)
     }
 
-    fn scroll_details(&mut self, amount: u16) {
-        let max = self.detail_max_scroll();
-        self.detail_scroll = self.detail_scroll.saturating_add(amount).min(max);
+    fn evidence_max_scroll(&self) -> u16 {
+        self.evidence_lines
+            .len()
+            .saturating_sub(1)
+            .try_into()
+            .unwrap_or(u16::MAX)
+    }
+
+    fn scroll_active_panel(&mut self, delta: i16) {
+        match self.focus {
+            Focus::Details => {
+                if delta.is_negative() {
+                    self.detail_scroll = self.detail_scroll.saturating_sub(delta.unsigned_abs());
+                } else {
+                    self.detail_scroll = self
+                        .detail_scroll
+                        .saturating_add(delta as u16)
+                        .min(self.detail_max_scroll());
+                }
+            }
+            Focus::Evidence => {
+                if delta.is_negative() {
+                    self.evidence_scroll =
+                        self.evidence_scroll.saturating_sub(delta.unsigned_abs());
+                } else {
+                    self.evidence_scroll = self
+                        .evidence_scroll
+                        .saturating_add(delta as u16)
+                        .min(self.evidence_max_scroll());
+                }
+            }
+            _ => {}
+        }
     }
 }
 
@@ -977,8 +1146,7 @@ mod tests {
         });
 
         assert_eq!(
-            app.primary_finding()
-                .map(|finding| finding.rule_id.as_str()),
+            app.primary_finding().map(|finding| finding.rule_id.as_str()),
             Some("CRIT-1")
         );
     }

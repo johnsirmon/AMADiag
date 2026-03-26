@@ -4,7 +4,7 @@ mod export;
 mod theme;
 mod ui;
 
-use crate::analyzers::finding::DiagnosticReport;
+use crate::detect::TuiAnalysis;
 use anyhow::Result;
 use crossterm::{
     cursor::Show,
@@ -61,7 +61,7 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
 
 fn receive_analysis_result(
     app: &mut App,
-    analysis_rx: &mut Option<Receiver<std::result::Result<DiagnosticReport, String>>>,
+    analysis_rx: &mut Option<Receiver<std::result::Result<TuiAnalysis, String>>>,
 ) {
     let Some(rx) = analysis_rx.as_ref() else {
         return;
@@ -80,10 +80,10 @@ fn receive_analysis_result(
     }
 }
 
-fn spawn_analysis(path: PathBuf) -> Receiver<std::result::Result<DiagnosticReport, String>> {
+fn spawn_analysis(path: PathBuf) -> Receiver<std::result::Result<TuiAnalysis, String>> {
     let (tx, rx) = mpsc::channel();
     std::thread::spawn(move || {
-        let result = crate::detect::analyze_bundle(&path).map_err(|err| err.to_string());
+        let result = crate::detect::analyze_bundle_for_tui(&path).map_err(|err| err.to_string());
         let _ = tx.send(result);
     });
     rx
