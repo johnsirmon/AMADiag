@@ -118,6 +118,8 @@ pub struct App {
     show_hidden: bool,
     // Number of directories (for separator rendering)
     dir_count: usize,
+    // Export overwrite confirmation pending
+    export_overwrite_pending: bool,
 }
 
 impl App {
@@ -156,6 +158,7 @@ impl App {
             export_path: String::new(),
             show_hidden: false,
             dir_count: 0,
+            export_overwrite_pending: false,
         };
         app.findings_state.select(None);
         app.refresh_input_validation();
@@ -265,6 +268,10 @@ impl App {
         self.dir_count
     }
 
+    pub fn export_overwrite_pending(&self) -> bool {
+        self.export_overwrite_pending
+    }
+
     /// Returns findings filtered by the current severity filter.
     pub fn filtered_findings(&self) -> Vec<&Finding> {
         let Some(report) = self.report.as_ref() else {
@@ -312,6 +319,7 @@ impl App {
                 }
                 Screen::Export => {
                     self.export_path.pop();
+                    self.export_overwrite_pending = false;
                     ActionResult::None
                 }
                 _ => ActionResult::None,
@@ -324,6 +332,7 @@ impl App {
                 }
                 Screen::Export => {
                     self.export_path.push(ch);
+                    self.export_overwrite_pending = false;
                     ActionResult::None
                 }
                 _ => ActionResult::None,
@@ -336,6 +345,7 @@ impl App {
                 }
                 Screen::Export => {
                     self.export_path.push_str(&text);
+                    self.export_overwrite_pending = false;
                     ActionResult::None
                 }
                 _ => ActionResult::None,
@@ -499,6 +509,7 @@ impl App {
             }
             Action::ExportCancel => {
                 if self.screen == Screen::Export {
+                    self.export_overwrite_pending = false;
                     self.screen = Screen::Dashboard;
                 }
                 ActionResult::None
@@ -666,6 +677,19 @@ impl App {
         dirs.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
         files.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
+        // Add parent directory entry
+        if let Some(parent) = self.browser_path.parent() {
+            if parent != self.browser_path.as_path() {
+                dirs.insert(0, BrowserEntry {
+                    name: "..".to_string(),
+                    is_dir: true,
+                    is_bundle: false,
+                    size: None,
+                    child_count: None,
+                });
+            }
+        }
+
         self.dir_count = dirs.len();
         self.browser_entries.extend(dirs);
         self.browser_entries.extend(files);
@@ -694,6 +718,12 @@ impl App {
         };
 
         let full_path = self.browser_path.join(&entry.name);
+
+        // Handle parent directory entry
+        if entry.name == ".." {
+            self.browser_parent();
+            return ActionResult::None;
+        }
 
         if entry.is_dir {
             // Check if it's a valid bundle directory
@@ -767,6 +797,7 @@ impl App {
             .join(format!("{stem}.amadiag.{ext}"))
             .display()
             .to_string();
+        self.export_overwrite_pending = false;
         self.screen = Screen::Export;
     }
 
@@ -775,6 +806,12 @@ impl App {
             self.set_error_status("Export path cannot be empty.");
             return ActionResult::None;
         }
+        let path = PathBuf::from(self.export_path.trim());
+        if path.exists() && !self.export_overwrite_pending {
+            self.export_overwrite_pending = true;
+            return ActionResult::None;
+        }
+        self.export_overwrite_pending = false;
         ActionResult::ShowExport(self.export_format)
     }
 
@@ -853,7 +890,7 @@ impl App {
 
     fn move_end(&mut self) {
         if self.focus == Focus::Details {
-            self.detail_scroll = self.detail_scroll.saturating_add(20);
+            self.detail_scroll = self.detail_max_scroll();
             return;
         }
 
@@ -864,8 +901,17 @@ impl App {
         }
     }
 
+    fn detail_max_scroll(&self) -> u16 {
+        let Some(finding) = self.selected_filtered_finding().or_else(|| self.primary_finding())
+        else {
+            return 0;
+        };
+        15u16.saturating_add(finding.evidence.len() as u16)
+    }
+
     fn scroll_details(&mut self, amount: u16) {
-        self.detail_scroll = self.detail_scroll.saturating_add(amount);
+        let max = self.detail_max_scroll();
+        self.detail_scroll = self.detail_scroll.saturating_add(amount).min(max);
     }
 }
 

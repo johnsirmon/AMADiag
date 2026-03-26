@@ -1,12 +1,14 @@
 mod app;
 mod event;
 mod export;
+mod theme;
 mod ui;
 
 use crate::analyzers::finding::DiagnosticReport;
 use anyhow::Result;
 use crossterm::{
     cursor::Show,
+    event::{DisableMouseCapture, EnableMouseCapture},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
@@ -54,7 +56,6 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
         }
     }
 
-    terminal.show_cursor()?;
     Ok(())
 }
 
@@ -91,7 +92,7 @@ fn spawn_analysis(path: PathBuf) -> Receiver<std::result::Result<DiagnosticRepor
 fn setup_terminal() -> Result<Terminal<CrosstermBackend<Stdout>>> {
     enable_raw_mode()?;
     let mut stdout = io::stdout();
-    execute!(stdout, EnterAlternateScreen)?;
+    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
     terminal.clear()?;
@@ -101,7 +102,7 @@ fn setup_terminal() -> Result<Terminal<CrosstermBackend<Stdout>>> {
 fn restore_terminal() -> Result<()> {
     disable_raw_mode()?;
     let mut stdout = io::stdout();
-    execute!(stdout, LeaveAlternateScreen, Show)?;
+    execute!(stdout, LeaveAlternateScreen, DisableMouseCapture, Show)?;
     Ok(())
 }
 
