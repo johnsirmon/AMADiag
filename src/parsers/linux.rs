@@ -101,9 +101,8 @@ pub fn enrich_linux_data(bundle: &mut ParsedBundle, _bundle_dir: &Path) {
 //   *.* @@127.0.0.1:28330
 //   local4.* @@127.0.0.1:28330
 //   if $rawmsg contains "CEF:" then @@127.0.0.1:28330
-static RSYSLOG_FWD_RE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?m)^(\S+(?:\.\S+)?)\s+@@?(\S+):(\d+)").unwrap()
-});
+static RSYSLOG_FWD_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?m)^(\S+(?:\.\S+)?)\s+@@?(\S+):(\d+)").unwrap());
 
 /// Parse rsyslog config content for forwarding rules.
 pub fn parse_rsyslog_rules(content: &str) -> Vec<RsyslogForwardRule> {
@@ -118,7 +117,10 @@ pub fn parse_rsyslog_rules(content: &str) -> Vec<RsyslogForwardRule> {
                 facility,
                 target_host: host,
                 target_port: port,
-                raw_line: caps.get(0).map(|m| m.as_str().to_string()).unwrap_or_default(),
+                raw_line: caps
+                    .get(0)
+                    .map(|m| m.as_str().to_string())
+                    .unwrap_or_default(),
             }
         })
         .collect()
@@ -178,10 +180,7 @@ HOME_URL="https://www.ubuntu.com/"
         assert_eq!(release.id.as_deref(), Some("ubuntu"));
         assert_eq!(release.version_id.as_deref(), Some("22.04"));
         assert_eq!(release.name.as_deref(), Some("Ubuntu"));
-        assert_eq!(
-            release.pretty_name.as_deref(),
-            Some("Ubuntu 22.04.3 LTS")
-        );
+        assert_eq!(release.pretty_name.as_deref(), Some("Ubuntu 22.04.3 LTS"));
     }
 
     #[test]
