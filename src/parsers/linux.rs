@@ -109,17 +109,17 @@ static RSYSLOG_FWD_RE: LazyLock<Regex> = LazyLock::new(|| {
 pub fn parse_rsyslog_rules(content: &str) -> Vec<RsyslogForwardRule> {
     RSYSLOG_FWD_RE
         .captures_iter(content)
-        .filter_map(|caps| {
+        .map(|caps| {
             let facility = caps.get(1).map(|m| m.as_str().to_string());
             let host = caps.get(2).map(|m| m.as_str().to_string());
             let port = caps.get(3).and_then(|m| m.as_str().parse().ok());
 
-            Some(RsyslogForwardRule {
+            RsyslogForwardRule {
                 facility,
                 target_host: host,
                 target_port: port,
                 raw_line: caps.get(0).map(|m| m.as_str().to_string()).unwrap_or_default(),
-            })
+            }
         })
         .collect()
 }
