@@ -848,8 +848,12 @@ fn severity_badge(severity: crate::analyzers::finding::Severity) -> &'static str
 
 fn severity_style(severity: crate::analyzers::finding::Severity) -> Style {
     match severity {
-        crate::analyzers::finding::Severity::Critical => Style::default().fg(theme::SEVERITY_CRITICAL),
-        crate::analyzers::finding::Severity::Warning => Style::default().fg(theme::SEVERITY_WARNING),
+        crate::analyzers::finding::Severity::Critical => {
+            Style::default().fg(theme::SEVERITY_CRITICAL)
+        }
+        crate::analyzers::finding::Severity::Warning => {
+            Style::default().fg(theme::SEVERITY_WARNING)
+        }
         crate::analyzers::finding::Severity::Info => Style::default().fg(theme::SEVERITY_INFO),
     }
 }
