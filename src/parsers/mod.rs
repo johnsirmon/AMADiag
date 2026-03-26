@@ -151,8 +151,15 @@ fn is_mcsconfig_file(rel_path: &str) -> bool {
 
 fn is_log_file(rel_path: &str) -> bool {
     let lower = rel_path.to_lowercase();
-    // Exclude HTML files — they contain rendered troubleshooter output, not raw logs
-    if lower.ends_with(".html") || lower.ends_with(".htm") {
+    // Exclude non-log file types — HTML and Markdown may contain troubleshooter
+    // output or documentation prose that triggers false pattern matches.
+    if lower.ends_with(".html")
+        || lower.ends_with(".htm")
+        || lower.ends_with(".md")
+        || lower.ends_with(".json")
+        || lower.ends_with(".xml")
+        || lower.ends_with(".csv")
+    {
         return false;
     }
     lower.ends_with(".log")

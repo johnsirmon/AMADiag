@@ -131,7 +131,7 @@ impl Patterns {
     pub fn auth_token_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
             Regex::new(
-                r"(?i)(managed.identity|MSI|auth.?token).*(fail|error|missing|absent|expired)",
+                r"(?i)(managed.identity|MSI|auth.?token).*(\bfailed\b|\bfailure\b|\berror\b|\bmissing\b|\babsent\b|\bexpired\b|\b401\b|\b403\b)",
             )
             .unwrap()
         });
@@ -140,7 +140,7 @@ impl Patterns {
 
     pub fn connectivity_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(\bfail(ed|ure)?\b|\berror\b|refused|timeout|unreachable)")
+            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(connection.refused|connection.timeout|\bunreachable\b|request.failed|endpoint.*(fail|error)|cannot.connect)")
                 .unwrap()
         });
         &RE
@@ -183,7 +183,7 @@ impl Patterns {
 
     pub fn metrics_extension_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(MetricsExtension|ME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)")
+            Regex::new(r"(?i)(MetricsExtension|\bME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)")
                 .unwrap()
         });
         &RE

@@ -245,6 +245,11 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         },
     ];
 
+    // Lines with ErrorCode:0 in AMA Windows extension logs indicate SUCCESS
+    // regardless of the log-level label. Skip these to avoid false positives.
+    static ERRORCODE_ZERO_RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"ErrorCode:0\b").unwrap());
+
     for check in &pattern_checks {
         if let Some(platform) = check.platform {
             if bundle.platform != Some(platform) {
@@ -257,6 +262,10 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             if check.pattern.is_match(&line.content) {
                 // Skip IPv6-only failures for connectivity/IMDS checks
                 if check.exclude_ipv6 && IPV6_RE.is_match(&line.content) {
+                    continue;
+                }
+                // Skip lines with ErrorCode:0 (success) in AMA extension logs
+                if ERRORCODE_ZERO_RE.is_match(&line.content) {
                     continue;
                 }
                 evidence.push(format!("{}:{}: {}", line.file, line.line_num, line.content));
