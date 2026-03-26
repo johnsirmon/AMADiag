@@ -32,3 +32,59 @@
     blocked network endpoints, insufficient permissions, or OS compatibility issues.
     Try removing and reinstalling the extension.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#step-1-verify-that-the-extension-was-installed-properly
+
+- id: INSTALL-003
+  name: Extension Uninstall Failure (Exit Code 126)
+  severity: warning
+  category: installation
+  platforms: [linux]
+  description: >
+    The AMA extension uninstall failed with exit code 126. This is a known
+    issue with AMA versions 1.15.2 and higher on Linux where the extension
+    removal process encounters permission or binary execution errors.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)Non-zero exit code: 126"
+  remediation: >
+    Try purging AMA manually using the AMA purge procedure.
+    Check extension.log and waagent.log for additional error details.
+    If purge fails, contact Azure support.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-manage
+
+- id: INSTALL-004
+  name: SLES insserv-compat Package Missing
+  severity: critical
+  category: installation
+  platforms: [linux]
+  description: >
+    AMA installation on SUSE SLES 15 failed because the insserv-compat
+    package is not installed. This package is required for the AMA
+    extension to install correctly on SLES.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)insserv.*(not found|missing|unavailable|error)"
+  remediation: >
+    Install the missing package and retry:
+    zypper install insserv-compat
+    Then reinstall the AMA extension.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-supported-operating-systems
+
+- id: INSTALL-005
+  name: Extension Auto-Upgrade Failure
+  severity: warning
+  category: installation
+  platforms: [windows, linux]
+  description: >
+    The AMA extension auto-upgrade process failed. The agent may be running
+    an outdated version that is missing bug fixes or security patches.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(auto.?upgrade|auto.?update).*(fail|error|timeout|unable)"
+  remediation: >
+    Check the extension status in the Azure portal. Verify autoUpgradeMinorVersion
+    is enabled. Check for pinned version constraints. Review extension.log and
+    waagent.log for download or installation errors during the upgrade attempt.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-manage

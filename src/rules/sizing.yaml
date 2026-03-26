@@ -51,3 +51,23 @@
     is typically C:\\WindowsAzure\\Resources\\AMADataStore. On Linux, check
     /var/opt/microsoft/azuremonitoragent/.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
+
+- id: SZ-005
+  name: OOM Killer Terminated Agent Process
+  severity: critical
+  category: sizing
+  platforms: [linux]
+  description: >
+    The Linux kernel OOM killer terminated an AMA agent process (mdsd or
+    amacoreagent). This happens when system memory or the memory cgroup
+    limit is exhausted. The agent will restart but may lose buffered data.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(oom-kill|Out of memory.*Killed process).*(mdsd|amacoreagent|azuremonitor)"
+  remediation: >
+    Upgrade the VM to a SKU with more memory. Reduce the number of DCR
+    data sources to lower the agent memory footprint. Check dmesg for
+    CONSTRAINT_MEMCG (cgroup limit) vs CONSTRAINT_NONE (system-wide OOM).
+    If cgroup-constrained, adjust the systemd MemoryMax setting.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance

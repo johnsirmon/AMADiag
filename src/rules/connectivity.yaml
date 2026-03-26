@@ -49,3 +49,21 @@
     IMDS must be accessible from the VM. Do NOT block 169.254.169.254 in local firewall
     rules. For Arc-enabled servers, HIMDS provides equivalent functionality.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm#verify-imds-connectivity
+
+- id: CONN-004
+  name: Proxy Configuration Error
+  severity: warning
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    Log entries indicate errors related to proxy configuration. The agent
+    may be unable to reach Azure endpoints through the configured proxy.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)proxy.*(fail|error|refused|timeout|unreachable|authentication)"
+  remediation: >
+    Verify the proxy configuration in /etc/opt/microsoft/azuremonitoragent/proxy.conf
+    (Linux) or the agent proxy settings (Windows). Test connectivity through the
+    proxy to *.handler.control.monitor.azure.com and *.ingest.monitor.azure.com.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration

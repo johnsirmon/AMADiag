@@ -102,6 +102,38 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             Severity::Warning,
             "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-arc",
         ),
+        (
+            Patterns::oom_killer(),
+            "OOM-001",
+            "OOM Killer Terminated Agent Process",
+            Category::Sizing,
+            Severity::Critical,
+            "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance",
+        ),
+        (
+            Patterns::fluentbit_error(),
+            "FLUENTBIT-001",
+            "Fluentbit Engine Error",
+            Category::Syslog,
+            Severity::Warning,
+            "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
+        ),
+        (
+            Patterns::mdsd_qos_failure(),
+            "QOS-001",
+            "MDSD QoS Upload Failure",
+            Category::Connectivity,
+            Severity::Warning,
+            "https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm",
+        ),
+        (
+            Patterns::throttling(),
+            "THROTTLE-001",
+            "Data Ingestion Throttling",
+            Category::Syslog,
+            Severity::Warning,
+            "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting",
+        ),
     ];
 
     for (pattern, rule_id, name, category, severity, doc_link) in &pattern_checks {

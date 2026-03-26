@@ -52,3 +52,41 @@
     automatically when a syslog data source is configured in the DCR.
     Verify the DCR has a syslog data source and try restarting the AMA extension.
   doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-004
+  name: Syslog Ingestion Throttling
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    The MDSD daemon is throttling syslog ingestion. This occurs when the agent
+    receives more syslog data than it can process or upload, typically due to
+    high message volume or blocked upload endpoints.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)Throttling ingestion"
+  remediation: >
+    Investigate data volume — reduce syslog facilities or severities in the DCR
+    if the volume is excessive. Check mdsd.warn for throttling frequency.
+    Verify connectivity to the log ingestion endpoint.
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-005
+  name: CEF Collection Upload Failure
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    The mdsd.qos log shows failures uploading CEF (Common Event Format)
+    security data via the SECURITY_CEF_BLOB channel. This indicates CEF
+    events are being collected but not reaching Log Analytics.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)SECURITY_CEF_BLOB.*(FailCount|fail|error)"
+  remediation: >
+    Verify rsyslog is forwarding CEF messages to mdsd on port 28330.
+    Check disk space and network connectivity to the ingestion endpoint.
+    Compare rsyslog configuration with a known good CEF config.
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting

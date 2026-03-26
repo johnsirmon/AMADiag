@@ -137,6 +137,36 @@ impl Patterns {
         });
         &RE
     }
+
+    pub fn oom_killer() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?i)(oom-kill|Out of memory.*Killed process).*(mdsd|amacoreagent|azuremonitor)",
+            )
+            .unwrap()
+        });
+        &RE
+    }
+
+    pub fn fluentbit_error() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"(?i)\[error\].*(fluentbit|fluent.bit|td-agent)").unwrap()
+        });
+        &RE
+    }
+
+    pub fn mdsd_qos_failure() -> &'static Regex {
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"(?i)(SuccessCount\s*=\s*0|FailCount\s*=\s*[1-9])").unwrap()
+        });
+        &RE
+    }
+
+    pub fn throttling() -> &'static Regex {
+        static RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"(?i)Throttling ingestion").unwrap());
+        &RE
+    }
 }
 
 #[cfg(test)]
