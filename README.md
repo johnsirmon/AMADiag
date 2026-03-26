@@ -17,17 +17,16 @@
 
 <img width="1263" height="663" alt="image" src="https://github.com/user-attachments/assets/96bcab00-8aff-4bfc-9d57-2aa13182a5d2" />
 
-
 ## 💡 Why AMADiag?
 
-When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes silent — diagnosing the cause means manually sifting through extension logs, DCR configs, IMDS responses, and MetricsExtension traces across multiple Microsoft Learn guides.
+When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes silent — diagnosing the cause usually means manually sifting through extension logs, DCR configs, IMDS responses, and MetricsExtension traces across multiple Microsoft Learn guides.
 
-**AMADiag does that for you.** Feed it a troubleshooter bundle and it returns a structured report with root causes, severity ratings, and step-by-step remediation — linked directly to the relevant docs.
+**AMADiag does that work for you.** Feed it a troubleshooter bundle and it returns a structured report with findings, severity, evidence, remediation guidance, and links to the relevant docs.
 
 ```
 ┌─────────────────────────────────────┐
 │  AMA Troubleshooter Output Bundle   │
-│  (.tgz / .zip / log directory)      │
+│  (.tgz / .tar.gz / .zip / folder)   │
 └──────────────┬──────────────────────┘
                │
                ▼
@@ -36,8 +35,8 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 │                                      │
 │  ┌────────────┐  ┌────────────────┐  │
 │  │  Parsers   │─▶│  Rules Engine  │  │
-│  │  Win / Lin │  │  (38 YAML +    │  │
-│  └────────────┘  │   19 regex)    │  │
+│  │  Win / Lin │  │  (YAML rules + │  │
+│  └────────────┘  │   log scanners)│  │
 │                  └───────┬────────┘  │
 │                          │           │
 │  ┌───────────────────────▼────────┐  │
@@ -49,10 +48,10 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
                ▼
 ┌──────────────────────────────────────┐
 │  Diagnostic Report                   │
-│  • Findings with severity & evidence │
-│  • Remediation steps                 │
-│  • Environment sizing assessment     │
-│  • Links to Microsoft Learn docs     │
+│  • Severity-ranked findings          │
+│  • Evidence and remediation          │
+│  • Environment summary               │
+│  • Microsoft Learn links             │
 └──────────────────────────────────────┘
 ```
 
@@ -60,23 +59,21 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 
 ## ✨ Highlights
 
-- 🔎 **38 built-in detection rules** across 8 categories — installation, connectivity, DCR, identity, performance counters, syslog/CEF, Linux collection, and environment sizing
-- 🧠 **19 regex pattern scanners** for IMDS, auth, connectivity, service crashes, DCR errors, extension failures, syslog, MetricsExtension, Arc agent issues, OOM kills, Fluentbit errors, MDSD QoS failures, throttling, guest agent errors, systemd failures, disk full, and cgroup OOM
-- 🐧 **Deep Linux analysis** — Fluentbit config parsing, MDSD QoS upload health checks, rsyslog forwarding validation, and OS release detection
-- 🪟🐧 **Auto-detect Windows & Linux** bundles from file structure alone
-- 📦 **Archive support** — `.tgz`, `.zip`, or plain directories
-- 📊 **Dual output** — human-readable Markdown or machine-readable JSON for CI/CD
-- 🖥️ **Interactive TUI** — keyboard-first dashboard with file browser, severity filtering, threaded analysis, and in-app report export
-- ⚡ **Single binary, zero runtime deps** — all rules embedded at compile time
-- 🧩 **YAML-extensible** — add custom detection rules without writing Rust
-- 🏥 **XML config parsing** — streaming parser for `mcsconfig.lkg.xml` / `mcsconfig.latest.xml`
-- 📈 **ETW trace analysis** — MetricsExtension CSV event table parsing
+- 🔎 **37 built-in YAML detection rules** across installation, connectivity, DCR, identity, performance, syslog, Linux collection, and sizing scenarios
+- 🧠 **Regex-based log scanners** for common AMA failures such as IMDS, auth, service crashes, extension issues, throttling, disk pressure, and upload errors
+- 🐧 **Linux-specific analysis** for Fluent Bit, rsyslog forwarding, QoS upload health, proxy signals, and OS details
+- 🪟🐧 **Automatic Windows/Linux bundle detection** from the extracted content
+- 📦 **Archive and directory input support** for `.tgz`, `.tar.gz`, `.zip`, and extracted folders
+- 📊 **Dual output formats** with Markdown for humans and JSON for automation
+- 🖥️ **Interactive TUI** with a file browser, severity and time filtering, threaded analysis, and in-app export
+- ⚡ **Single binary, zero runtime setup** with rules embedded at compile time
+- 🧩 **YAML-extensible rule catalog** for adding new detections without changing the CLI surface
 
 ---
 
 ## 🚀 Quick Start
 
-If you want the easiest path, especially for someone new to command-line tools, start with [`quickstart.md`](quickstart.md). It explains how to download a ready-made release and run AMADiag without installing Rust.
+If you want the easiest path, especially for someone new to command-line tools, start with [`quickstart.md`](quickstart.md). It explains how to download a release build and run AMADiag without installing Rust.
 
 ```bash
 # 1. Clone and build
@@ -87,21 +84,20 @@ cargo build --release
 # 2. Analyze a troubleshooter bundle
 ./target/release/amadiag analyze /path/to/bundle.tgz
 
-# 2b. Or launch the interactive TUI
+# 3. Or launch the interactive TUI
 ./target/release/amadiag tui
-
-# 3. Review the report
-#    Findings are printed to stdout as a Markdown table
 ```
 
-Or install directly:
+The `analyze` command prints a full Markdown diagnostic report to stdout by default. Use `--format json` when you want structured output for scripts or CI.
+
+You can also install it directly:
 
 ```bash
 cargo install --path .
 amadiag analyze /path/to/bundle.tgz
 ```
 
-For non-build users, download prebuilt Windows and Linux binaries from the repository's **Releases** page. Those packages are meant to be the easiest path and do not require building from source.
+For non-build users, download the Windows or Linux release package from **Releases** and run the included binary.
 
 ---
 
@@ -110,203 +106,197 @@ For non-build users, download prebuilt Windows and Linux binaries from the repos
 ### Analyze a troubleshooter bundle
 
 ```bash
-# Linux .tgz bundle
+# Linux archive
 amadiag analyze /tmp/ama-troubleshooter-output.tgz
 
-# Windows zip or directory
-amadiag analyze C:\AMA-Diag-Logs\
+# Extracted folder
+amadiag analyze /tmp/ama-logs
 
-# JSON output for CI/CD integration
+# JSON output for automation
 amadiag analyze ./bundle.tgz --format json --output report.json
 
-# Verbose logging
-amadiag analyze ./bundle.tgz --verbose
-
-# Interactive TUI
-amadiag tui
-
-# Start the TUI with a preselected path
-amadiag tui ./bundle.tgz
+# Verbose logging (global flag)
+amadiag --verbose analyze ./bundle.tgz
 ```
 
-The TUI is keyboard-first with a built-in file browser:
+```powershell
+# Windows zip or extracted directory
+amadiag analyze C:\AMA-Diag-Logs
+amadiag analyze C:\temp\ama-troubleshooter-output.zip
+```
 
-- `b` to open the **file browser** — navigate to bundles visually
-- type or paste a path to a `.zip`, `.tgz`, `.tar.gz`, or extracted log folder
-- press `Enter` to analyze
-- use `Up` / `Down` or `j` / `k` to navigate findings
-- use `Tab` to switch between the findings list and the details pane
-- filter by severity: `1` = Critical, `2` = Critical+Warning, `3` = All
-- press `m` to export Markdown or `j` to export JSON
-- press `n` to return to path entry, `r` to rerun, and `q` to quit
+### Launch the interactive TUI
 
-### Validate a bundle (no analysis)
+```bash
+# Start in the file browser
+amadiag tui
+
+# Start immediately with a known bundle path
+amadiag tui /path/to/bundle.tgz
+
+# Alias
+amadiag interactive
+```
+
+The TUI starts in the **file browser** unless you pass a path. Analysis runs on a worker thread so the UI stays responsive while a bundle is being processed.
+
+#### File browser
+
+- `Enter` selects the highlighted file or folder
+- `Backspace` goes to the parent directory
+- `Up` / `Down` or `j` / `k` moves through the current directory
+- `t` switches from the browser to manual path entry
+- `h` shows or hides dotfiles
+- `Esc` or `q` quits
+
+#### Manual path entry
+
+- type or paste a `.zip`, `.tgz`, `.tar.gz`, or extracted folder path
+- `Enter` starts analysis
+- `Ctrl+T` switches back to the file browser
+- `Esc` quits
+
+#### Dashboard and export
+
+- `Tab`, `Left`, `Right`, or `Shift+Tab` cycles focus through **Navigator → Findings → Details → Evidence**
+- `Up` / `Down` moves inside the focused list pane
+- `Page Up` / `Page Down` scrolls the active detail or evidence pane
+- `Home` / `End` jumps to the first or last item in the active list
+- `1`, `2`, `3` set severity filters: **critical**, **critical + warning**, or **all**
+- `t` cycles the time filter used by the dashboard timeline and grouped findings
+- `m` opens Markdown export and `j` opens JSON export
+- on the export screen, edit the output path, use `Tab` to switch format, and press `Enter` to write the file
+- if the export target already exists, press `Enter` again to confirm overwrite
+- `r` reruns the last analysis
+- `n` or `Esc` returns to the file browser
+- `q` quits
+
+### Validate a bundle without full analysis
 
 ```bash
 amadiag validate /path/to/bundle
 ```
 
-Prints file counts, sizes, and format summary without running the full analysis pipeline.
+Validation prints a quick summary that includes bundle format, file counts, total size, and XML/log/CSV counts.
 
-### List all detection rules
+### List built-in YAML rules
 
 ```bash
 amadiag rules list
 ```
 
-### Exit Codes
+Use this command as the authoritative source for the current built-in rule catalog.
+
+### Exit codes
 
 | Code | Meaning |
 |:----:|---------|
-| `0`  | Analysis complete — no critical findings |
-| `1`  | Analysis complete — **critical findings detected** |
-| `2`  | Input error (invalid path, unrecognized format) |
+| `0`  | Analysis completed with no critical findings |
+| `1`  | Analysis completed and at least one critical finding was detected |
+| `2`  | Input or execution error |
 
 ---
 
-## 🛡️ Detection Rules
+## 🛡️ Detection coverage
 
-AMADiag ships with **38 YAML-defined rules** plus **6 programmatic analysis rules** covering the most common AMA failure modes:
+AMADiag combines three layers of analysis:
 
-| ID | Name | Severity | Category | Platforms |
-|----|------|:--------:|----------|:---------:|
-| `INSTALL-001` | Extension Not Installed | 🔴 Critical | Installation | Win · Lin |
-| `INSTALL-002` | Extension Provisioning Error Log | 🔴 Critical | Installation | Win · Lin |
-| `INSTALL-003` | Extension Uninstall Failure (Exit Code 126) | 🔴 Critical | Installation | Lin |
-| `INSTALL-004` | SLES insserv-compat Package Missing | 🔴 Critical | Installation | Lin |
-| `INSTALL-005` | Extension Auto-Upgrade Failure | 🟡 Warning | Installation | Win · Lin |
-| `INSTALL-006` | Linux Guest Agent Not Running | 🔴 Critical | Installation | Lin |
-| `INSTALL-007` | AMA Linux Service Not Running | 🔴 Critical | Installation | Lin |
-| `CONN-001` | AMCS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
-| `CONN-002` | Log Ingestion Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
-| `CONN-003` | IMDS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
-| `CONN-004` | Proxy Configuration Error | 🟡 Warning | Connectivity | Win · Lin |
-| `CONN-005` | Azure AD Token Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
-| `CONN-006` | HIMDS Endpoint Unreachable (Arc) | 🔴 Critical | Connectivity | Lin |
-| `DCR-001` | No DCR Configuration Found | 🔴 Critical | DCR | Win · Lin |
-| `DCR-002` | Empty DCR Configuration | 🟡 Warning | DCR | Win · Lin |
-| `IDENTITY-001` | Missing Managed Identity | 🔴 Critical | Identity | Win · Lin |
-| `IDENTITY-002` | Auth Token Expired or Invalid | 🔴 Critical | Identity | Win · Lin |
-| `IDENTITY-003` | MSI Token Acquisition Retry Loop | 🟡 Warning | Identity | Win · Lin |
-| `PERF-001` | No Performance Counter Config | 🟡 Warning | Perf Counters | Win |
-| `PERF-002` | Invalid Performance Counter Path | 🟡 Warning | Perf Counters | Win |
-| `LCOL-001` | Fluentbit Cannot Tail Log File | 🟡 Warning | Linux Collection | Lin |
-| `LCOL-002` | Fluentbit Output to MDSD Failing | 🔴 Critical | Linux Collection | Lin |
-| `LCOL-003` | JSON Log Schema Mismatch | 🟡 Warning | Linux Collection | Lin |
-| `LCOL-004` | MDSD Configuration Parse Error | 🔴 Critical | Linux Collection | Lin |
-| `SYSLOG-001` | Syslog Forwarder Not Running | 🔴 Critical | Syslog | Lin |
-| `SYSLOG-002` | Syslog Port Not Listening | 🟡 Warning | Syslog | Lin |
-| `SYSLOG-003` | Syslog Config Missing AMA Forwarding | 🟡 Warning | Syslog | Lin |
-| `SYSLOG-004` | Syslog Ingestion Throttling | 🟡 Warning | Syslog | Lin |
-| `SYSLOG-005` | CEF Collection Upload Failure | 🔴 Critical | Syslog | Lin |
-| `SYSLOG-006` | Rsyslog Not Forwarding to AMA Port | 🟡 Warning | Syslog | Lin |
-| `SYSLOG-007` | Syslog Facility Not Configured in DCR | 🟡 Warning | Syslog | Lin |
-| `SZ-001` | Memory Pressure Detected | 🟡 Warning | Sizing | Win · Lin |
-| `SZ-002` | High CPU Usage by AMA | 🟡 Warning | Sizing | Win · Lin |
-| `SZ-003` | Disk Space Low | 🟡 Warning | Sizing | Win · Lin |
-| `SZ-005` | OOM Killer Terminated Agent Process | 🔴 Critical | Sizing | Lin |
-| `SZ-006` | Memory Cgroup OOM Kill | 🔴 Critical | Sizing | Lin |
-| `SZ-007` | Disk Space Full Preventing Upload | 🔴 Critical | Sizing | Lin |
+- **Embedded YAML rules** in `src/rules/` for file presence, file absence, content matches, and XML checks
+- **Programmatic analyzers** for Linux-specific scenarios such as Fluent Bit config health, rsyslog forwarding, and MDSD QoS upload behavior
+- **Regex-based pattern scanning** for recurring log signatures that indicate auth, connectivity, provisioning, throttling, or resource-pressure failures
 
-**Programmatic analysis rules** (Linux analysis engine):
+Current rule families include:
 
-| ID | Name | Severity | Description |
-|----|------|:--------:|-------------|
-| `QOS-002` | Complete Upload Failure | 🔴 Critical | MDSD QoS shows zero successful uploads for a data channel |
-| `QOS-003` | Partial Upload Failures | 🟡 Warning | MDSD QoS shows some failed uploads |
-| `FBCFG-001` | Fluentbit No Input Config | 🟡 Warning | Fluentbit config has no input sections |
-| `FBCFG-002` | Fluentbit Not Sending to MDSD | 🟡 Warning | Fluentbit config missing TCP output to port 28330 |
-| `FBCFG-003` | Fluentbit Debug Logging | ℹ️ Info | Debug logging enabled (performance impact) |
-| `RSYSLOG-001` | Rsyslog Not Forwarding to AMA | 🟡 Warning | No rsyslog rule forwarding to AMA port |
+- Installation
+- Connectivity
+- DCR
+- Identity
+- Performance counters
+- Linux collection
+- Syslog / CEF
+- Sizing
 
-> **Plus 19 regex-based pattern scanners** that run alongside YAML rules — catching IMDS errors, authentication failures, connectivity issues, service crashes, DCR errors, extension failures, syslog issues, MetricsExtension errors, Arc agent problems, OOM kills, Fluentbit errors, MDSD QoS failures, throttling, guest agent errors, systemd service failures, disk full conditions, and cgroup OOM events.
+Severity levels are `critical`, `warning`, and `info`.
 
----
+If you want the exact current built-in YAML rules, run `amadiag rules list`.
 
 <details>
-<summary><strong>🧩 Adding Custom Rules</strong></summary>
+<summary><strong>🧩 Adding custom rules</strong></summary>
 
-Rules are defined in YAML. Each rule specifies a detection condition and remediation guidance:
+Rules are defined in YAML and embedded at compile time from `src/rules/`.
 
 ```yaml
 - id: CUSTOM-001
   name: My Custom Detection
-  severity: warning          # critical | warning | info
-  category: connectivity     # installation | identity | connectivity | dcr | ...
+  severity: warning
+  category: connectivity
   platforms: [windows, linux]
   description: >
     Description of what this rule detects.
   detection:
-    file_pattern: ".log"           # file name substring to match
-    condition: content_match       # file_missing | file_present | content_match | xml_element_missing
+    file_pattern: ".log"
+    condition: content_match
     content_regex: "(?i)my-error-pattern"
   remediation: >
     Steps to fix the issue.
   doc_link: https://learn.microsoft.com/en-us/...
 ```
 
-Built-in rules are embedded at compile time from `src/rules/`. To add new rules, create or modify YAML files in that directory and rebuild.
+Supported condition values are:
+
+- `file_missing`
+- `file_present`
+- `content_match`
+- `xml_element_missing`
+
+After adding or updating rules under `src/rules/`, rebuild the project to embed the changes.
 
 </details>
 
 <details>
-<summary><strong>📁 Project Structure</strong></summary>
+<summary><strong>📁 Project structure</strong></summary>
 
 ```
 src/
 ├── main.rs                 # CLI entry point (clap)
 ├── lib.rs                  # Library root
-├── detect.rs               # Orchestrator: extract → parse → analyze → report
-├── input.rs                # Bundle extraction (.tgz, .zip, directory) + validation
+├── detect.rs               # Orchestrator: extract -> parse -> analyze -> report
+├── input.rs                # Bundle extraction and validation
 ├── parsers/
-│   ├── mod.rs              # File walker, platform detection
-│   ├── common.rs           # Log line classification, 19 regex pattern scanners
-│   ├── xml_config.rs       # mcsconfig XML parser (quick-xml)
+│   ├── mod.rs              # File walker and platform detection
+│   ├── common.rs           # Log line classification and pattern scanning
+│   ├── xml_config.rs       # mcsconfig XML parser
 │   ├── event_table.rs      # MetricsExtension ETW CSV parser
-│   ├── fluentbit_config.rs # Fluentbit td-agent.conf parser
-│   ├── mdsd_qos.rs         # MDSD QoS upload health parser
+│   ├── fluentbit_config.rs # Fluent Bit config parser
+│   ├── mdsd_qos.rs         # MDSD QoS parser
 │   ├── windows.rs          # Windows-specific enrichment
-│   └── linux.rs            # Linux-specific enrichment (rsyslog, os-release, proxy)
+│   └── linux.rs            # Linux-specific enrichment
 ├── analyzers/
-│   ├── mod.rs              # Analysis orchestration, pattern scanning
-│   ├── finding.rs          # Finding / Severity / Category / DiagnosticReport
-│   ├── linux_analysis.rs   # Linux programmatic analysis (QoS, Fluentbit, rsyslog)
-│   ├── rules.rs            # YAML rules engine (load, evaluate, display)
-│   └── sizing.rs           # Environment sizing checks (memory, CPU, disk)
+│   ├── mod.rs              # Analysis orchestration
+│   ├── finding.rs          # Diagnostic report data model
+│   ├── linux_analysis.rs   # Linux programmatic analysis
+│   ├── rules.rs            # YAML rules engine
+│   └── sizing.rs           # Environment sizing checks
 ├── reporters/
 │   ├── mod.rs              # OutputFormat enum
 │   ├── markdown.rs         # Markdown report renderer
 │   └── json.rs             # JSON report renderer
-├── rules/                  # Embedded YAML rule definitions (8 files, 38 rules)
-│   ├── installation.yaml
-│   ├── connectivity.yaml
-│   ├── dcr.yaml
-│   ├── identity.yaml
-│   ├── linux_collection.yaml
-│   ├── performance.yaml
-│   ├── syslog.yaml
-│   └── sizing.yaml
-└── tui/                    # Interactive terminal UI (ratatui)
-    ├── mod.rs              # TUI entry point and state machine
-    ├── app.rs              # Application state and event loop
-    ├── ui.rs               # Screen rendering (file browser, dashboard, export)
-    ├── event.rs            # Input event handling
-    ├── export.rs           # Report export from TUI
-    └── theme.rs            # Color theme constants
+├── rules/                  # Embedded YAML rule definitions
+└── tui/                    # Interactive terminal UI
 ```
 
 </details>
 
 ---
 
-## 🎯 Who Is This For?
+## 🎯 Who is this for?
 
-| Persona | Use Case |
+| Persona | Use case |
 |---------|----------|
-| **Azure Admin / IT Pro** | Fast root-cause identification without reading multiple troubleshooting docs |
-| **SOC / Sentinel Analyst** | Determine why syslog/CEF data stopped flowing into Sentinel |
-| **Microsoft Support Engineer** | Structured analysis to accelerate case resolution from customer bundles |
-| **DevOps / SRE** | CLI + JSON output for validating AMA health in deployment pipelines |
+| **Azure Admin / IT Pro** | Identify AMA root causes without reading multiple troubleshooting guides |
+| **SOC / Sentinel Analyst** | Investigate why Syslog or CEF data stopped flowing |
+| **Microsoft Support Engineer** | Turn customer bundles into a structured diagnostic summary quickly |
+| **DevOps / SRE** | Integrate AMA validation into scripts and CI/CD with JSON output |
 
 ---
 
@@ -315,19 +305,19 @@ src/
 | | |
 |---|---|
 | **Build** | Rust 1.80+ |
-| **Runtime** | No dependencies — single statically-linked binary |
-| **Input** | AMA troubleshooter output (`.tgz`, `.zip`, or directory) |
+| **Runtime** | Single binary, no additional runtime dependencies |
+| **Input** | AMA troubleshooter output as `.tgz`, `.tar.gz`, `.zip`, or directory |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! The easiest way to get started is by adding a new detection rule — all it takes is a YAML file (see **Adding Custom Rules** above).
+Contributions are welcome. A good first contribution is adding or refining a detection rule in `src/rules/`.
 
 1. Fork the repo
-2. Create a feature branch (`git checkout -b feat/my-rule`)
-3. Add or modify rules in `src/rules/`
-4. Run `cargo test` to validate
+2. Create a branch such as `git checkout -b feat/my-rule`
+3. Update the relevant rule file or analyzer
+4. Run `cargo test`
 5. Open a pull request
 
 ---
@@ -345,8 +335,8 @@ AMADiag builds on the diagnostic guidance from these Microsoft Learn resources:
 - [Azure Monitor Agent Overview](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-overview)
 - [Troubleshoot AMA on Windows VMs](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm)
 - [Troubleshoot AMA on Linux VMs](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm)
-- [AMA Troubleshooter — Windows](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-windows)
-- [AMA Troubleshooter — Linux](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-linux)
+- [AMA Troubleshooter - Windows](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-windows)
+- [AMA Troubleshooter - Linux](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/troubleshooter-ama-linux)
 - [Troubleshoot CEF/Syslog via AMA](https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting)
 - [Data Collection Rules](https://learn.microsoft.com/en-us/azure/azure-monitor/vm/data-collection)
 
@@ -354,6 +344,6 @@ AMADiag builds on the diagnostic guidance from these Microsoft Learn resources:
 
 <div align="center">
 
-*Built with 🦀 Rust — fast, safe, zero-dependency diagnostics for Azure Monitor Agent.*
+*Built with 🦀 Rust — fast, safe diagnostics for Azure Monitor Agent bundles.*
 
 </div>

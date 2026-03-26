@@ -2,7 +2,7 @@
 
 This guide is for people who do **not** regularly build software from source code.
 
-If you can download a file, unzip it, and open a terminal, you can run AMADiag.
+If you can download a file, extract it, and open a terminal, you can run AMADiag.
 
 You do **not** need Rust or a compiler if you use the release downloads.
 
@@ -18,17 +18,12 @@ AMADiag reads an Azure Monitor Agent troubleshooting bundle and tells you:
 It works with:
 
 - `.zip` bundles
-- `.tgz` / `.tar.gz` bundles
+- `.tgz` and `.tar.gz` bundles
 - extracted log folders
 
 ## The easiest way to get it
 
 Go to the project's **Releases** page and download the package for your operating system.
-
-You should see release files like:
-
-- `amadiag-windows-x86_64.zip`
-- `amadiag-linux-x86_64.tar.gz`
 
 After downloading:
 
@@ -41,10 +36,10 @@ If you are not sure where to put it, your **Downloads** folder is fine.
 
 If you only want the shortest version:
 
-1. Download the release for your operating system from **Releases**
-2. Unzip or extract it
-3. Open a terminal in that folder
-4. Run:
+1. Download the release for your operating system from **Releases**.
+2. Extract it.
+3. Open a terminal in that folder.
+4. Run one of these:
 
 ### Windows
 
@@ -58,7 +53,11 @@ If you only want the shortest version:
 ./amadiag tui
 ```
 
-5. Paste the path to your AMA bundle and press `Enter`
+5. The TUI opens in a **file browser**.
+6. Use the arrow keys to highlight your AMA bundle or extracted folder.
+7. Press `Enter` to analyze it.
+
+If you prefer to paste a full path instead of browsing, press `t` on the first screen and then paste the path.
 
 ## What you need before running it
 
@@ -72,10 +71,10 @@ You need one of these:
 
 ### 1. Download and unzip
 
-- Download the Windows release zip
-- Right-click it
-- Choose **Extract All**
-- Open the extracted folder
+- Download the Windows release zip.
+- Right-click it.
+- Choose **Extract All**.
+- Open the extracted folder.
 
 You should see `amadiag.exe`.
 
@@ -89,19 +88,30 @@ An easy way:
 
 A PowerShell window will open in the correct folder.
 
-### 3. Start the interactive mode
-
-Run:
+### 3. Start interactive mode
 
 ```powershell
 .\amadiag.exe tui
 ```
 
-You will see the interactive screen.
+You will see the file browser.
 
-### 4. Enter your bundle path
+### 4. Choose how to open your bundle
 
-Example paths:
+#### Option A: browse to it
+
+Use these keys on the first screen:
+
+- `Up` / `Down` = move through files and folders
+- `Enter` = open a folder or analyze the selected bundle
+- `Backspace` = go to the parent folder
+- `h` = show or hide hidden files
+- `t` = switch to typed path entry
+- `Esc` or `q` = quit
+
+#### Option B: paste a full path
+
+Press `t`, then paste a path like one of these and press `Enter`:
 
 ```powershell
 C:\Users\YourName\Downloads\ama-troubleshooter-output.zip
@@ -109,20 +119,41 @@ C:\Users\YourName\Downloads\ama-troubleshooter-output.tgz
 C:\Users\YourName\Downloads\AMA-Diag-Logs
 ```
 
-Paste the path into the TUI and press `Enter`.
+Useful path-entry keys:
 
-### 5. Move around the results
+- `Enter` = start analysis
+- `Ctrl+T` = go back to the file browser
+- `Esc` = quit
+
+### 5. Review the results dashboard
+
+After analysis finishes, the dashboard opens.
 
 Useful keys:
 
-- `Up` / `Down` = move between findings
-- `Tab`, `Left`, `Right` = switch panes
-- `Page Up` / `Page Down` = scroll details
-- `Home` / `End` = jump to first or last finding
-- `m` = export Markdown report
-- `j` = export JSON report
-- `n` or `Esc` = go back to path entry
+- `Tab`, `Left`, `Right`, `Shift+Tab` = move focus between category navigator, findings, details, and evidence
+- `Up` / `Down` = move in the currently focused list
+- `Page Up` / `Page Down` = scroll the details or evidence pane
+- `Home` / `End` = jump to the first or last item
+- `1` = show critical findings only
+- `2` = show critical and warning findings
+- `3` = show all findings
+- `t` = cycle the time filter used by the dashboard
+- `m` = open Markdown export
+- `j` = open JSON export
+- `r` = rerun the last analysis
+- `n` or `Esc` = go back to the file browser
 - `q` = quit
+
+### 6. Save a report from the TUI
+
+When you press `m` or `j`, an export screen opens.
+
+- edit the suggested output path if you want
+- press `Tab` to switch between Markdown and JSON
+- press `Enter` to save the file
+- if the file already exists, press `Enter` again to confirm overwrite
+- press `Esc` to cancel the export screen
 
 ## Linux: step-by-step
 
@@ -143,15 +174,18 @@ You should see an `amadiag` binary.
 chmod +x ./amadiag
 ```
 
-### 3. Start the interactive mode
+### 3. Start interactive mode
 
 ```bash
 ./amadiag tui
 ```
 
-### 4. Enter your bundle path
+### 4. Pick a bundle
 
-Example paths:
+You can either:
+
+- browse with the file browser and press `Enter` on the bundle, or
+- press `t`, paste a path like the examples below, and press `Enter`
 
 ```bash
 /home/yourname/Downloads/ama-troubleshooter-output.tgz
@@ -159,7 +193,7 @@ Example paths:
 /home/yourname/Downloads/ama-logs
 ```
 
-Paste the path into the TUI and press `Enter`.
+If you switch to typed path mode by mistake, press `Ctrl+T` to go back to the browser.
 
 ## If you prefer a one-line command instead of the TUI
 
@@ -174,6 +208,8 @@ Paste the path into the TUI and press `Enter`.
 ```bash
 ./amadiag analyze /path/to/bundle.tgz
 ```
+
+By default, `analyze` prints a Markdown report to the terminal.
 
 ## Saving a report to a file
 
@@ -191,32 +227,74 @@ Paste the path into the TUI and press `Enter`.
 ./amadiag analyze /path/to/bundle.tgz --format markdown --output report.md
 ```
 
+If you want verbose logs, put `--verbose` before the subcommand:
+
+### Windows
+
+```powershell
+.\amadiag.exe --verbose analyze C:\path\to\bundle.zip
+```
+
+### Linux
+
+```bash
+./amadiag --verbose analyze /path/to/bundle.tgz
+```
+
+## Other useful commands
+
+### Validate a bundle without full analysis
+
+```powershell
+.\amadiag.exe validate C:\path\to\bundle.zip
+```
+
+```bash
+./amadiag validate /path/to/bundle.tgz
+```
+
+This prints a quick summary of the bundle format, file count, total size, and XML/log/CSV counts.
+
+### List built-in YAML rules
+
+```powershell
+.\amadiag.exe rules list
+```
+
+```bash
+./amadiag rules list
+```
+
 ## Common problems
 
 ### "Path does not exist"
 
 The path is wrong or the file was moved.
 
-Check:
+Check that:
 
 - the file or folder really exists
 - you copied the full path
-- the file extension is `.zip`, `.tgz`, or `.tar.gz`
+- the extension is `.zip`, `.tgz`, or `.tar.gz`, unless you are pointing to a directory
 
 ### "Unrecognized bundle format"
 
-AMADiag only accepts:
+AMADiag accepts only:
 
 - `.zip`
 - `.tgz`
 - `.tar.gz`
 - directories
 
-### Nothing happens after typing a path
+### "I want to paste a path, but the app opened a browser"
 
-Press `Enter` after pasting the path.
+That is expected. Press `t` to switch from the file browser to typed path entry.
 
-### The terminal looks strange after closing
+### "I switched to typed path mode and want the browser back"
+
+Press `Ctrl+T`.
+
+### "The terminal looks strange after closing"
 
 Close the terminal window and open a new one. If that happens often, report it as an issue.
 
@@ -227,8 +305,8 @@ The repository includes a GitHub Actions workflow that builds Windows and Linux 
 Example:
 
 ```bash
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
 That workflow creates a GitHub Release and uploads packaged binaries for users to download.
