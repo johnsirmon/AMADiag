@@ -3,7 +3,7 @@ use ratatui::{
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
     text::{Line, Span, Text},
-    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph, Wrap},
+    widgets::{Block, BorderType, Clear, List, ListItem, Paragraph, Wrap},
     Frame,
 };
 use tui_big_text::{BigText, PixelSize};
@@ -52,7 +52,8 @@ fn draw_file_browser(frame: &mut Frame, app: &mut App) {
         title_area,
     );
 
-    let path_str = clean_path(&app.browser_path().display().to_string());
+    let binding = app.browser_path().display().to_string();
+    let path_str = clean_path(&binding);
     let hidden_indicator = if app.show_hidden() {
         " [hidden: shown]"
     } else {
@@ -825,4 +826,62 @@ fn centered_rect(percent_x: u16, percent_y: u16, area: Rect) -> Rect {
     };
 
     horizontal
+}
+
+/// Strip the Windows extended-length path prefix `\\?\` from display strings.
+fn clean_path(s: &str) -> &str {
+    s.strip_prefix(r"\\?\").unwrap_or(s)
+}
+
+/// Return a file-type icon based on extension.
+fn file_icon(name: &str) -> &'static str {
+    let lower = name.to_lowercase();
+    if lower.ends_with(".zip") || lower.ends_with(".tgz") || lower.ends_with(".tar.gz") {
+        "📦 "
+    } else if lower.ends_with(".yaml") || lower.ends_with(".yml") {
+        "📄 "
+    } else if lower.ends_with(".json") {
+        "📄 "
+    } else if lower.ends_with(".xml") {
+        "📄 "
+    } else if lower.ends_with(".log") || lower.ends_with(".txt") {
+        "📝 "
+    } else if lower.ends_with(".csv") {
+        "📊 "
+    } else {
+        "   "
+    }
+}
+
+/// Format a byte count into a human-readable string.
+fn format_size(bytes: u64) -> String {
+    const KB: u64 = 1024;
+    const MB: u64 = 1024 * KB;
+    const GB: u64 = 1024 * MB;
+
+    if bytes >= GB {
+        format!("{:.1} GB", bytes as f64 / GB as f64)
+    } else if bytes >= MB {
+        format!("{:.1} MB", bytes as f64 / MB as f64)
+    } else if bytes >= KB {
+        format!("{:.1} KB", bytes as f64 / KB as f64)
+    } else {
+        format!("{bytes} B")
+    }
+}
+
+/// Render a key label as a pill badge (dark bg, white text).
+fn key_badge(label: &str) -> Span<'_> {
+    Span::styled(
+        format!(" {label} "),
+        Style::default()
+            .bg(Color::DarkGray)
+            .fg(Color::White)
+            .add_modifier(Modifier::BOLD),
+    )
+}
+
+/// Render a key description in muted text.
+fn key_desc(desc: &str) -> Span<'_> {
+    Span::styled(desc, Style::default().fg(Color::Gray))
 }
