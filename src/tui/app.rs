@@ -264,6 +264,7 @@ impl App {
         self.show_hidden
     }
 
+    #[allow(dead_code)]
     pub fn dir_count(&self) -> usize {
         self.dir_count
     }
