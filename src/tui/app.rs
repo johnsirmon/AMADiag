@@ -680,13 +680,16 @@ impl App {
         // Add parent directory entry
         if let Some(parent) = self.browser_path.parent() {
             if parent != self.browser_path.as_path() {
-                dirs.insert(0, BrowserEntry {
-                    name: "..".to_string(),
-                    is_dir: true,
-                    is_bundle: false,
-                    size: None,
-                    child_count: None,
-                });
+                dirs.insert(
+                    0,
+                    BrowserEntry {
+                        name: "..".to_string(),
+                        is_dir: true,
+                        is_bundle: false,
+                        size: None,
+                        child_count: None,
+                    },
+                );
             }
         }
 
@@ -902,7 +905,9 @@ impl App {
     }
 
     fn detail_max_scroll(&self) -> u16 {
-        let Some(finding) = self.selected_filtered_finding().or_else(|| self.primary_finding())
+        let Some(finding) = self
+            .selected_filtered_finding()
+            .or_else(|| self.primary_finding())
         else {
             return 0;
         };

@@ -1,6 +1,6 @@
 use super::app::{Action, Screen};
 use anyhow::Result;
-use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
+use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind};
 use std::time::Duration;
 
 pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> {
@@ -24,6 +24,8 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::End => Some(Action::End),
                 KeyCode::Char('t') => Some(Action::ToggleView),
                 KeyCode::Char('h') => Some(Action::ToggleHidden),
+                KeyCode::Char('j') => Some(Action::Next),
+                KeyCode::Char('k') => Some(Action::Previous),
                 _ => None,
             },
             Screen::PathInput => match key.code {
@@ -81,6 +83,11 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::Char(ch) => Some(Action::InputChar(ch)),
                 _ => None,
             },
+        },
+        Event::Mouse(mouse) => match mouse.kind {
+            MouseEventKind::ScrollUp => Some(Action::Previous),
+            MouseEventKind::ScrollDown => Some(Action::Next),
+            _ => None,
         },
         Event::Paste(text) => Some(Action::Paste(text)),
         _ => None,
