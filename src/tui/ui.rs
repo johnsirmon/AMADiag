@@ -531,10 +531,10 @@ fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {
 }
 
 fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
-    let title = if app.focus() == Focus::Details {
-        format!("Finding details [focus]  scroll {}", app.detail_scroll())
+    let border_style = if app.focus() == Focus::Details {
+        theme::focused_border()
     } else {
-        format!("Finding details  scroll {}", app.detail_scroll())
+        theme::unfocused_border()
     };
 
     let text = if let Some(finding) = app
@@ -560,6 +560,20 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
                 format!("Evidence ({})", finding.evidence.len()),
                 Style::default().add_modifier(Modifier::BOLD),
             )),
+        ];
+
+        // Evidence lines (placed right after header)
+        if finding.evidence.is_empty() {
+            lines.push(Line::from(
+                "No direct evidence lines captured for this finding.",
+            ));
+        } else {
+            for evidence in &finding.evidence {
+                lines.push(Line::from(format!("  \u{2022} {evidence}")));
+            }
+        }
+
+        lines.extend([
             Line::from(""),
             Line::from(Span::styled(
                 "Remediation",
@@ -577,32 +591,38 @@ fn draw_details(frame: &mut Frame, app: &App, area: Rect) {
                     .clone()
                     .unwrap_or_else(|| "No documentation link supplied.".to_string()),
             ),
-        ];
-
-        if finding.evidence.is_empty() {
-            lines.push(Line::from(
-                "No direct evidence lines captured for this finding.",
-            ));
-        } else {
-            for evidence in &finding.evidence {
-                lines.push(Line::from(format!("- {evidence}")));
-            }
-        }
+        ]);
 
         Text::from(lines)
     } else {
         Text::from("Run an analysis to see detailed findings here.")
     };
 
+    let content_length = text.lines.len();
     let details = Paragraph::new(text)
         .block(
             Block::bordered()
                 .border_type(BorderType::Rounded)
-                .title(title),
+                .border_style(border_style)
+                .title("Finding details"),
         )
         .wrap(Wrap { trim: false })
         .scroll((app.detail_scroll(), 0));
     frame.render_widget(details, area);
+
+    // Scrollbar
+    let viewport = area.height.saturating_sub(2) as usize;
+    if content_length > viewport {
+        let mut scrollbar_state =
+            ScrollbarState::new(content_length).position(app.detail_scroll() as usize);
+        frame.render_stateful_widget(
+            Scrollbar::new(ScrollbarOrientation::VerticalRight)
+                .begin_symbol(Some("\u{2191}"))
+                .end_symbol(Some("\u{2193}")),
+            area,
+            &mut scrollbar_state,
+        );
+    }
 }
 
 fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
@@ -614,20 +634,25 @@ fn draw_footer(frame: &mut Frame, app: &App, area: Rect) {
                 StatusKind::Error => Style::default().fg(Color::Red),
             },
         )),
-        None => Line::from(vec![
-            key_badge("M"),
-            key_desc("Export MD  "),
-            key_badge("J"),
-            key_desc("Export JSON  "),
-            key_badge("R"),
-            key_desc("Rerun  "),
-            key_badge("N/Esc"),
-            key_desc("New  "),
-            key_badge("1/2/3"),
-            key_desc("Filter  "),
-            key_badge("Q"),
-            key_desc("Quit"),
-        ]),
+        None => {
+            let filter = app.severity_filter();
+            Line::from(vec![
+                key_badge("M"),
+                key_desc("MD  "),
+                key_badge("J"),
+                key_desc("JSON  "),
+                key_badge("R"),
+                key_desc("Rerun  "),
+                key_badge("N"),
+                key_desc("New  "),
+                severity_pill(1, "C", filter, theme::SEVERITY_CRITICAL),
+                severity_pill(2, "W", filter, theme::SEVERITY_WARNING),
+                severity_pill(3, "I", filter, theme::SEVERITY_INFO),
+                Span::raw(" "),
+                key_badge("Q"),
+                key_desc("Quit"),
+            ])
+        }
     };
 
     let paragraph =
