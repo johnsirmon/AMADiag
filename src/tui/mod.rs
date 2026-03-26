@@ -42,7 +42,15 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
                 ActionResult::ShowExport(format) => {
                     let export_path = app.export_path().to_string();
                     if let Some(report) = app.report() {
-                        match export::export_report_to(report, format, &export_path) {
+                        match export::export_dashboard_to(
+                            report,
+                            app.grouped_findings(),
+                            app.selected_group(),
+                            &app.current_time_filter_label(),
+                            &app.selected_category_label(),
+                            format,
+                            &export_path,
+                        ) {
                             Ok(path) => {
                                 app.set_info_status(format!("Report saved to {}", path.display()));
                                 // Return to dashboard after successful export

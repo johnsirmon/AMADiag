@@ -200,10 +200,6 @@ impl App {
         self.report.as_ref()
     }
 
-    pub fn analysis(&self) -> Option<&TuiAnalysis> {
-        self.analysis.as_ref()
-    }
-
     pub fn findings_state(&mut self) -> &mut TableState {
         &mut self.findings_state
     }
@@ -272,14 +268,11 @@ impl App {
         self.show_hidden
     }
 
-    pub fn dir_count(&self) -> usize {
-        self.dir_count
-    }
-
     pub fn export_overwrite_pending(&self) -> bool {
         self.export_overwrite_pending
     }
 
+    #[cfg(test)]
     pub fn primary_finding(&self) -> Option<&Finding> {
         self.report
             .as_ref()?
@@ -1090,6 +1083,7 @@ impl App {
     }
 }
 
+#[cfg(test)]
 fn severity_rank(severity: Severity) -> usize {
     match severity {
         Severity::Critical => 3,

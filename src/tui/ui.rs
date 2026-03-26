@@ -959,14 +959,6 @@ fn group_severity_style(severity: UiSeverity) -> Style {
     }
 }
 
-fn severity_totals(report: &crate::analyzers::finding::DiagnosticReport) -> String {
-    format!(
-        "Critical: {}  Warning: {}  Info: {}",
-        report.finding_count_by_severity(crate::analyzers::finding::Severity::Critical),
-        report.finding_count_by_severity(crate::analyzers::finding::Severity::Warning),
-        report.finding_count_by_severity(crate::analyzers::finding::Severity::Info),
-    )
-}
 
 fn centered_rect(percent_x: u16, percent_y: u16, area: Rect) -> Rect {
     let [vertical] = Layout::default()
