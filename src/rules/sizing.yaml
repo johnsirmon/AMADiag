@@ -71,3 +71,42 @@
     CONSTRAINT_MEMCG (cgroup limit) vs CONSTRAINT_NONE (system-wide OOM).
     If cgroup-constrained, adjust the systemd MemoryMax setting.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
+
+- id: SZ-006
+  name: Memory Cgroup OOM Kill
+  severity: critical
+  category: sizing
+  platforms: [linux]
+  description: >
+    The kernel OOM killer terminated an AMA process due to a memory cgroup
+    limit (CONSTRAINT_MEMCG). This means the systemd MemoryMax or cgroup
+    limit for the agent service is too low for the current workload.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)"
+  remediation: >
+    Increase the systemd MemoryMax setting for the azuremonitoragent
+    service, or reduce data collection scope. Check current limit:
+    systemctl show azuremonitoragent | grep MemoryMax.
+    Edit with: systemctl edit azuremonitoragent and set MemoryMax=.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance
+
+- id: SZ-007
+  name: Disk Space Full Preventing Upload
+  severity: critical
+  category: sizing
+  platforms: [linux]
+  description: >
+    The disk is full or nearly full, preventing AMA from writing to its
+    spool directory, event cache, or log files. Data collection and upload
+    will fail until disk space is freed.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(no space left|ENOSPC|disk full|cannot write).*(spool|events|cache|log)"
+  remediation: >
+    Free disk space: df -h to check, du -sh /var/opt/microsoft/azuremonitoragent/
+    to check agent storage. Clear old spool data if safe. Address the root
+    cause (blocked uploads, excessive log volume). Restart AMA after freeing space.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-performance

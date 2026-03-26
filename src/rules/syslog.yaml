@@ -90,3 +90,41 @@
     Check disk space and network connectivity to the ingestion endpoint.
     Compare rsyslog configuration with a known good CEF config.
   doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-006
+  name: Rsyslog Not Forwarding to AMA Port
+  severity: warning
+  category: syslog
+  platforms: [linux]
+  description: >
+    Log entries indicate rsyslog is unable to forward messages to the AMA
+    listening port (28330). This prevents syslog/CEF data from reaching
+    the mdsd daemon for upload.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(28330).*(connection refused|No route|cannot connect|reset)"
+  remediation: >
+    Verify mdsd is running and listening on port 28330:
+    ss -tlnp | grep 28330
+    Restart AMA if the port is not listening: systemctl restart azuremonitoragent.
+    Check /etc/rsyslog.d/10-azuremonitoragent.conf for the forwarding rule.
+  doc_link: https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-troubleshooting
+
+- id: SYSLOG-007
+  name: Syslog Facility Not Configured in DCR
+  severity: info
+  category: syslog
+  platforms: [linux]
+  description: >
+    Log entries suggest a syslog facility is not configured for collection
+    in the DCR. Messages from that facility will be dropped by the agent.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)facility.*(not configured|not found|unconfigured|unknown|dropped)"
+  remediation: >
+    Review the DCR syslog data source configuration to ensure the desired
+    facilities and severities are included. Update the DCR and wait for
+    the agent to pick up the new configuration.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-collection-syslog

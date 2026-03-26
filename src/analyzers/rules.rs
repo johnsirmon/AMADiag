@@ -93,6 +93,7 @@ const IDENTITY_RULES: &str = include_str!("../rules/identity.yaml");
 const PERFORMANCE_RULES: &str = include_str!("../rules/performance.yaml");
 const SYSLOG_RULES: &str = include_str!("../rules/syslog.yaml");
 const SIZING_RULES: &str = include_str!("../rules/sizing.yaml");
+const LINUX_COLLECTION_RULES: &str = include_str!("../rules/linux_collection.yaml");
 
 /// Load all built-in detection rules from embedded YAML.
 pub fn load_builtin_rules() -> anyhow::Result<Vec<RuleDefinition>> {
@@ -106,6 +107,7 @@ pub fn load_builtin_rules() -> anyhow::Result<Vec<RuleDefinition>> {
         PERFORMANCE_RULES,
         SYSLOG_RULES,
         SIZING_RULES,
+        LINUX_COLLECTION_RULES,
     ];
 
     for yaml in &yaml_sources {

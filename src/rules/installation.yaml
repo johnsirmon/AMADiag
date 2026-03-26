@@ -88,3 +88,41 @@
     is enabled. Check for pinned version constraints. Review extension.log and
     waagent.log for download or installation errors during the upgrade attempt.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-manage
+
+- id: INSTALL-006
+  name: Linux Guest Agent Not Running
+  severity: critical
+  category: installation
+  platforms: [linux]
+  description: >
+    The Azure Linux Guest Agent (walinuxagent/waagent) appears to be stopped
+    or not running. The guest agent is required for AMA extension installation
+    and lifecycle management on Azure VMs.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(walinuxagent|waagent).*(stopped|inactive|dead|not running|failed)"
+  remediation: >
+    Start the guest agent: sudo systemctl start walinuxagent (or waagent).
+    Enable it on boot: sudo systemctl enable walinuxagent.
+    Review /var/log/waagent.log for errors.
+  doc_link: https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux
+
+- id: INSTALL-007
+  name: AMA Linux Service Not Running
+  severity: critical
+  category: agent_not_running
+  platforms: [linux]
+  description: >
+    The azuremonitoragent systemd service appears to be inactive, dead,
+    or in a failed state. All data collection stops when the agent service
+    is not running.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)azuremonitoragent.*(inactive|dead|failed|not running|stopped)"
+  remediation: >
+    Restart the agent: sudo systemctl restart azuremonitoragent.
+    Check status: systemctl status azuremonitoragent.
+    Review mdsd.err and extension.log for crash or startup errors.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-linux-vm

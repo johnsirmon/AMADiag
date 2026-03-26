@@ -67,3 +67,40 @@
     (Linux) or the agent proxy settings (Windows). Test connectivity through the
     proxy to *.handler.control.monitor.azure.com and *.ingest.monitor.azure.com.
   doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
+
+- id: CONN-005
+  name: Azure AD Token Endpoint Unreachable
+  severity: critical
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    The agent cannot reach the Azure AD token endpoint
+    (login.microsoftonline.com). Authentication tokens cannot be acquired,
+    preventing data upload to Azure Monitor.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(login\\.microsoftonline|aadcdn).*(fail|timeout|refused|unreachable|error)"
+  remediation: >
+    Verify outbound HTTPS connectivity to login.microsoftonline.com:443.
+    Check firewall and NSG rules. If using a proxy, ensure it allows
+    Azure AD endpoints.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-network-configuration
+
+- id: CONN-006
+  name: HIMDS Endpoint Unreachable (Arc)
+  severity: critical
+  category: connectivity
+  platforms: [windows, linux]
+  description: >
+    The Hybrid Instance Metadata Service (HIMDS) at localhost:40342 is
+    unreachable. Arc-enabled servers require HIMDS for identity and
+    token acquisition.
+  detection:
+    file_pattern: ".log"
+    condition: content_match
+    content_regex: "(?i)(localhost:40342|HIMDS|hybrid.instance.metadata).*(fail|timeout|refused|unreachable|error)"
+  remediation: >
+    Verify the Azure Connected Machine Agent is running: azcmagent show.
+    Check that the himds service is active. Restart the Arc agent if needed.
+  doc_link: https://learn.microsoft.com/en-us/azure/azure-arc/servers/troubleshoot-agent-onboard
