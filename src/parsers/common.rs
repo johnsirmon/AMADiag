@@ -116,84 +116,105 @@ pub fn extract_timestamp(line: &str) -> Option<ExtractedTimestamp> {
     None
 }
 
+// ── Raw pattern strings (single source of truth) ────────────────────────────
+// These constants feed both the individual `LazyLock<Regex>` accessors and the
+// `RegexSet` used for single-pass multi-pattern matching.
+
+const IMDS_ERROR_PAT: &str =
+    r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|\bfail(ed|ure)?\b|\berror\b|refused)";
+const AUTH_TOKEN_ERROR_PAT: &str = r"(?i)(managed.identity|MSI|auth.?token).*(\bfailed\b|\bfailure\b|\berror\b|\bmissing\b|\babsent\b|\bexpired\b|\b401\b|\b403\b)";
+const CONNECTIVITY_ERROR_PAT: &str = r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(connection.refused|connection.timeout|\bunreachable\b|request.failed|endpoint.*(fail|error)|cannot.connect)";
+const SERVICE_CRASH_PAT: &str = r"(?i)(crash(ed|ing)?|terminated unexpectedly|service.*(stopped|failed|dead)|process.exited.*(error|abnormal|unexpected))";
+const DCR_ERROR_PAT: &str =
+    r"(?i)(DCR|data.collection.rule).*(not.found|missing|invalid|error|fail)";
+const EXTENSION_ERROR_PAT: &str = r"(?i)(extension|provisioning).*(\bfailed\b|\bfailure\b|\btimeout\b|not.installed|provision.*(error|fail))";
+const SYSLOG_ERROR_PAT: &str =
+    r"(?i)(rsyslog|syslog-ng|syslog|CEF).*(fail|error|not.running|stopped|refused)";
+const METRICS_EXTENSION_ERROR_PAT: &str =
+    r"(?i)(MetricsExtension|\bME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)";
+const ARC_AGENT_ERROR_PAT: &str =
+    r"(?i)(himds|connected.machine|arc.agent|azcmagent).*(fail|error|not.running|stopped)";
+const OOM_KILLER_PAT: &str =
+    r"(?i)(oom-kill|Out of memory.*Killed process).*(mdsd|amacoreagent|azuremonitor)";
+const FLUENTBIT_ERROR_PAT: &str = r"(?i)\[error\].*(fluentbit|fluent.bit|td-agent)";
+const MDSD_QOS_FAILURE_PAT: &str = r"(?i)(SuccessCount\s*=\s*0|FailCount\s*=\s*[1-9])";
+const THROTTLING_PAT: &str = r"(?i)Throttling ingestion";
+const GUEST_AGENT_ERROR_PAT: &str =
+    r"(?i)(walinuxagent|waagent|guest.agent).*(fail|error|stopped|not.running|dead)";
+const SYSTEMD_SERVICE_FAILURE_PAT: &str =
+    r"(?i)(azuremonitoragent|azuremonitor-coreagent).*(failed|inactive|dead|not.running)";
+const DISK_FULL_PAT: &str = r"(?i)(no space left|disk full|cannot write|ENOSPC)";
+const CGROUP_OOM_PAT: &str = r"(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)";
+
+/// Ordered list of all diagnostic pattern strings.
+/// Index positions match the `RegexSet` match indices used by `scan_log_patterns()`.
+pub(crate) const DIAGNOSTIC_PATTERN_STRINGS: &[&str] = &[
+    IMDS_ERROR_PAT,              // 0
+    AUTH_TOKEN_ERROR_PAT,        // 1
+    CONNECTIVITY_ERROR_PAT,      // 2
+    SERVICE_CRASH_PAT,           // 3
+    DCR_ERROR_PAT,               // 4
+    EXTENSION_ERROR_PAT,         // 5
+    SYSLOG_ERROR_PAT,            // 6
+    METRICS_EXTENSION_ERROR_PAT, // 7
+    ARC_AGENT_ERROR_PAT,         // 8
+    OOM_KILLER_PAT,              // 9
+    FLUENTBIT_ERROR_PAT,         // 10
+    MDSD_QOS_FAILURE_PAT,        // 11
+    THROTTLING_PAT,              // 12
+    GUEST_AGENT_ERROR_PAT,       // 13
+    SYSTEMD_SERVICE_FAILURE_PAT, // 14
+    DISK_FULL_PAT,               // 15
+    CGROUP_OOM_PAT,              // 16
+];
+
 /// Common regex patterns for AMA diagnostic log analysis.
 pub struct Patterns;
 
 impl Patterns {
     pub fn imds_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|\bfail(ed|ure)?\b|\berror\b|refused)")
-                .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(IMDS_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn auth_token_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(managed.identity|MSI|auth.?token).*(\bfailed\b|\bfailure\b|\berror\b|\bmissing\b|\babsent\b|\bexpired\b|\b401\b|\b403\b)",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(AUTH_TOKEN_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn connectivity_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(connection.refused|connection.timeout|\bunreachable\b|request.failed|endpoint.*(fail|error)|cannot.connect)")
-                .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(CONNECTIVITY_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn service_crash() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(crash(ed|ing)?|terminated unexpectedly|service.*(stopped|failed|dead)|process.exited.*(error|abnormal|unexpected))",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(SERVICE_CRASH_PAT).unwrap());
         &RE
     }
 
     pub fn dcr_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(DCR|data.collection.rule).*(not.found|missing|invalid|error|fail)")
-                .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(DCR_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn extension_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(extension|provisioning).*(\bfailed\b|\bfailure\b|\btimeout\b|not.installed|provision.*(error|fail))").unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(EXTENSION_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn syslog_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(rsyslog|syslog-ng|syslog|CEF).*(fail|error|not.running|stopped|refused)",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(SYSLOG_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn metrics_extension_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(MetricsExtension|\bME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)")
-                .unwrap()
-        });
+        static RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(METRICS_EXTENSION_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn arc_agent_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(himds|connected.machine|arc.agent|azcmagent).*(fail|error|not.running|stopped)")
-                .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(ARC_AGENT_ERROR_PAT).unwrap());
         &RE
     }
 
@@ -205,67 +226,52 @@ impl Patterns {
     }
 
     pub fn oom_killer() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(oom-kill|Out of memory.*Killed process).*(mdsd|amacoreagent|azuremonitor)",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(OOM_KILLER_PAT).unwrap());
         &RE
     }
 
     pub fn fluentbit_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)\[error\].*(fluentbit|fluent.bit|td-agent)").unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(FLUENTBIT_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn mdsd_qos_failure() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(SuccessCount\s*=\s*0|FailCount\s*=\s*[1-9])").unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(MDSD_QOS_FAILURE_PAT).unwrap());
         &RE
     }
 
     pub fn throttling() -> &'static Regex {
-        static RE: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"(?i)Throttling ingestion").unwrap());
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(THROTTLING_PAT).unwrap());
         &RE
     }
 
     pub fn guest_agent_error() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(walinuxagent|waagent|guest.agent).*(fail|error|stopped|not.running|dead)",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(GUEST_AGENT_ERROR_PAT).unwrap());
         &RE
     }
 
     pub fn systemd_service_failure() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?i)(azuremonitoragent|azuremonitor-coreagent).*(failed|inactive|dead|not.running)",
-            )
-            .unwrap()
-        });
+        static RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(SYSTEMD_SERVICE_FAILURE_PAT).unwrap());
         &RE
     }
 
     pub fn disk_full() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(no space left|disk full|cannot write|ENOSPC)").unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(DISK_FULL_PAT).unwrap());
         &RE
     }
 
     pub fn cgroup_oom() -> &'static Regex {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)CONSTRAINT_MEMCG.*(mdsd|amacoreagent|azuremonitor)").unwrap()
-        });
+        static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(CGROUP_OOM_PAT).unwrap());
         &RE
+    }
+
+    /// `RegexSet` for single-pass matching of all diagnostic patterns.
+    /// Index positions correspond to [`DIAGNOSTIC_PATTERN_STRINGS`].
+    pub fn diagnostic_set() -> &'static regex::RegexSet {
+        static SET: LazyLock<regex::RegexSet> =
+            LazyLock::new(|| regex::RegexSet::new(DIAGNOSTIC_PATTERN_STRINGS).unwrap());
+        &SET
     }
 }
 

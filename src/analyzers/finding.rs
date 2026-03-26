@@ -86,6 +86,15 @@ pub enum Platform {
     Linux,
 }
 
+impl Platform {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Platform::Windows => "windows",
+            Platform::Linux => "linux",
+        }
+    }
+}
+
 impl fmt::Display for Platform {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {

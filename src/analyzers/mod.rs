@@ -32,11 +32,12 @@ pub fn analyze(bundle: &ParsedBundle, report: &mut DiagnosticReport) -> anyhow::
 }
 
 /// Convenience: run pattern-based scanning across all log lines.
+///
+/// Uses `RegexSet` for single-pass matching: each log line is tested against
+/// all 17 diagnostic patterns in one evaluation instead of 17 separate ones.
 pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
     use crate::parsers::common::Patterns;
     use finding::{Category, Severity};
-
-    let mut findings = Vec::new();
 
     // Regex to detect IPv6 context — lines about IPv6-only failures are benign
     // on most Azure VMs and should not trigger connectivity/IMDS alerts.
@@ -44,8 +45,12 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         regex::Regex::new(r"(?i)(IPv6|fe80::|::[\da-f]{2,}|\[2[0-9a-f]{3}:)").unwrap()
     });
 
+    // Lines with ErrorCode:0 in AMA Windows extension logs indicate SUCCESS
+    // regardless of the log-level label. Skip these to avoid false positives.
+    static ERRORCODE_ZERO_RE: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new(r"ErrorCode:0\b").unwrap());
+
     struct PatternCheck {
-        pattern: &'static regex::Regex,
         rule_id: &'static str,
         name: &'static str,
         category: Category,
@@ -56,9 +61,9 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         exclude_ipv6: bool,
     }
 
-    let pattern_checks = vec![
+    // Index order MUST match DIAGNOSTIC_PATTERN_STRINGS in common.rs
+    let pattern_checks: Vec<PatternCheck> = vec![
         PatternCheck {
-            pattern: Patterns::imds_error(),
             rule_id: "IMDS-001",
             name: "IMDS Connectivity Failure",
             category: Category::Connectivity,
@@ -69,7 +74,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: true,
         },
         PatternCheck {
-            pattern: Patterns::auth_token_error(),
             rule_id: "IDENTITY-002",
             name: "Authentication Token Error",
             category: Category::Identity,
@@ -80,7 +84,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::connectivity_error(),
             rule_id: "CONN-001",
             name: "Network Connectivity Failure",
             category: Category::Connectivity,
@@ -91,7 +94,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: true,
         },
         PatternCheck {
-            pattern: Patterns::service_crash(),
             rule_id: "AGENT-001",
             name: "Agent Service Crash or Unexpected Termination",
             category: Category::AgentNotRunning,
@@ -102,7 +104,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::dcr_error(),
             rule_id: "DCR-001",
             name: "DCR Configuration Error",
             category: Category::Dcr,
@@ -113,7 +114,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::extension_error(),
             rule_id: "INSTALL-001",
             name: "Extension Provisioning Failure",
             category: Category::Installation,
@@ -124,7 +124,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::syslog_error(),
             rule_id: "SYSLOG-001",
             name: "Syslog/CEF Forwarding Failure",
             category: Category::Syslog,
@@ -135,7 +134,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::metrics_extension_error(),
             rule_id: "METRICS-001",
             name: "MetricsExtension Error",
             category: Category::MetricsExtension,
@@ -146,7 +144,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::arc_agent_error(),
             rule_id: "ARC-001",
             name: "Arc Agent Error",
             category: Category::ArcAgent,
@@ -157,7 +154,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::oom_killer(),
             rule_id: "OOM-001",
             name: "OOM Killer Terminated Agent Process",
             category: Category::Sizing,
@@ -168,7 +164,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::fluentbit_error(),
             rule_id: "FLUENTBIT-001",
             name: "Fluentbit Engine Error",
             category: Category::Syslog,
@@ -179,7 +174,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::mdsd_qos_failure(),
             rule_id: "QOS-001",
             name: "MDSD QoS Upload Failure",
             category: Category::Connectivity,
@@ -190,7 +184,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::throttling(),
             rule_id: "THROTTLE-001",
             name: "Data Ingestion Throttling",
             category: Category::Syslog,
@@ -201,7 +194,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::guest_agent_error(),
             rule_id: "GUEST-001",
             name: "Linux Guest Agent Error",
             category: Category::Installation,
@@ -211,7 +203,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::systemd_service_failure(),
             rule_id: "SERVICE-001",
             name: "AMA Systemd Service Failure",
             category: Category::AgentNotRunning,
@@ -222,7 +213,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::disk_full(),
             rule_id: "DISK-001",
             name: "Disk Space Exhaustion",
             category: Category::Sizing,
@@ -233,7 +223,6 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
             exclude_ipv6: false,
         },
         PatternCheck {
-            pattern: Patterns::cgroup_oom(),
             rule_id: "CGROUP-001",
             name: "Memory Cgroup OOM Kill",
             category: Category::Sizing,
@@ -245,51 +234,71 @@ pub fn scan_log_patterns(bundle: &ParsedBundle) -> Vec<Finding> {
         },
     ];
 
-    // Lines with ErrorCode:0 in AMA Windows extension logs indicate SUCCESS
-    // regardless of the log-level label. Skip these to avoid false positives.
-    static ERRORCODE_ZERO_RE: std::sync::LazyLock<regex::Regex> =
-        std::sync::LazyLock::new(|| regex::Regex::new(r"ErrorCode:0\b").unwrap());
+    let regex_set = Patterns::diagnostic_set();
 
-    for check in &pattern_checks {
-        if let Some(platform) = check.platform {
-            if bundle.platform != Some(platform) {
+    // Pre-filter: determine which pattern indices apply to this bundle's platform.
+    let active_indices: Vec<usize> = pattern_checks
+        .iter()
+        .enumerate()
+        .filter(|(_, check)| check.platform.map_or(true, |p| bundle.platform == Some(p)))
+        .map(|(idx, _)| idx)
+        .collect();
+
+    // Single-pass: collect evidence per pattern using RegexSet
+    let mut evidence_per_check: Vec<Vec<String>> = vec![Vec::new(); pattern_checks.len()];
+
+    for line in &bundle.log_lines {
+        // Check if all active patterns have hit the 5-evidence cap
+        if active_indices
+            .iter()
+            .all(|&idx| evidence_per_check[idx].len() >= 5)
+        {
+            break;
+        }
+
+        let matches = regex_set.matches(&line.content);
+        if !matches.matched_any() {
+            continue;
+        }
+
+        for &idx in &active_indices {
+            if !matches.matched(idx) || evidence_per_check[idx].len() >= 5 {
                 continue;
             }
-        }
 
-        let mut evidence = Vec::new();
-        for line in &bundle.log_lines {
-            if check.pattern.is_match(&line.content) {
-                // Skip IPv6-only failures for connectivity/IMDS checks
-                if check.exclude_ipv6 && IPV6_RE.is_match(&line.content) {
-                    continue;
-                }
-                // Skip lines with ErrorCode:0 (success) in AMA extension logs
-                if ERRORCODE_ZERO_RE.is_match(&line.content) {
-                    continue;
-                }
-                evidence.push(format!("{}:{}: {}", line.file, line.line_num, line.content));
-                if evidence.len() >= 5 {
-                    break; // Cap evidence per finding
-                }
+            let check = &pattern_checks[idx];
+            if check.exclude_ipv6 && IPV6_RE.is_match(&line.content) {
+                continue;
             }
-        }
+            if ERRORCODE_ZERO_RE.is_match(&line.content) {
+                continue;
+            }
 
-        if !evidence.is_empty() {
-            findings.push(Finding {
-                rule_id: check.rule_id.to_string(),
-                name: check.name.to_string(),
-                severity: check.severity,
-                category: check.category.clone(),
-                description: format!(
-                    "Detected {} pattern match(es) in log files.",
-                    evidence.len()
-                ),
-                evidence,
-                remediation: format!("See documentation: {}", check.doc_link),
-                doc_link: Some(check.doc_link.to_string()),
-            });
+            evidence_per_check[idx]
+                .push(format!("{}:{}: {}", line.file, line.line_num, line.content));
         }
+    }
+
+    // Build findings from collected evidence
+    let mut findings = Vec::with_capacity(active_indices.len());
+    for (idx, evidence) in evidence_per_check.into_iter().enumerate() {
+        if evidence.is_empty() {
+            continue;
+        }
+        let check = &pattern_checks[idx];
+        findings.push(Finding {
+            rule_id: check.rule_id.to_string(),
+            name: check.name.to_string(),
+            severity: check.severity,
+            category: check.category.clone(),
+            description: format!(
+                "Detected {} pattern match(es) in log files.",
+                evidence.len()
+            ),
+            evidence,
+            remediation: format!("See documentation: {}", check.doc_link),
+            doc_link: Some(check.doc_link.to_string()),
+        });
     }
 
     findings

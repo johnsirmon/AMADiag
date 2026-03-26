@@ -23,10 +23,11 @@ impl EventStore {
             source_dir: bundle_dir.to_path_buf(),
         };
 
-        for entry in walkdir::WalkDir::new(bundle_dir)
-            .into_iter()
+        for entry in ignore::WalkBuilder::new(bundle_dir)
+            .standard_filters(false)
+            .build()
             .filter_map(|entry| entry.ok())
-            .filter(|entry| entry.file_type().is_file())
+            .filter(|entry| entry.file_type().is_some_and(|ft| ft.is_file()))
         {
             let path = entry.path();
             let relative_path = path

@@ -125,11 +125,11 @@ pub fn evaluate_rules(rules: &[RuleDefinition], bundle: &ParsedBundle) -> Vec<Fi
     for rule in rules {
         // Check platform applicability
         if let Some(platform) = &bundle.platform {
-            let platform_str = format!("{platform}").to_lowercase();
+            let platform_str = platform.as_str();
             if !rule
                 .platforms
                 .iter()
-                .any(|p| p.to_lowercase() == platform_str || p == "all")
+                .any(|p| p.eq_ignore_ascii_case(platform_str) || p == "all")
             {
                 continue;
             }

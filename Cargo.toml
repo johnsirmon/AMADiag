@@ -38,7 +38,10 @@ tar = "0.4"
 zip = "2"
 
 # File system
-walkdir = "2"
+ignore = "0.4"
+
+# Parallelism
+rayon = "1"
 
 # Terminal output
 owo-colors = "4"

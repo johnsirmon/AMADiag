@@ -143,10 +143,11 @@ pub fn validate_bundle(path: &Path) -> Result<String> {
     let mut log_count = 0_usize;
     let mut csv_count = 0_usize;
 
-    for entry in walkdir::WalkDir::new(&dir)
-        .into_iter()
+    for entry in ignore::WalkBuilder::new(&dir)
+        .standard_filters(false)
+        .build()
         .filter_map(|e| e.ok())
-        .filter(|e| e.file_type().is_file())
+        .filter(|e| e.file_type().is_some_and(|ft| ft.is_file()))
     {
         file_count += 1;
         total_size += entry.metadata().map(|m| m.len()).unwrap_or(0);

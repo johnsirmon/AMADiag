@@ -7,6 +7,7 @@ pub mod windows;
 pub mod xml_config;
 
 use crate::analyzers::finding::Platform;
+use rayon::prelude::*;
 use std::collections::HashMap;
 use std::path::Path;
 
@@ -43,48 +44,73 @@ pub struct ParsedBundle {
 
 /// Parse all relevant files from an extracted bundle directory.
 pub fn parse_bundle(bundle_dir: &Path) -> anyhow::Result<ParsedBundle> {
+    struct FileResult {
+        rel_path: String,
+        content: String,
+        xml_config: Option<xml_config::McsConfig>,
+        event_entries: Vec<event_table::EventEntry>,
+        log_lines: Vec<common::LogLine>,
+    }
+
     let mut parsed = ParsedBundle {
         platform: detect_platform(bundle_dir),
         ..Default::default()
     };
 
-    // Walk the bundle directory and parse files
-    for entry in walkdir::WalkDir::new(bundle_dir)
-        .into_iter()
+    // Collect all file paths first, then process in parallel with rayon.
+    // Uses the `ignore` crate (ripgrep ecosystem) — faster than walkdir.
+    let file_paths: Vec<_> = ignore::WalkBuilder::new(bundle_dir)
+        .standard_filters(false)
+        .build()
         .filter_map(|e| e.ok())
-        .filter(|e| e.file_type().is_file())
-    {
-        let path = entry.path();
-        let rel_path = path.strip_prefix(bundle_dir).unwrap_or(path);
-        let rel_str = rel_path.to_string_lossy().to_string();
+        .filter(|e| e.file_type().is_some_and(|ft| ft.is_file()))
+        .map(|e| e.into_path())
+        .collect();
 
-        // Read file content (skip binary files on read error)
-        let content = match std::fs::read_to_string(path) {
-            Ok(c) => c,
-            Err(_) => continue,
-        };
+    let results: Vec<FileResult> = file_paths
+        .par_iter()
+        .filter_map(|path| {
+            let rel_path = path.strip_prefix(bundle_dir).unwrap_or(path);
+            let rel_str = rel_path.to_string_lossy().to_string();
 
-        // Parse XML config files
-        if is_mcsconfig_file(&rel_str) {
-            if let Ok(config) = xml_config::parse_mcsconfig(&content) {
-                parsed.xml_configs.push(config);
-            }
+            let content = std::fs::read_to_string(path).ok()?;
+
+            let xml_config = if is_mcsconfig_file(&rel_str) {
+                xml_config::parse_mcsconfig(&content).ok()
+            } else {
+                None
+            };
+
+            let event_entries = if rel_str.ends_with(".csv") {
+                event_table::parse_csv(&content).unwrap_or_default()
+            } else {
+                Vec::new()
+            };
+
+            let log_lines = if is_log_file(&rel_str) {
+                common::parse_log_lines(&content, &rel_str)
+            } else {
+                Vec::new()
+            };
+
+            Some(FileResult {
+                rel_path: rel_str,
+                content,
+                xml_config,
+                event_entries,
+                log_lines,
+            })
+        })
+        .collect();
+
+    // Merge results
+    for result in results {
+        if let Some(cfg) = result.xml_config {
+            parsed.xml_configs.push(cfg);
         }
-
-        // Parse CSV event table files
-        if rel_str.ends_with(".csv") {
-            if let Ok(entries) = event_table::parse_csv(&content) {
-                parsed.event_entries.extend(entries);
-            }
-        }
-
-        // Parse log files for known patterns
-        if is_log_file(&rel_str) {
-            let lines = common::parse_log_lines(&content, &rel_str);
-            parsed.log_lines.extend(lines);
-        }
-
-        parsed.files.insert(rel_str, content);
+        parsed.event_entries.extend(result.event_entries);
+        parsed.log_lines.extend(result.log_lines);
+        parsed.files.insert(result.rel_path, result.content);
     }
 
     Ok(parsed)
@@ -115,9 +141,10 @@ fn detect_platform(dir: &Path) -> Option<Platform> {
     let mut win_score = 0;
     let mut linux_score = 0;
 
-    for entry in walkdir::WalkDir::new(dir)
-        .max_depth(4)
-        .into_iter()
+    for entry in ignore::WalkBuilder::new(dir)
+        .standard_filters(false)
+        .max_depth(Some(4))
+        .build()
         .filter_map(|e| e.ok())
     {
         let name = entry.file_name().to_string_lossy();
