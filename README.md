@@ -5,8 +5,8 @@
 **Automated root-cause analysis for Azure Monitor Agent troubleshooter output**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
-[![Version](https://img.shields.io/badge/version-0.2.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
+[![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![Version](https://img.shields.io/badge/version-0.3.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 
 *Drop in an AMA troubleshooter bundle. Get a diagnostic report in seconds — no AMA expertise required.*
@@ -33,8 +33,8 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 │                                      │
 │  ┌────────────┐  ┌────────────────┐  │
 │  │  Parsers   │─▶│  Rules Engine  │  │
-│  │  Win / Lin │  │  (17 YAML +    │  │
-│  └────────────┘  │   9 regex)     │  │
+│  │  Win / Lin │  │  (38 YAML +    │  │
+│  └────────────┘  │   19 regex)    │  │
 │                  └───────┬────────┘  │
 │                          │           │
 │  ┌───────────────────────▼────────┐  │
@@ -57,12 +57,13 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 
 ## ✨ Highlights
 
-- 🔎 **17 built-in detection rules** across 7 categories — installation, connectivity, DCR, identity, performance counters, syslog/CEF, and environment sizing
-- 🧠 **9 regex pattern scanners** for IMDS, auth, connectivity, service crashes, DCR errors, extension failures, syslog, MetricsExtension, and Arc agent issues
+- 🔎 **38 built-in detection rules** across 8 categories — installation, connectivity, DCR, identity, performance counters, syslog/CEF, Linux collection, and environment sizing
+- 🧠 **19 regex pattern scanners** for IMDS, auth, connectivity, service crashes, DCR errors, extension failures, syslog, MetricsExtension, Arc agent issues, OOM kills, Fluentbit errors, MDSD QoS failures, throttling, guest agent errors, systemd failures, disk full, and cgroup OOM
+- 🐧 **Deep Linux analysis** — Fluentbit config parsing, MDSD QoS upload health checks, rsyslog forwarding validation, and OS release detection
 - 🪟🐧 **Auto-detect Windows & Linux** bundles from file structure alone
 - 📦 **Archive support** — `.tgz`, `.zip`, or plain directories
 - 📊 **Dual output** — human-readable Markdown or machine-readable JSON for CI/CD
-- 🖥️ **Interactive TUI** — keyboard-first dashboard for analyzing bundles and exporting reports
+- 🖥️ **Interactive TUI** — keyboard-first dashboard with file browser, severity filtering, threaded analysis, and in-app report export
 - ⚡ **Single binary, zero runtime deps** — all rules embedded at compile time
 - 🧩 **YAML-extensible** — add custom detection rules without writing Rust
 - 🏥 **XML config parsing** — streaming parser for `mcsconfig.lkg.xml` / `mcsconfig.latest.xml`
@@ -125,12 +126,14 @@ amadiag tui
 amadiag tui ./bundle.tgz
 ```
 
-The TUI is keyboard-first and path-driven in v1:
+The TUI is keyboard-first with a built-in file browser:
 
+- `b` to open the **file browser** — navigate to bundles visually
 - type or paste a path to a `.zip`, `.tgz`, `.tar.gz`, or extracted log folder
 - press `Enter` to analyze
-- use `Up` / `Down` to navigate findings
+- use `Up` / `Down` or `j` / `k` to navigate findings
 - use `Tab` to switch between the findings list and the details pane
+- filter by severity: `1` = Critical, `2` = Critical+Warning, `3` = All
 - press `m` to export Markdown or `j` to export JSON
 - press `n` to return to path entry, `r` to rerun, and `q` to quit
 
@@ -160,29 +163,60 @@ amadiag rules list
 
 ## 🛡️ Detection Rules
 
-AMADiag ships with **17 YAML-defined rules** covering the most common AMA failure modes:
+AMADiag ships with **38 YAML-defined rules** plus **6 programmatic analysis rules** covering the most common AMA failure modes:
 
 | ID | Name | Severity | Category | Platforms |
 |----|------|:--------:|----------|:---------:|
 | `INSTALL-001` | Extension Not Installed | 🔴 Critical | Installation | Win · Lin |
 | `INSTALL-002` | Extension Provisioning Error Log | 🔴 Critical | Installation | Win · Lin |
+| `INSTALL-003` | Extension Uninstall Failure (Exit Code 126) | 🔴 Critical | Installation | Lin |
+| `INSTALL-004` | SLES insserv-compat Package Missing | 🔴 Critical | Installation | Lin |
+| `INSTALL-005` | Extension Auto-Upgrade Failure | 🟡 Warning | Installation | Win · Lin |
+| `INSTALL-006` | Linux Guest Agent Not Running | 🔴 Critical | Installation | Lin |
+| `INSTALL-007` | AMA Linux Service Not Running | 🔴 Critical | Installation | Lin |
 | `CONN-001` | AMCS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
 | `CONN-002` | Log Ingestion Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
 | `CONN-003` | IMDS Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
+| `CONN-004` | Proxy Configuration Error | 🟡 Warning | Connectivity | Win · Lin |
+| `CONN-005` | Azure AD Token Endpoint Unreachable | 🔴 Critical | Connectivity | Win · Lin |
+| `CONN-006` | HIMDS Endpoint Unreachable (Arc) | 🔴 Critical | Connectivity | Lin |
 | `DCR-001` | No DCR Configuration Found | 🔴 Critical | DCR | Win · Lin |
 | `DCR-002` | Empty DCR Configuration | 🟡 Warning | DCR | Win · Lin |
 | `IDENTITY-001` | Missing Managed Identity | 🔴 Critical | Identity | Win · Lin |
 | `IDENTITY-002` | Auth Token Expired or Invalid | 🔴 Critical | Identity | Win · Lin |
+| `IDENTITY-003` | MSI Token Acquisition Retry Loop | 🟡 Warning | Identity | Win · Lin |
 | `PERF-001` | No Performance Counter Config | 🟡 Warning | Perf Counters | Win |
 | `PERF-002` | Invalid Performance Counter Path | 🟡 Warning | Perf Counters | Win |
+| `LCOL-001` | Fluentbit Cannot Tail Log File | 🟡 Warning | Linux Collection | Lin |
+| `LCOL-002` | Fluentbit Output to MDSD Failing | 🔴 Critical | Linux Collection | Lin |
+| `LCOL-003` | JSON Log Schema Mismatch | 🟡 Warning | Linux Collection | Lin |
+| `LCOL-004` | MDSD Configuration Parse Error | 🔴 Critical | Linux Collection | Lin |
 | `SYSLOG-001` | Syslog Forwarder Not Running | 🔴 Critical | Syslog | Lin |
 | `SYSLOG-002` | Syslog Port Not Listening | 🟡 Warning | Syslog | Lin |
 | `SYSLOG-003` | Syslog Config Missing AMA Forwarding | 🟡 Warning | Syslog | Lin |
+| `SYSLOG-004` | Syslog Ingestion Throttling | 🟡 Warning | Syslog | Lin |
+| `SYSLOG-005` | CEF Collection Upload Failure | 🔴 Critical | Syslog | Lin |
+| `SYSLOG-006` | Rsyslog Not Forwarding to AMA Port | 🟡 Warning | Syslog | Lin |
+| `SYSLOG-007` | Syslog Facility Not Configured in DCR | 🟡 Warning | Syslog | Lin |
 | `SZ-001` | Memory Pressure Detected | 🟡 Warning | Sizing | Win · Lin |
 | `SZ-002` | High CPU Usage by AMA | 🟡 Warning | Sizing | Win · Lin |
 | `SZ-003` | Disk Space Low | 🟡 Warning | Sizing | Win · Lin |
+| `SZ-005` | OOM Killer Terminated Agent Process | 🔴 Critical | Sizing | Lin |
+| `SZ-006` | Memory Cgroup OOM Kill | 🔴 Critical | Sizing | Lin |
+| `SZ-007` | Disk Space Full Preventing Upload | 🔴 Critical | Sizing | Lin |
 
-> **Plus 9 regex-based pattern scanners** that run alongside YAML rules — catching IMDS errors, authentication failures, connectivity issues, service crashes, DCR errors, extension failures, syslog issues, MetricsExtension errors, and Arc agent problems.
+**Programmatic analysis rules** (Linux analysis engine):
+
+| ID | Name | Severity | Description |
+|----|------|:--------:|-------------|
+| `QOS-002` | Complete Upload Failure | 🔴 Critical | MDSD QoS shows zero successful uploads for a data channel |
+| `QOS-003` | Partial Upload Failures | 🟡 Warning | MDSD QoS shows some failed uploads |
+| `FBCFG-001` | Fluentbit No Input Config | 🟡 Warning | Fluentbit config has no input sections |
+| `FBCFG-002` | Fluentbit Not Sending to MDSD | 🟡 Warning | Fluentbit config missing TCP output to port 28330 |
+| `FBCFG-003` | Fluentbit Debug Logging | ℹ️ Info | Debug logging enabled (performance impact) |
+| `RSYSLOG-001` | Rsyslog Not Forwarding to AMA | 🟡 Warning | No rsyslog rule forwarding to AMA port |
+
+> **Plus 19 regex-based pattern scanners** that run alongside YAML rules — catching IMDS errors, authentication failures, connectivity issues, service crashes, DCR errors, extension failures, syslog issues, MetricsExtension errors, Arc agent problems, OOM kills, Fluentbit errors, MDSD QoS failures, throttling, guest agent errors, systemd service failures, disk full conditions, and cgroup OOM events.
 
 ---
 
@@ -223,28 +257,39 @@ src/
 ├── input.rs                # Bundle extraction (.tgz, .zip, directory) + validation
 ├── parsers/
 │   ├── mod.rs              # File walker, platform detection
-│   ├── common.rs           # Log line classification, regex patterns
+│   ├── common.rs           # Log line classification, 19 regex pattern scanners
 │   ├── xml_config.rs       # mcsconfig XML parser (quick-xml)
 │   ├── event_table.rs      # MetricsExtension ETW CSV parser
+│   ├── fluentbit_config.rs # Fluentbit td-agent.conf parser
+│   ├── mdsd_qos.rs         # MDSD QoS upload health parser
 │   ├── windows.rs          # Windows-specific enrichment
-│   └── linux.rs            # Linux-specific enrichment
+│   └── linux.rs            # Linux-specific enrichment (rsyslog, os-release, proxy)
 ├── analyzers/
 │   ├── mod.rs              # Analysis orchestration, pattern scanning
 │   ├── finding.rs          # Finding / Severity / Category / DiagnosticReport
+│   ├── linux_analysis.rs   # Linux programmatic analysis (QoS, Fluentbit, rsyslog)
 │   ├── rules.rs            # YAML rules engine (load, evaluate, display)
 │   └── sizing.rs           # Environment sizing checks (memory, CPU, disk)
 ├── reporters/
 │   ├── mod.rs              # OutputFormat enum
 │   ├── markdown.rs         # Markdown report renderer
 │   └── json.rs             # JSON report renderer
-└── rules/                  # Embedded YAML rule definitions
-    ├── installation.yaml
-    ├── connectivity.yaml
-    ├── dcr.yaml
-    ├── identity.yaml
-    ├── performance.yaml
-    ├── syslog.yaml
-    └── sizing.yaml
+├── rules/                  # Embedded YAML rule definitions (8 files, 38 rules)
+│   ├── installation.yaml
+│   ├── connectivity.yaml
+│   ├── dcr.yaml
+│   ├── identity.yaml
+│   ├── linux_collection.yaml
+│   ├── performance.yaml
+│   ├── syslog.yaml
+│   └── sizing.yaml
+└── tui/                    # Interactive terminal UI (ratatui)
+    ├── mod.rs              # TUI entry point and state machine
+    ├── app.rs              # Application state and event loop
+    ├── ui.rs               # Screen rendering (file browser, dashboard, export)
+    ├── event.rs            # Input event handling
+    ├── export.rs           # Report export from TUI
+    └── theme.rs            # Color theme constants
 ```
 
 </details>
@@ -266,7 +311,7 @@ src/
 
 | | |
 |---|---|
-| **Build** | Rust 1.70+ |
+| **Build** | Rust 1.80+ |
 | **Runtime** | No dependencies — single statically-linked binary |
 | **Input** | AMA troubleshooter output (`.tgz`, `.zip`, or directory) |
 

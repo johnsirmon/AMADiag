@@ -27,8 +27,8 @@ Go to the project's **Releases** page and download the package for your operatin
 
 You should see release files like:
 
-- `amadiag-windows-x86_64-v0.2.0.zip`
-- `amadiag-linux-x86_64-v0.2.0.tar.gz`
+- `amadiag-windows-x86_64-v0.3.0.zip`
+- `amadiag-linux-x86_64-v0.3.0.tar.gz`
 
 After downloading:
 
@@ -227,8 +227,8 @@ The repository includes a GitHub Actions workflow that builds Windows and Linux 
 Example:
 
 ```bash
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
 That workflow creates a GitHub Release and uploads packaged binaries for users to download.
