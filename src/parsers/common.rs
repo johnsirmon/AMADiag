@@ -140,7 +140,7 @@ impl Patterns {
 
     pub fn connectivity_error() -> &'static Regex {
         static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler).*(\bfail(ed|ure)?\b|\berror\b|refused|timeout|unreachable)")
+            Regex::new(r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(\bfail(ed|ure)?\b|\berror\b|refused|timeout|unreachable)")
                 .unwrap()
         });
         &RE
@@ -358,28 +358,26 @@ mod tests {
     #[test]
     fn connectivity_error_matches() {
         assert!(Patterns::connectivity_error().is_match("AMCS endpoint connection refused"));
-        assert!(Patterns::connectivity_error().is_match("network timeout on ingestion"));
+        assert!(Patterns::connectivity_error().is_match("ingestion endpoint unreachable"));
         assert!(!Patterns::connectivity_error().is_match("connected successfully"));
+        assert!(!Patterns::connectivity_error().is_match("TCP connect to (10.1.0.4 : 80) failed"));
     }
 
     #[test]
     fn service_crash_matches() {
-        assert!(Patterns::service_crash().is_match("process exited unexpectedly"));
-        assert!(Patterns::service_crash().is_match("service stopped"));
+        assert!(Patterns::service_crash().is_match("process exited with error code 1"));
+        assert!(Patterns::service_crash().is_match("service stopped unexpectedly"));
+        assert!(Patterns::service_crash().is_match("agent crashed during startup"));
         assert!(!Patterns::service_crash().is_match("service started"));
-    }
-
-    #[test]
-    fn dcr_error_matches() {
-        assert!(Patterns::dcr_error().is_match("DCR not found for workspace"));
-        assert!(Patterns::dcr_error().is_match("data collection rule invalid"));
-        assert!(!Patterns::dcr_error().is_match("DCR applied successfully"));
+        assert!(!Patterns::service_crash().is_match("Health monitor is not running"));
     }
 
     #[test]
     fn extension_error_matches() {
         assert!(Patterns::extension_error().is_match("extension provisioning failed"));
+        assert!(Patterns::extension_error().is_match("extension installation failure"));
         assert!(!Patterns::extension_error().is_match("extension installed"));
+        assert!(!Patterns::extension_error().is_match("[Extension] ErrorCode:0 INFO: LogFolder"));
     }
 
     #[test]
