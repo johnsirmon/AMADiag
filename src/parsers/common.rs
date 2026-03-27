@@ -393,7 +393,9 @@ mod tests {
     fn service_crash_matches() {
         // Pattern now requires AMA process name context
         assert!(Patterns::service_crash().is_match("MonAgentHost process exited with error code 1"));
-        assert!(Patterns::service_crash().is_match("azuremonitoragent service stopped unexpectedly"));
+        assert!(
+            Patterns::service_crash().is_match("azuremonitoragent service stopped unexpectedly")
+        );
         assert!(Patterns::service_crash().is_match("mdsd crashed during startup"));
         assert!(Patterns::service_crash().is_match("amacoreagent terminated unexpectedly"));
         // Generic lines without AMA process names should not match

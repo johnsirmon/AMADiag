@@ -53,11 +53,11 @@ If you only want the shortest version:
 ./amadiag tui
 ```
 
-5. The TUI opens in a **file browser**.
+5. The TUI opens in a **file browser** with a path bar at the top.
 6. Use the arrow keys to highlight your AMA bundle or extracted folder.
 7. Press `Enter` to analyze it.
 
-If you prefer to paste a full path instead of browsing, press `t` on the first screen and then paste the path.
+If you prefer to paste a full path instead of browsing, press `Tab` to move to the path bar, paste the path, and press `Enter`.
 
 ## What you need before running it
 
@@ -71,7 +71,7 @@ You need one of these:
 
 ### 1. Download and unzip
 
-- Download the Windows release zip, such as `amadiag-windows-x86_64-v0.3.2.zip`.
+- Download the Windows release zip, such as `amadiag-windows-x86_64-v0.4.0.zip`.
 - Right-click it.
 - Choose **Extract All**.
 - Open the extracted folder.
@@ -100,18 +100,22 @@ You will see the file browser.
 
 #### Option A: browse to it
 
-Use these keys on the first screen:
+The file browser has two areas you can switch between with `Tab`: the **file list** and the **path bar**.
+
+File list keys:
 
 - `Up` / `Down` = move through files and folders
 - `Enter` = open a folder or analyze the selected bundle
 - `Backspace` = go to the parent folder
+- `Home` / `End` = jump to first or last entry
+- `Tab` = move to the path bar
+- `t`, `/`, or `\` = activate the path bar
 - `h` = show or hide hidden files
-- `t` = switch to typed path entry
 - `Esc` or `q` = quit
 
 #### Option B: paste a full path
 
-Press `t`, then paste a path like one of these and press `Enter`:
+Press `Tab` to move to the path bar, then paste a path like one of these and press `Enter`:
 
 ```powershell
 C:\Users\YourName\Downloads\ama-troubleshooter-output.zip
@@ -119,10 +123,11 @@ C:\Users\YourName\Downloads\ama-troubleshooter-output.tgz
 C:\Users\YourName\Downloads\AMA-Diag-Logs
 ```
 
-Useful path-entry keys:
+Path bar keys:
 
-- `Enter` = start analysis
-- `Ctrl+T` = go back to the file browser
+- `Enter` = open the path (navigates into directories, analyzes bundles)
+- `Tab` = move back to the file list
+- `Ctrl+T` = move back to the file list
 - `Esc` = quit
 
 ### 5. Review the results dashboard
@@ -162,8 +167,8 @@ When you press `m` or `j`, an export screen opens.
 Download the Linux release archive, then extract it:
 
 ```bash
-tar -xzf amadiag-linux-x86_64-v0.3.2.tar.gz
-cd amadiag-linux-x86_64-v0.3.2
+tar -xzf amadiag-linux-x86_64-v0.4.0.tar.gz
+cd amadiag-linux-x86_64-v0.4.0
 ```
 
 You should see an `amadiag` binary.
@@ -185,7 +190,7 @@ chmod +x ./amadiag
 You can either:
 
 - browse with the file browser and press `Enter` on the bundle, or
-- press `t`, paste a path like the examples below, and press `Enter`
+- press `Tab` to move to the path bar, paste a path like the examples below, and press `Enter`
 
 ```bash
 /home/yourname/Downloads/ama-troubleshooter-output.tgz
@@ -193,7 +198,7 @@ You can either:
 /home/yourname/Downloads/ama-logs
 ```
 
-If you switch to typed path mode by mistake, press `Ctrl+T` to go back to the browser.
+If you move to the path bar by mistake, press `Tab` or `Ctrl+T` to go back to the file list.
 
 ## If you prefer a one-line command instead of the TUI
 
@@ -288,11 +293,11 @@ AMADiag accepts only:
 
 ### "I want to paste a path, but the app opened a browser"
 
-That is expected. Press `t` to switch from the file browser to typed path entry.
+That is expected. Press `Tab` or `t` to move focus to the path bar and type a path.
 
-### "I switched to typed path mode and want the browser back"
+### "I moved to the path bar and want the file list back"
 
-Press `Ctrl+T`.
+Press `Tab` or `Ctrl+T`.
 
 ### "The terminal looks strange after closing"
 
@@ -305,8 +310,8 @@ The repository includes a GitHub Actions workflow that builds Windows and Linux 
 Example:
 
 ```bash
-git tag v0.3.2
-git push origin v0.3.2
+git tag v0.4.0
+git push origin v0.4.0
 ```
 
 That workflow creates a GitHub Release and uploads packaged binaries for users to download.

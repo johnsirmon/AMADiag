@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
-[![Version](https://img.shields.io/badge/version-0.3.2-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
+[![Version](https://img.shields.io/badge/version-0.4.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 
 *Drop in an AMA troubleshooter bundle. Get a diagnostic report in seconds — no AMA expertise required.*
@@ -65,7 +65,8 @@ When Azure Monitor Agent breaks — logs stop, perf counters vanish, syslog goes
 - 🪟🐧 **Automatic Windows/Linux bundle detection** from the extracted content
 - 📦 **Archive and directory input support** for `.tgz`, `.tar.gz`, `.zip`, and extracted folders
 - 📊 **Dual output formats** with Markdown for humans and JSON for automation
-- 🖥️ **Interactive TUI** with a file browser, severity and time filtering, threaded analysis, and in-app export
+- 🖥️ **Interactive TUI** with integrated file browser and path bar, bundle metadata dashboard, adaptive timeline, severity and time filtering, threaded analysis, and in-app export
+- 📉 **Reduced false positives** with tighter pattern matching that requires AMA process context and filters operational noise
 - ⚡ **Single binary, zero runtime setup** with rules embedded at compile time
 - 🧩 **YAML-extensible rule catalog** for adding new detections without changing the CLI surface
 
@@ -97,7 +98,7 @@ cargo install --path .
 amadiag analyze /path/to/bundle.tgz
 ```
 
-For non-build users, download the Windows or Linux release package from **Releases** and run the included binary. For `v0.3.2`, the packaged assets are `amadiag-windows-x86_64-v0.3.2.zip` and `amadiag-linux-x86_64-v0.3.2.tar.gz`.
+For non-build users, download the Windows or Linux release package from **Releases** and run the included binary. For `v0.4.0`, the packaged assets are `amadiag-windows-x86_64-v0.4.0.zip` and `amadiag-linux-x86_64-v0.4.0.tar.gz`.
 
 ---
 
@@ -138,22 +139,29 @@ amadiag tui /path/to/bundle.tgz
 amadiag interactive
 ```
 
-The TUI starts in the **file browser** unless you pass a path. Analysis runs on a worker thread so the UI stays responsive while a bundle is being processed.
+The TUI starts in the **file browser** unless you pass a path. The browser has an integrated **path bar** for typing or pasting paths directly. Analysis runs on a worker thread so the UI stays responsive while a bundle is being processed.
 
 #### File browser
+
+The file browser has two focus areas: the **file list** and the **path bar**. Press `Tab` to cycle between them.
+
+**File list** (default focus):
 
 - `Enter` selects the highlighted file or folder
 - `Backspace` goes to the parent directory
 - `Up` / `Down` or `j` / `k` moves through the current directory
-- `t` switches from the browser to manual path entry
+- `Home` / `End` jumps to the first or last entry
+- `Tab` moves focus to the path bar
+- `t`, `/`, or `\` activates the path bar for typed entry
 - `h` shows or hides dotfiles
 - `Esc` or `q` quits
 
-#### Manual path entry
+**Path bar** (for typing or pasting a path):
 
 - type or paste a `.zip`, `.tgz`, `.tar.gz`, or extracted folder path
-- `Enter` starts analysis
-- `Ctrl+T` switches back to the file browser
+- `Enter` opens the path (navigates into directories, analyzes bundles)
+- `Tab` moves focus back to the file list
+- `Ctrl+T` switches back to the file list
 - `Esc` quits
 
 #### Dashboard and export
