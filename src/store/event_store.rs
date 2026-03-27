@@ -1,7 +1,7 @@
 use crate::model::diagnostic::{Category, DiagnosticEvent, EvidenceRef, OsKind, Severity, Status};
 use crate::model::filter::FilterState;
-use crate::parsers::common::{self, LogLevel, TimestampKind};
-use crate::store::timeline::{build_timeline, TimelineBucket};
+use crate::parsers::common::{self, LogLevel};
+use crate::store::timeline::{build_timeline_for_indices, TimelineBucket};
 use anyhow::Result;
 use chrono::{DateTime, Duration, Utc};
 use std::collections::BTreeMap;
@@ -105,6 +105,7 @@ pub struct EventStore {
     time_index: BTreeMap<i64, Vec<usize>>,
     source_dir: PathBuf,
     date_summary: BundleDateSummary,
+    latest_timestamp: Option<DateTime<Utc>>,
 }
 
 impl EventStore {
@@ -122,6 +123,7 @@ impl EventStore {
             time_index: BTreeMap::new(),
             source_dir: bundle_dir.to_path_buf(),
             date_summary: BundleDateSummary::default(),
+            latest_timestamp: None,
         };
 
         for entry in ignore::WalkBuilder::new(bundle_dir)
@@ -160,7 +162,7 @@ impl EventStore {
     }
 
     pub fn latest_timestamp(&self) -> Option<DateTime<Utc>> {
-        self.events.iter().filter_map(|event| event.ts).max()
+        self.latest_timestamp
     }
 
     pub fn filtered_event_indices(&self, filter: &FilterState) -> Vec<usize> {
@@ -179,11 +181,7 @@ impl EventStore {
 
     pub fn timeline(&self, filter: &FilterState) -> Vec<TimelineBucket> {
         let indices = self.filtered_event_indices(filter);
-        let events: Vec<_> = indices
-            .into_iter()
-            .filter_map(|index| self.events.get(index).cloned())
-            .collect();
-        build_timeline(&events, 5)
+        build_timeline_for_indices(&self.events, &indices, 5)
     }
 
     pub fn load_evidence_context(
@@ -232,27 +230,30 @@ impl EventStore {
         let event_start = self.events.len();
         let mut touched_minutes = Vec::new();
         let mut file_range = TimeRange::default();
+        let mut latest_file_event_ts: Option<DateTime<Utc>> = None;
 
         for (index, line) in reader.lines().enumerate() {
             let line_number = index + 1;
             let line = line?;
-            if let Some(candidate) = common::extract_timestamp(&line) {
-                match candidate.kind {
-                    TimestampKind::DateTime(value) => file_range.include(value),
-                }
+            let timestamp =
+                common::extract_timestamp(&line).map(|candidate| match candidate.kind {
+                    common::TimestampKind::DateTime(value) => value,
+                });
+            if let Some(ts) = timestamp {
+                file_range.include(ts);
             }
-            let Some(event) = classify_line(relative_path, line_number, &line, os) else {
+            let Some(event) = classify_line(relative_path, line_number, &line, os, timestamp)
+            else {
                 continue;
             };
 
             let event_index = self.events.len();
             if let Some(ts) = event.ts {
                 let minute = ts.timestamp() / 60;
-                self.time_index
-                    .entry(minute)
-                    .or_default()
-                    .push(event_index);
+                self.time_index.entry(minute).or_default().push(event_index);
                 touched_minutes.push(minute);
+                latest_file_event_ts =
+                    Some(latest_file_event_ts.map_or(ts, |current| current.max(ts)));
             }
             self.events.push(event);
         }
@@ -271,6 +272,11 @@ impl EventStore {
             }
 
             self.date_summary.analyzed_range.include_range(file_range);
+        }
+
+        if let Some(ts) = latest_file_event_ts {
+            self.latest_timestamp =
+                Some(self.latest_timestamp.map_or(ts, |current| current.max(ts)));
         }
 
         Ok(())
@@ -304,11 +310,9 @@ fn classify_line(
     line_number: usize,
     line: &str,
     os: OsKind,
+    timestamp: Option<DateTime<Utc>>,
 ) -> Option<DiagnosticEvent> {
     let log_level = common::classify_line(line);
-    let timestamp = common::extract_timestamp(line).and_then(|candidate| match candidate.kind {
-        TimestampKind::DateTime(value) => Some(value),
-    });
 
     let mut category = Category::Other;
     let mut title = match log_level {
@@ -473,6 +477,7 @@ mod tests {
             4,
             "2026-03-26T10:00:00Z ERROR ingestion endpoint unreachable",
             OsKind::Linux,
+            Some("2026-03-26T10:00:00Z".parse().unwrap()),
         )
         .unwrap();
 
@@ -510,13 +515,11 @@ mod tests {
             store.date_summary().analyzed_range().start(),
             store.date_summary().analyzed_range().end()
         );
-        assert!(
-            summary
-                .discovered_range()
-                .start()
-                .zip(summary.analyzed_range().start())
-                .is_some_and(|(discovered, analyzed)| discovered < analyzed)
-        );
+        assert!(summary
+            .discovered_range()
+            .start()
+            .zip(summary.analyzed_range().start())
+            .is_some_and(|(discovered, analyzed)| discovered < analyzed));
 
         let _ = std::fs::remove_dir_all(dir);
     }
@@ -524,8 +527,11 @@ mod tests {
     #[test]
     fn untimestamped_logs_remain_available() {
         let dir = create_temp_dir();
-        std::fs::write(dir.join("untimestamped.log"), "ERROR ingestion endpoint unreachable\n")
-            .unwrap();
+        std::fs::write(
+            dir.join("untimestamped.log"),
+            "ERROR ingestion endpoint unreachable\n",
+        )
+        .unwrap();
 
         let store = EventStore::from_bundle_dir(&dir, OsKind::Linux).unwrap();
 

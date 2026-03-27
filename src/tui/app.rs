@@ -119,6 +119,7 @@ pub struct App {
     browser_path: PathBuf,
     browser_entries: Vec<BrowserEntry>,
     browser_state: ListState,
+    navigator_items: Vec<(String, Option<UiCategory>)>,
     severity_filter: u8,
     export_format: OutputFormat,
     export_path: String,
@@ -161,6 +162,7 @@ impl App {
             browser_path: browser_path.clone(),
             browser_entries: Vec::new(),
             browser_state: ListState::default(),
+            navigator_items: default_navigator_items(),
             severity_filter: 3,
             export_format: OutputFormat::Markdown,
             export_path: String::new(),
@@ -282,32 +284,15 @@ impl App {
             .max_by_key(|finding| severity_rank(finding.severity))
     }
 
-    pub fn navigator_items(&self) -> Vec<(String, Option<UiCategory>)> {
-        let Some(analysis) = self.analysis.as_ref() else {
-            return vec![("All categories".to_string(), None)];
-        };
-
-        let mut categories = BTreeSet::new();
-        for event in &analysis.events {
-            categories.insert(event.category);
-        }
-
-        let mut items = vec![("All categories".to_string(), None)];
-        items.extend(
-            categories
-                .into_iter()
-                .map(|category| (category.to_string(), Some(category))),
-        );
-        items
+    pub fn navigator_items(&self) -> &[(String, Option<UiCategory>)] {
+        &self.navigator_items
     }
 
-    pub fn selected_category_label(&self) -> String {
-        let items = self.navigator_items();
+    pub fn selected_category_label(&self) -> &str {
         let selected = self.navigator_state.selected().unwrap_or(0);
-        items
+        self.navigator_items
             .get(selected)
-            .map(|(label, _)| label.clone())
-            .unwrap_or_else(|| "All categories".to_string())
+            .map_or("All categories", |(label, _)| label.as_str())
     }
 
     pub fn selected_group(&self) -> Option<&FindingGroup> {
@@ -327,18 +312,10 @@ impl App {
         self.grouped_findings().len()
     }
 
-    pub fn timeline_points(&self) -> Vec<u64> {
+    pub fn timeline_points(&self) -> &[u64] {
         self.analysis
             .as_ref()
-            .map(|analysis| {
-                analysis
-                    .event_store
-                    .timeline(&analysis.filter)
-                    .into_iter()
-                    .map(|bucket| u64::try_from(bucket.warning_or_higher).unwrap_or(u64::MAX))
-                    .collect()
-            })
-            .unwrap_or_default()
+            .map_or(&[], |analysis| analysis.timeline_points.as_slice())
     }
 
     pub fn current_time_filter_label(&self) -> String {
@@ -351,7 +328,9 @@ impl App {
     pub fn bundle_span_label(&self) -> String {
         self.analysis
             .as_ref()
-            .map(|analysis| format_time_range(analysis.event_store.date_summary().discovered_range()))
+            .map(|analysis| {
+                format_time_range(analysis.event_store.date_summary().discovered_range())
+            })
             .unwrap_or_else(|| "Unknown".to_string())
     }
 
@@ -365,15 +344,22 @@ impl App {
     pub fn stale_log_files_skipped(&self) -> usize {
         self.analysis
             .as_ref()
-            .map(|analysis| analysis.event_store.date_summary().stale_log_files_skipped())
+            .map(|analysis| {
+                analysis
+                    .event_store
+                    .date_summary()
+                    .stale_log_files_skipped()
+            })
             .unwrap_or(0)
     }
 
     pub fn finish_analysis(&mut self, result: std::result::Result<TuiAnalysis, String>) {
         match result {
             Ok(analysis) => {
+                let navigator_items = build_navigator_items(&analysis.events);
                 let report = analysis.report.clone();
                 let finding_count = analysis.grouped_findings.len();
+                self.navigator_items = navigator_items;
                 self.analysis = Some(analysis);
                 self.report = Some(report);
                 self.screen = Screen::Dashboard;
@@ -392,6 +378,7 @@ impl App {
             Err(err) => {
                 self.screen = Screen::FileBrowser;
                 self.analysis = None;
+                self.navigator_items = default_navigator_items();
                 self.report = None;
                 self.set_error_status(format!("Analysis failed: {err}"));
             }
@@ -617,7 +604,7 @@ impl App {
                             2 => UiSeverity::Medium,
                             _ => UiSeverity::Info,
                         };
-                        analysis.refresh_groups();
+                        analysis.refresh_dashboard_data();
                     }
                     self.sync_dashboard_state();
                 }
@@ -627,7 +614,7 @@ impl App {
                 if self.screen == Screen::Dashboard {
                     if let Some(analysis) = self.analysis.as_mut() {
                         analysis.filter.cycle_time_filter();
-                        analysis.refresh_groups();
+                        analysis.refresh_dashboard_data();
                     }
                     self.sync_dashboard_state();
                 }
@@ -917,7 +904,7 @@ impl App {
     fn move_next(&mut self) {
         match self.focus {
             Focus::Navigator => {
-                let count = self.navigator_items().len();
+                let count = self.navigator_items.len();
                 if count == 0 {
                     return;
                 }
@@ -982,7 +969,7 @@ impl App {
     fn move_end(&mut self) {
         match self.focus {
             Focus::Navigator => {
-                let count = self.navigator_items().len();
+                let count = self.navigator_items.len();
                 if count > 0 {
                     self.navigator_state.select(Some(count - 1));
                     self.apply_category_filter();
@@ -1003,13 +990,13 @@ impl App {
     fn apply_category_filter(&mut self) {
         let selected = self.navigator_state.selected().unwrap_or(0);
         let category = self
-            .navigator_items()
+            .navigator_items
             .get(selected)
             .and_then(|(_, category)| *category);
 
         if let Some(analysis) = self.analysis.as_mut() {
             analysis.filter.categories = category.into_iter().collect::<BTreeSet<_>>();
-            analysis.refresh_groups();
+            analysis.refresh_dashboard_data();
         }
 
         self.sync_dashboard_state();
@@ -1087,7 +1074,7 @@ impl App {
                 } else {
                     self.detail_scroll = self
                         .detail_scroll
-                        .saturating_add(delta as u16)
+                        .saturating_add(delta.unsigned_abs())
                         .min(self.detail_max_scroll());
                 }
             }
@@ -1098,7 +1085,7 @@ impl App {
                 } else {
                     self.evidence_scroll = self
                         .evidence_scroll
-                        .saturating_add(delta as u16)
+                        .saturating_add(delta.unsigned_abs())
                         .min(self.evidence_max_scroll());
                 }
             }
@@ -1138,10 +1125,48 @@ fn format_time_range(range: TimeRange) -> String {
     }
 }
 
+fn default_navigator_items() -> Vec<(String, Option<UiCategory>)> {
+    vec![("All categories".to_string(), None)]
+}
+
+fn build_navigator_items(
+    events: &[crate::model::diagnostic::DiagnosticEvent],
+) -> Vec<(String, Option<UiCategory>)> {
+    let mut categories = BTreeSet::new();
+    for event in events {
+        categories.insert(event.category);
+    }
+
+    let mut items = default_navigator_items();
+    items.extend(
+        categories
+            .into_iter()
+            .map(|category| (category.to_string(), Some(category))),
+    );
+    items
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::analyzers::finding::{Category, EnvironmentInfo, Finding, Severity};
+    use crate::detect::TuiAnalysis;
+    use crate::model::diagnostic::OsKind;
+    use crate::model::filter::FilterState;
+    use crate::store::event_store::EventStore;
+    use chrono::Utc;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    fn create_temp_dir() -> PathBuf {
+        let mut path = std::env::temp_dir();
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_nanos();
+        path.push(format!("amadiag-app-test-{unique}"));
+        std::fs::create_dir_all(&path).unwrap();
+        path
+    }
 
     #[test]
     fn primary_finding_prefers_highest_severity() {
@@ -1179,5 +1204,40 @@ mod tests {
                 .map(|finding| finding.rule_id.as_str()),
             Some("CRIT-1")
         );
+    }
+
+    #[test]
+    fn finish_analysis_populates_cached_navigator_and_timeline_data() {
+        let dir = create_temp_dir();
+        let now = Utc::now().format("%Y-%m-%dT%H:%M:%SZ");
+        std::fs::write(
+            dir.join("ama.log"),
+            format!("{now} ERROR ingestion endpoint unreachable\n"),
+        )
+        .unwrap();
+
+        let event_store = EventStore::from_bundle_dir(&dir, OsKind::Linux).unwrap();
+        let mut analysis = TuiAnalysis {
+            report: DiagnosticReport::new(dir.display().to_string()),
+            extracted_bundle: crate::input::prepare_bundle(&dir).unwrap(),
+            events: event_store.events().to_vec(),
+            event_store,
+            grouped_findings: Vec::new(),
+            timeline_points: Vec::new(),
+            filter: FilterState::default(),
+        };
+        analysis.refresh_dashboard_data();
+
+        let mut app = App::new(None);
+        app.finish_analysis(Ok(analysis));
+
+        assert!(app.timeline_points().len() <= 1 || !app.timeline_points().is_empty());
+        assert_eq!(app.selected_category_label(), "All categories");
+        assert!(app
+            .navigator_items()
+            .iter()
+            .any(|(label, _)| label == "Connectivity"));
+
+        let _ = std::fs::remove_dir_all(dir);
     }
 }

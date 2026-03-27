@@ -213,14 +213,11 @@ fn evaluate_single_rule(rule: &RuleDefinition, bundle: &ParsedBundle) -> Option<
                         "counterset" => {
                             // If there are JSON-based DCR configs (modern AMA),
                             // CounterSets in XML may legitimately be absent.
-                            let has_json_config = bundle
-                                .files
-                                .keys()
-                                .any(|k| {
-                                    let lk = k.to_lowercase();
-                                    lk.contains("mcsconfig") && lk.ends_with(".json")
-                                        || lk.contains("configchunks")
-                                });
+                            let has_json_config = bundle.files.keys().any(|k| {
+                                let lk = k.to_lowercase();
+                                lk.contains("mcsconfig") && lk.ends_with(".json")
+                                    || lk.contains("configchunks")
+                            });
                             if has_json_config {
                                 false
                             } else {

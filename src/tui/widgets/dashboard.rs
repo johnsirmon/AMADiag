@@ -96,10 +96,16 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
             )),
         ]),
         Line::from(vec![
-            Span::styled("Bundle span: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(
+                "Bundle span: ",
+                Style::default().add_modifier(Modifier::BOLD),
+            ),
             Span::raw(app.bundle_span_label()),
             Span::raw("  "),
-            Span::styled("Active span: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(
+                "Active span: ",
+                Style::default().add_modifier(Modifier::BOLD),
+            ),
             Span::raw(app.analyzed_span_label()),
         ]),
         Line::from(vec![
@@ -109,10 +115,16 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
             Span::styled("Category: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw(app.selected_category_label()),
             Span::raw("  "),
-            Span::styled("Visible groups: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(
+                "Visible groups: ",
+                Style::default().add_modifier(Modifier::BOLD),
+            ),
             Span::raw(app.grouped_finding_count().to_string()),
             Span::raw("  "),
-            Span::styled("Skipped stale logs: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(
+                "Skipped stale logs: ",
+                Style::default().add_modifier(Modifier::BOLD),
+            ),
             Span::raw(app.stale_log_files_skipped().to_string()),
         ]),
     ];
@@ -132,8 +144,8 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
 fn draw_navigator(frame: &mut Frame, app: &mut App, area: Rect) {
     let items: Vec<ListItem> = app
         .navigator_items()
-        .into_iter()
-        .map(|(label, _)| ListItem::new(label))
+        .iter()
+        .map(|(label, _)| ListItem::new(label.clone()))
         .collect();
 
     let title = if app.focus() == Focus::Navigator {

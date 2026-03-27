@@ -1,6 +1,6 @@
-use anyhow::{bail, Context, Result};
 use crate::model::diagnostic::OsKind;
 use crate::store::event_store::{EventStore, TimeRange, DEFAULT_STALE_LOG_AGE_DAYS};
+use anyhow::{bail, Context, Result};
 use std::fmt;
 use std::path::{Path, PathBuf};
 
@@ -24,7 +24,7 @@ impl fmt::Display for BundleFormat {
 
 pub struct ExtractedBundle {
     dir: PathBuf,
-    _tmp: Option<tempdir::TempDir>,
+    tmp: Option<tempdir::TempDir>,
 }
 
 impl ExtractedBundle {
@@ -33,7 +33,7 @@ impl ExtractedBundle {
     }
 
     pub fn into_parts(self) -> (PathBuf, Option<tempdir::TempDir>) {
-        (self.dir, self._tmp)
+        (self.dir, self.tmp)
     }
 }
 
@@ -68,15 +68,15 @@ pub fn prepare_bundle(path: &Path) -> Result<ExtractedBundle> {
     match detect_format(path)? {
         BundleFormat::Directory => Ok(ExtractedBundle {
             dir: path.to_path_buf(),
-            _tmp: None,
+            tmp: None,
         }),
         BundleFormat::TarGz => {
             let (dir, tmp) = extract_tar_gz(path)?;
-            Ok(ExtractedBundle { dir, _tmp: tmp })
+            Ok(ExtractedBundle { dir, tmp })
         }
         BundleFormat::Zip => {
             let (dir, tmp) = extract_zip(path)?;
-            Ok(ExtractedBundle { dir, _tmp: tmp })
+            Ok(ExtractedBundle { dir, tmp })
         }
     }
 }

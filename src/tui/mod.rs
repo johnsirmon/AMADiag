@@ -48,7 +48,7 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
                             app.grouped_findings(),
                             app.selected_group(),
                             &app.current_time_filter_label(),
-                            &app.selected_category_label(),
+                            app.selected_category_label(),
                             format,
                             &export_path,
                         ) {
