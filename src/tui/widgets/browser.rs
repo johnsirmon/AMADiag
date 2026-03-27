@@ -73,7 +73,9 @@ pub(crate) fn draw(frame: &mut Frame, app: &mut App) {
         .title(if path_focused {
             Span::styled(
                 " Path (editing) ",
-                Style::default().fg(theme::ACCENT).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(theme::ACCENT)
+                    .add_modifier(Modifier::BOLD),
             )
         } else {
             Span::styled(" Path ", Style::default().fg(Color::DarkGray))
@@ -233,10 +235,7 @@ pub(crate) fn draw(frame: &mut Frame, app: &mut App) {
                     key_desc("File list  "),
                     key_badge("Esc"),
                     key_desc("Quit  "),
-                    Span::styled(
-                        "  Paste supported",
-                        Style::default().fg(Color::DarkGray),
-                    ),
+                    Span::styled("  Paste supported", Style::default().fg(Color::DarkGray)),
                 ])
             } else {
                 Line::from(vec![
