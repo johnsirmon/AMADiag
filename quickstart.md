@@ -71,7 +71,7 @@ You need one of these:
 
 ### 1. Download and unzip
 
-- Download the Windows release zip.
+- Download the Windows release zip, such as `amadiag-windows-x86_64-v0.3.2.zip`.
 - Right-click it.
 - Choose **Extract All**.
 - Open the extracted folder.
@@ -162,8 +162,8 @@ When you press `m` or `j`, an export screen opens.
 Download the Linux release archive, then extract it:
 
 ```bash
-tar -xzf amadiag-linux-x86_64.tar.gz
-cd amadiag-linux-x86_64
+tar -xzf amadiag-linux-x86_64-v0.3.2.tar.gz
+cd amadiag-linux-x86_64-v0.3.2
 ```
 
 You should see an `amadiag` binary.
@@ -305,8 +305,8 @@ The repository includes a GitHub Actions workflow that builds Windows and Linux 
 Example:
 
 ```bash
-git tag v0.3.0
-git push origin v0.3.0
+git tag v0.3.2
+git push origin v0.3.2
 ```
 
 That workflow creates a GitHub Release and uploads packaged binaries for users to download.

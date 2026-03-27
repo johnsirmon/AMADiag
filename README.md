@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?logo=rust)](https://www.rust-lang.org/)
-[![Version](https://img.shields.io/badge/version-0.3.0-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
+[![Version](https://img.shields.io/badge/version-0.3.2-green.svg)](https://github.com/johnsirmon/AMADiag/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 
 *Drop in an AMA troubleshooter bundle. Get a diagnostic report in seconds — no AMA expertise required.*
@@ -97,7 +97,7 @@ cargo install --path .
 amadiag analyze /path/to/bundle.tgz
 ```
 
-For non-build users, download the Windows or Linux release package from **Releases** and run the included binary.
+For non-build users, download the Windows or Linux release package from **Releases** and run the included binary. For `v0.3.2`, the packaged assets are `amadiag-windows-x86_64-v0.3.2.zip` and `amadiag-linux-x86_64-v0.3.2.tar.gz`.
 
 ---
 
