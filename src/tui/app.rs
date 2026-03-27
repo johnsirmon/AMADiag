@@ -12,7 +12,6 @@ use std::time::{Duration, Instant};
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Screen {
     FileBrowser,
-    PathInput,
     Analyzing,
     Dashboard,
     Export,
@@ -24,6 +23,12 @@ pub enum Focus {
     Findings,
     Details,
     Evidence,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BrowserFocus {
+    FileList,
+    PathBar,
 }
 
 #[derive(Debug, Clone)]
@@ -102,6 +107,7 @@ pub struct BrowserEntry {
 pub struct App {
     screen: Screen,
     focus: Focus,
+    browser_focus: BrowserFocus,
     input_path: String,
     input_hint: Option<String>,
     input_error: Option<String>,
@@ -145,6 +151,7 @@ impl App {
         let mut app = Self {
             screen,
             focus: Focus::Findings,
+            browser_focus: BrowserFocus::FileList,
             input_path,
             input_hint: None,
             input_error: None,
@@ -271,6 +278,25 @@ impl App {
         self.show_hidden
     }
 
+    pub fn browser_focus(&self) -> BrowserFocus {
+        self.browser_focus
+    }
+
+    pub fn bundle_name(&self) -> String {
+        self.report
+            .as_ref()
+            .map(|report| {
+                let path = std::path::Path::new(&report.bundle_path);
+                let stem = path
+                    .file_stem()
+                    .and_then(|s| s.to_str())
+                    .unwrap_or("Unknown bundle");
+                // Strip .tar from .tar.gz stems
+                stem.strip_suffix(".tar").unwrap_or(stem).to_string()
+            })
+            .unwrap_or_else(|| "Unknown bundle".to_string())
+    }
+
     pub fn export_overwrite_pending(&self) -> bool {
         self.export_overwrite_pending
     }
@@ -318,20 +344,45 @@ impl App {
             .map_or(&[], |analysis| analysis.timeline_points.as_slice())
     }
 
+    pub fn timeline_range_label(&self) -> Option<(String, String)> {
+        let analysis = self.analysis.as_ref()?;
+        let buckets = analysis.event_store.timeline(&analysis.filter);
+        let first = buckets.first()?;
+        let last = buckets.last()?;
+        Some((
+            first.start.format("%Y-%m-%d %H:%M").to_string(),
+            last.start.format("%Y-%m-%d %H:%M").to_string(),
+        ))
+    }
+
+    pub fn timeline_event_count(&self) -> usize {
+        self.analysis
+            .as_ref()
+            .map(|analysis| {
+                let latest = analysis.event_store.latest_timestamp();
+                let indexed = analysis.event_store.events().len();
+                let mut count = analysis
+                    .event_store
+                    .filtered_event_indices(&analysis.filter)
+                    .len();
+                for event in analysis.events.iter().skip(indexed) {
+                    if event.severity >= analysis.filter.min_severity
+                        && analysis.filter.allows_category(event.category)
+                        && analysis.filter.time_filter.contains(event.ts, latest)
+                    {
+                        count += 1;
+                    }
+                }
+                count
+            })
+            .unwrap_or(0)
+    }
+
     pub fn current_time_filter_label(&self) -> String {
         self.analysis
             .as_ref()
             .map(|analysis| analysis.filter.time_filter.label())
             .unwrap_or_else(|| "All".to_string())
-    }
-
-    pub fn bundle_span_label(&self) -> String {
-        self.analysis
-            .as_ref()
-            .map(|analysis| {
-                format_time_range(analysis.event_store.date_summary().discovered_range())
-            })
-            .unwrap_or_else(|| "Unknown".to_string())
     }
 
     pub fn analyzed_span_label(&self) -> String {
@@ -412,13 +463,18 @@ impl App {
         match action {
             Action::Quit => ActionResult::Quit,
             Action::Submit => match self.screen {
-                Screen::FileBrowser => self.browser_select(),
-                Screen::PathInput => self.submit_path(),
+                Screen::FileBrowser => {
+                    if self.browser_focus == BrowserFocus::PathBar {
+                        self.submit_path()
+                    } else {
+                        self.browser_select()
+                    }
+                }
                 Screen::Export => self.confirm_export(),
                 _ => ActionResult::None,
             },
             Action::Backspace => match self.screen {
-                Screen::PathInput => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::PathBar => {
                     self.input_path.pop();
                     self.refresh_input_validation();
                     ActionResult::None
@@ -435,7 +491,15 @@ impl App {
                 _ => ActionResult::None,
             },
             Action::InputChar(ch) => match self.screen {
-                Screen::PathInput => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::PathBar => {
+                    self.input_path.push(ch);
+                    self.refresh_input_validation();
+                    ActionResult::None
+                }
+                Screen::FileBrowser if ch == '/' || ch == '\\' => {
+                    // Typing '/' or '\' activates the path bar from file list
+                    self.browser_focus = BrowserFocus::PathBar;
+                    self.input_path.clear();
                     self.input_path.push(ch);
                     self.refresh_input_validation();
                     ActionResult::None
@@ -448,8 +512,15 @@ impl App {
                 _ => ActionResult::None,
             },
             Action::Paste(text) => match self.screen {
-                Screen::PathInput => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::PathBar => {
                     self.input_path.push_str(&text);
+                    self.refresh_input_validation();
+                    ActionResult::None
+                }
+                Screen::FileBrowser => {
+                    // Pasting into file list activates path bar
+                    self.browser_focus = BrowserFocus::PathBar;
+                    self.input_path = text;
                     self.refresh_input_validation();
                     ActionResult::None
                 }
@@ -461,24 +532,42 @@ impl App {
                 _ => ActionResult::None,
             },
             Action::FocusPrevious => {
-                if self.screen == Screen::Dashboard {
-                    self.focus = match self.focus {
-                        Focus::Navigator => Focus::Evidence,
-                        Focus::Findings => Focus::Navigator,
-                        Focus::Details => Focus::Findings,
-                        Focus::Evidence => Focus::Details,
-                    };
+                match self.screen {
+                    Screen::Dashboard => {
+                        self.focus = match self.focus {
+                            Focus::Navigator => Focus::Evidence,
+                            Focus::Findings => Focus::Navigator,
+                            Focus::Details => Focus::Findings,
+                            Focus::Evidence => Focus::Details,
+                        };
+                    }
+                    Screen::FileBrowser => {
+                        self.browser_focus = match self.browser_focus {
+                            BrowserFocus::FileList => BrowserFocus::PathBar,
+                            BrowserFocus::PathBar => BrowserFocus::FileList,
+                        };
+                    }
+                    _ => {}
                 }
                 ActionResult::None
             }
             Action::FocusNext => {
-                if self.screen == Screen::Dashboard {
-                    self.focus = match self.focus {
-                        Focus::Navigator => Focus::Findings,
-                        Focus::Findings => Focus::Details,
-                        Focus::Details => Focus::Evidence,
-                        Focus::Evidence => Focus::Navigator,
-                    };
+                match self.screen {
+                    Screen::Dashboard => {
+                        self.focus = match self.focus {
+                            Focus::Navigator => Focus::Findings,
+                            Focus::Findings => Focus::Details,
+                            Focus::Details => Focus::Evidence,
+                            Focus::Evidence => Focus::Navigator,
+                        };
+                    }
+                    Screen::FileBrowser => {
+                        self.browser_focus = match self.browser_focus {
+                            BrowserFocus::FileList => BrowserFocus::PathBar,
+                            BrowserFocus::PathBar => BrowserFocus::FileList,
+                        };
+                    }
+                    _ => {}
                 }
                 ActionResult::None
             }
@@ -487,7 +576,7 @@ impl App {
                     self.move_next();
                     ActionResult::None
                 }
-                Screen::FileBrowser => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::FileList => {
                     self.browser_move_next();
                     ActionResult::None
                 }
@@ -498,7 +587,7 @@ impl App {
                     self.move_previous();
                     ActionResult::None
                 }
-                Screen::FileBrowser => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::FileList => {
                     self.browser_move_previous();
                     ActionResult::None
                 }
@@ -521,7 +610,7 @@ impl App {
                     self.move_home();
                     ActionResult::None
                 }
-                Screen::FileBrowser => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::FileList => {
                     self.browser_state.select(Some(0));
                     ActionResult::None
                 }
@@ -532,7 +621,7 @@ impl App {
                     self.move_end();
                     ActionResult::None
                 }
-                Screen::FileBrowser => {
+                Screen::FileBrowser if self.browser_focus == BrowserFocus::FileList => {
                     let count = self.browser_entries.len();
                     if count > 0 {
                         self.browser_state.select(Some(count - 1));
@@ -542,7 +631,7 @@ impl App {
                 _ => ActionResult::None,
             },
             Action::EditPath => match self.screen {
-                Screen::PathInput | Screen::FileBrowser => ActionResult::Quit,
+                Screen::FileBrowser => ActionResult::Quit,
                 Screen::Analyzing => ActionResult::None,
                 Screen::Export => {
                     self.screen = Screen::Dashboard;
@@ -550,6 +639,7 @@ impl App {
                 }
                 Screen::Dashboard => {
                     self.screen = Screen::FileBrowser;
+                    self.browser_focus = BrowserFocus::FileList;
                     self.detail_scroll = 0;
                     self.evidence_scroll = 0;
                     let path = self.browser_path.clone();
@@ -578,13 +668,10 @@ impl App {
             }
             Action::ToggleView => match self.screen {
                 Screen::FileBrowser => {
-                    self.screen = Screen::PathInput;
-                    ActionResult::None
-                }
-                Screen::PathInput => {
-                    self.screen = Screen::FileBrowser;
-                    let path = self.browser_path.clone();
-                    self.load_browser_dir(&path);
+                    self.browser_focus = match self.browser_focus {
+                        BrowserFocus::FileList => BrowserFocus::PathBar,
+                        BrowserFocus::PathBar => BrowserFocus::FileList,
+                    };
                     ActionResult::None
                 }
                 _ => ActionResult::None,
@@ -656,10 +743,6 @@ impl App {
     }
 
     fn submit_path(&mut self) -> ActionResult {
-        if self.screen != Screen::PathInput {
-            return ActionResult::None;
-        }
-
         let trimmed = self.input_path.trim();
         if trimmed.is_empty() {
             self.input_error = Some("Enter a path to a bundle or extracted folder.".to_string());
@@ -667,6 +750,15 @@ impl App {
         }
 
         let path = PathBuf::from(trimmed);
+        // If it's a directory that's not a bundle, navigate into it
+        if path.is_dir() && input::detect_format(&path).is_err() {
+            self.load_browser_dir(&path);
+            self.browser_focus = BrowserFocus::FileList;
+            self.input_path.clear();
+            self.input_hint = None;
+            self.input_error = None;
+            return ActionResult::None;
+        }
         match input::detect_format(&path) {
             Ok(_) => self.start_analysis(path),
             Err(err) => {

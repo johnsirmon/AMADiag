@@ -4,9 +4,22 @@ use crate::parsers::common::{self, LogLevel};
 use crate::store::timeline::{build_timeline_for_indices, TimelineBucket};
 use anyhow::Result;
 use chrono::{DateTime, Duration, Utc};
+use regex::Regex;
 use std::collections::BTreeMap;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
+
+/// Lines with ErrorCode:0 or ErrorCode(0) in AMA logs indicate SUCCESS despite
+/// having an ERROR log-level label. Filter these to avoid false positives.
+static ERRORCODE_ZERO_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"ErrorCode[:(]\s*0\)?").unwrap());
+
+/// Scheduled task lifecycle messages from MAEventTable are routine per-query
+/// timeouts that AMA handles gracefully — not crashes or real errors.
+static SCHEDULED_TASK_NOISE_RE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)Tasks\s*-\s*MAEventTable.*MDRESULT.*ErrorCode\(0\)").unwrap()
+});
 
 pub const DEFAULT_STALE_LOG_AGE_DAYS: i64 = 180;
 
@@ -181,7 +194,48 @@ impl EventStore {
 
     pub fn timeline(&self, filter: &FilterState) -> Vec<TimelineBucket> {
         let indices = self.filtered_event_indices(filter);
-        build_timeline_for_indices(&self.events, &indices, 5)
+        let bucket_minutes = self.adaptive_bucket_minutes(filter);
+        build_timeline_for_indices(&self.events, &indices, bucket_minutes)
+    }
+
+    /// Choose a bucket size that gives a readable number of bars for the
+    /// current filter window.
+    fn adaptive_bucket_minutes(&self, filter: &FilterState) -> i64 {
+        use crate::model::filter::TimeFilter;
+        match &filter.time_filter {
+            TimeFilter::LastMinutes(m) if *m <= 60 => 1,
+            TimeFilter::LastMinutes(_) => 5,
+            TimeFilter::LastHours(h) if *h <= 1 => 1,
+            TimeFilter::LastHours(h) if *h <= 6 => 5,
+            TimeFilter::LastHours(h) if *h <= 24 => 15,
+            TimeFilter::LastHours(h) if *h <= 168 => 60,
+            TimeFilter::LastHours(_) => 240,
+            TimeFilter::Custom { start, end } => {
+                let span = (*end - *start).num_minutes();
+                match span {
+                    0..=60 => 1,
+                    61..=360 => 5,
+                    361..=1440 => 15,
+                    1441..=10080 => 60,
+                    _ => 240,
+                }
+            }
+            TimeFilter::All => {
+                let range = self.date_summary.analyzed_range;
+                if let (Some(start), Some(end)) = (range.start(), range.end()) {
+                    let span = (end - start).num_minutes();
+                    match span {
+                        0..=60 => 1,
+                        61..=360 => 5,
+                        361..=1440 => 15,
+                        1441..=10080 => 60,
+                        _ => 240,
+                    }
+                } else {
+                    5
+                }
+            }
+        }
     }
 
     pub fn load_evidence_context(
@@ -312,6 +366,16 @@ fn classify_line(
     os: OsKind,
     timestamp: Option<DateTime<Utc>>,
 ) -> Option<DiagnosticEvent> {
+    // ── False-positive filters ──────────────────────────────────────
+    // ErrorCode:0 / ErrorCode(0) indicates success in AMA Windows logs.
+    if ERRORCODE_ZERO_RE.is_match(line) {
+        return None;
+    }
+    // Scheduled task lifecycle noise from MAEventTable is not actionable.
+    if SCHEDULED_TASK_NOISE_RE.is_match(line) {
+        return None;
+    }
+
     let log_level = common::classify_line(line);
 
     let mut category = Category::Other;
@@ -323,9 +387,11 @@ fn classify_line(
         LogLevel::Unknown => "AMA log event",
     }
     .to_string();
+    // Unclassified errors/warnings get downgraded so they don't compete
+    // with real diagnostic findings matched by specific patterns below.
     let mut severity = match log_level {
-        LogLevel::Error => Severity::High,
-        LogLevel::Warning => Severity::Medium,
+        LogLevel::Error => Severity::Medium,
+        LogLevel::Warning => Severity::Low,
         LogLevel::Info => Severity::Info,
         LogLevel::Debug | LogLevel::Unknown => Severity::Low,
     };

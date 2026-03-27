@@ -1,5 +1,5 @@
 use super::shared::{
-    clean_path, group_severity_badge, group_severity_style, key_badge, key_desc,
+    group_severity_badge, group_severity_style, key_badge, key_desc,
     render_vertical_scrollbar, severity_pill,
 };
 use crate::tui::{
@@ -8,7 +8,7 @@ use crate::tui::{
 };
 use ratatui::{
     layout::{Constraint, Direction, Layout, Rect},
-    style::{Modifier, Style},
+    style::{Color, Modifier, Style},
     text::{Line, Span, Text},
     widgets::{Block, BorderType, Cell, List, ListItem, Paragraph, Row, Sparkline, Table, Wrap},
     Frame,
@@ -40,7 +40,7 @@ pub(crate) fn draw(frame: &mut Frame, app: &mut App) {
 
     let [timeline_area, findings_area] = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Length(5), Constraint::Min(8)])
+        .constraints([Constraint::Length(6), Constraint::Min(8)])
         .areas(center_area);
 
     draw_summary(frame, app, summary_area);
@@ -60,81 +60,81 @@ fn draw_summary(frame: &mut Frame, app: &App, area: Rect) {
     let env = &report.environment;
     let lines = vec![
         Line::from(vec![
+            Span::styled("Host: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::styled(
-                format!("AMADiag v{}  ", env!("CARGO_PKG_VERSION")),
-                Style::default()
-                    .fg(theme::ACCENT)
-                    .add_modifier(Modifier::BOLD),
-            ),
-            Span::raw(format!("Bundle: {}  ", clean_path(&report.bundle_path))),
-            Span::raw(format!("Files: {}  ", report.files_analyzed)),
-            Span::raw(format!("Legacy findings: {}  ", report.findings.len())),
-            Span::raw(format!("Grouped findings: {}", app.grouped_finding_count())),
-        ]),
-        Line::from(vec![
-            Span::raw(format!(
-                "Platform: {}  ",
-                env.platform
-                    .map(|platform| platform.to_string())
-                    .unwrap_or_else(|| "Unknown".to_string())
-            )),
-            Span::raw(format!(
-                "OS: {}  ",
-                env.os.clone().unwrap_or_else(|| "Unknown".to_string())
-            )),
-            Span::raw(format!(
-                "AMA: {}  ",
-                env.ama_version
-                    .clone()
-                    .unwrap_or_else(|| "Unknown".to_string())
-            )),
-            Span::raw(format!(
-                "Host: {}",
                 env.hostname
                     .clone()
-                    .unwrap_or_else(|| "Unknown".to_string())
-            )),
+                    .unwrap_or_else(|| "Unknown".to_string()),
+                Style::default().fg(theme::ACCENT),
+            ),
+            Span::styled("  │  ", Style::default().fg(Color::DarkGray)),
+            Span::styled("Platform: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(
+                env.platform
+                    .map(|p| p.to_string())
+                    .unwrap_or_else(|| "Unknown".to_string()),
+            ),
+            Span::styled("  │  ", Style::default().fg(Color::DarkGray)),
+            Span::styled("AMA: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(
+                env.ama_version
+                    .clone()
+                    .unwrap_or_else(|| "Unknown".to_string()),
+                Style::default().fg(theme::ACCENT),
+            ),
+            Span::styled("  │  ", Style::default().fg(Color::DarkGray)),
+            Span::styled("OS: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(env.os.clone().unwrap_or_else(|| "Unknown".to_string())),
         ]),
         Line::from(vec![
+            Span::styled("Files: ", Style::default().add_modifier(Modifier::BOLD)),
+            Span::raw(format!("{}  ", report.files_analyzed)),
+            Span::styled("│  ", Style::default().fg(Color::DarkGray)),
             Span::styled(
-                "Bundle span: ",
+                "Grouped findings: ",
                 Style::default().add_modifier(Modifier::BOLD),
             ),
-            Span::raw(app.bundle_span_label()),
-            Span::raw("  "),
+            Span::raw(app.grouped_finding_count().to_string()),
+        ]),
+        Line::from(vec![
             Span::styled(
                 "Active span: ",
                 Style::default().add_modifier(Modifier::BOLD),
             ),
             Span::raw(app.analyzed_span_label()),
-        ]),
-        Line::from(vec![
+            Span::styled("  │  ", Style::default().fg(Color::DarkGray)),
             Span::styled("Window: ", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw(app.current_time_filter_label()),
-            Span::raw("  "),
+        ]),
+        Line::from(vec![
             Span::styled("Category: ", Style::default().add_modifier(Modifier::BOLD)),
-            Span::raw(app.selected_category_label()),
-            Span::raw("  "),
+            Span::raw(format!("{}  ", app.selected_category_label())),
+            Span::styled("│  ", Style::default().fg(Color::DarkGray)),
             Span::styled(
-                "Visible groups: ",
-                Style::default().add_modifier(Modifier::BOLD),
-            ),
-            Span::raw(app.grouped_finding_count().to_string()),
-            Span::raw("  "),
-            Span::styled(
-                "Skipped stale logs: ",
+                "Stale logs skipped: ",
                 Style::default().add_modifier(Modifier::BOLD),
             ),
             Span::raw(app.stale_log_files_skipped().to_string()),
         ]),
     ];
 
+    let title = format!(
+        " {} — AMADiag v{} ",
+        app.bundle_name(),
+        env!("CARGO_PKG_VERSION")
+    );
+
     frame.render_widget(
         Paragraph::new(Text::from(lines))
             .block(
                 Block::bordered()
                     .border_type(BorderType::Rounded)
-                    .title("Ops cockpit"),
+                    .title(Span::styled(
+                        title,
+                        Style::default()
+                            .fg(theme::ACCENT)
+                            .add_modifier(Modifier::BOLD),
+                    )),
             )
             .wrap(Wrap { trim: false }),
         area,
@@ -171,19 +171,53 @@ fn draw_navigator(frame: &mut Frame, app: &mut App, area: Rect) {
 fn draw_timeline(frame: &mut Frame, app: &App, area: Rect) {
     let data = app.timeline_points();
     let max = data.iter().copied().max().unwrap_or(1);
-    let title = format!("Timeline ({})", app.current_time_filter_label());
+    let event_count = app.timeline_event_count();
+
+    let title = if let Some((start, end)) = app.timeline_range_label() {
+        format!("Timeline — {start} to {end} ({event_count} events)")
+    } else {
+        format!("Timeline ({})", app.current_time_filter_label())
+    };
+
+    // Split area: sparkline + 1-line time axis
+    let [spark_area, axis_area] = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([Constraint::Min(3), Constraint::Length(1)])
+        .areas(
+            Block::bordered()
+                .border_type(BorderType::Rounded)
+                .title(title.clone())
+                .inner(area),
+        );
+
+    // Render the bordered container
+    frame.render_widget(
+        Block::bordered()
+            .border_type(BorderType::Rounded)
+            .title(title),
+        area,
+    );
+
+    // Render sparkline inside the container
     frame.render_widget(
         Sparkline::default()
-            .block(
-                Block::bordered()
-                    .border_type(BorderType::Rounded)
-                    .title(title),
-            )
             .style(Style::default().fg(theme::ACCENT))
             .max(max)
             .data(data),
-        area,
+        spark_area,
     );
+
+    // Render time axis labels
+    if let Some((start, end)) = app.timeline_range_label() {
+        let axis_width = axis_area.width as usize;
+        let end_len = end.len();
+        let padding = axis_width.saturating_sub(start.len() + end_len);
+        let axis_text = format!("{start}{:>width$}", end, width = padding + end_len);
+        frame.render_widget(
+            Paragraph::new(Span::styled(axis_text, Style::default().fg(Color::DarkGray))),
+            axis_area,
+        );
+    }
 }
 
 fn draw_findings(frame: &mut Frame, app: &mut App, area: Rect) {

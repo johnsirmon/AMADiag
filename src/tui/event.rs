@@ -1,15 +1,34 @@
-use super::app::{Action, Screen};
+use super::app::{Action, BrowserFocus, Screen};
 use anyhow::Result;
 use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind};
 use std::time::Duration;
 
-pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> {
+pub fn next_action(
+    timeout: Duration,
+    screen: Screen,
+    browser_focus: BrowserFocus,
+) -> Result<Option<Action>> {
     if !event::poll(timeout)? {
         return Ok(None);
     }
 
     let action = match event::read()? {
         Event::Key(key) if key.kind == KeyEventKind::Press => match screen {
+            Screen::FileBrowser if browser_focus == BrowserFocus::PathBar => match key.code {
+                KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                    Some(Action::Quit)
+                }
+                KeyCode::Esc => Some(Action::EditPath),
+                KeyCode::Enter => Some(Action::Submit),
+                KeyCode::Backspace => Some(Action::Backspace),
+                KeyCode::Tab => Some(Action::FocusNext),
+                KeyCode::BackTab => Some(Action::FocusPrevious),
+                KeyCode::Char('t') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                    Some(Action::ToggleView)
+                }
+                KeyCode::Char(ch) => Some(Action::InputChar(ch)),
+                _ => None,
+            },
             Screen::FileBrowser => match key.code {
                 KeyCode::Char('q') => Some(Action::Quit),
                 KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
@@ -22,23 +41,13 @@ pub fn next_action(timeout: Duration, screen: Screen) -> Result<Option<Action>> 
                 KeyCode::Down => Some(Action::Next),
                 KeyCode::Home => Some(Action::Home),
                 KeyCode::End => Some(Action::End),
+                KeyCode::Tab => Some(Action::FocusNext),
+                KeyCode::BackTab => Some(Action::FocusPrevious),
                 KeyCode::Char('t') => Some(Action::ToggleView),
                 KeyCode::Char('h') => Some(Action::ToggleHidden),
                 KeyCode::Char('j') => Some(Action::Next),
                 KeyCode::Char('k') => Some(Action::Previous),
-                _ => None,
-            },
-            Screen::PathInput => match key.code {
-                KeyCode::Char('c') if key.modifiers.contains(KeyModifiers::CONTROL) => {
-                    Some(Action::Quit)
-                }
-                KeyCode::Esc => Some(Action::EditPath),
-                KeyCode::Enter => Some(Action::Submit),
-                KeyCode::Backspace => Some(Action::Backspace),
-                KeyCode::Char('t') if key.modifiers.contains(KeyModifiers::CONTROL) => {
-                    Some(Action::ToggleView)
-                }
-                KeyCode::Char(ch) => Some(Action::InputChar(ch)),
+                KeyCode::Char('/') | KeyCode::Char('\\') => Some(Action::ToggleView),
                 _ => None,
             },
             Screen::Analyzing => match key.code {

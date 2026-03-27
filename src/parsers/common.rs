@@ -138,14 +138,14 @@ const IMDS_ERROR_PAT: &str =
     r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|\bfail(ed|ure)?\b|\berror\b|refused)";
 const AUTH_TOKEN_ERROR_PAT: &str = r"(?i)(managed.identity|MSI|auth.?token).*(\bfailed\b|\bfailure\b|\berror\b|\bmissing\b|\babsent\b|\bexpired\b|\b401\b|\b403\b)";
 const CONNECTIVITY_ERROR_PAT: &str = r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(connection.refused|connection.timeout|\bunreachable\b|request.failed|endpoint.*(fail|error)|cannot.connect)";
-const SERVICE_CRASH_PAT: &str = r"(?i)(crash(ed|ing)?|terminated unexpectedly|service.*(stopped|failed|dead)|process.exited.*(error|abnormal|unexpected))";
+const SERVICE_CRASH_PAT: &str = r"(?i)(?:(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent).*(?:crash(?:ed|ing)?|terminated unexpectedly|service.*(?:stopped|failed|dead)|process\.exited.*(?:error|abnormal|unexpected))|(?:crash(?:ed|ing)?|terminated unexpectedly).*(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent))";
 const DCR_ERROR_PAT: &str =
     r"(?i)(DCR|data.collection.rule).*(not.found|missing|invalid|error|fail)";
 const EXTENSION_ERROR_PAT: &str = r"(?i)(extension|provisioning).*(\bfailed\b|\bfailure\b|\btimeout\b|not.installed|provision.*(error|fail))";
 const SYSLOG_ERROR_PAT: &str =
     r"(?i)(rsyslog|syslog-ng|syslog|CEF).*(fail|error|not.running|stopped|refused)";
 const METRICS_EXTENSION_ERROR_PAT: &str =
-    r"(?i)(MetricsExtension|\bME\b).*(\berror\b|\bfail(ed|ure)?\b|Level\s*2)";
+    r"(?i)(MetricsExtension|\bME\b).*(\berror\b|\bfail(ed|ure)?\b)";
 const ARC_AGENT_ERROR_PAT: &str =
     r"(?i)(himds|connected.machine|arc.agent|azcmagent).*(fail|error|not.running|stopped)";
 const OOM_KILLER_PAT: &str =
