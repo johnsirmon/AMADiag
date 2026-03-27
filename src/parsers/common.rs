@@ -138,7 +138,7 @@ const IMDS_ERROR_PAT: &str =
     r"(?i)(IMDS|169\.254\.169\.254).*(unreachable|timeout|\bfail(ed|ure)?\b|\berror\b|refused)";
 const AUTH_TOKEN_ERROR_PAT: &str = r"(?i)(managed.identity|MSI|auth.?token).*(\bfailed\b|\bfailure\b|\berror\b|\bmissing\b|\babsent\b|\bexpired\b|\b401\b|\b403\b)";
 const CONNECTIVITY_ERROR_PAT: &str = r"(?i)(AMCS|handler\.control|ingest\.monitor|ods\.opinsights|monitor\.azure\.com|global\.handler|ingestion.endpoint|control.endpoint).*(connection.refused|connection.timeout|\bunreachable\b|request.failed|endpoint.*(fail|error)|cannot.connect)";
-const SERVICE_CRASH_PAT: &str = r"(?i)(?:(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent).*(?:crash(?:ed|ing)?|terminated unexpectedly|service.*(?:stopped|failed|dead)|process\.exited.*(?:error|abnormal|unexpected))|(?:crash(?:ed|ing)?|terminated unexpectedly).*(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent))";
+const SERVICE_CRASH_PAT: &str = r"(?i)(?:(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent).*(?:crash(?:ed|ing)?|terminated unexpectedly|service.+(?:stopped|failed|dead)|process.exited.+(?:error|abnormal|unexpected))|(?:crash(?:ed|ing)?|terminated unexpectedly).*(?:azuremonitoragent|MonAgent|mdsd|amacoreagent|AzureMonitorLinuxAgent))";
 const DCR_ERROR_PAT: &str =
     r"(?i)(DCR|data.collection.rule).*(not.found|missing|invalid|error|fail)";
 const EXTENSION_ERROR_PAT: &str = r"(?i)(extension|provisioning).*(\bfailed\b|\bfailure\b|\btimeout\b|not.installed|provision.*(error|fail))";
@@ -391,11 +391,17 @@ mod tests {
 
     #[test]
     fn service_crash_matches() {
-        assert!(Patterns::service_crash().is_match("process exited with error code 1"));
-        assert!(Patterns::service_crash().is_match("service stopped unexpectedly"));
-        assert!(Patterns::service_crash().is_match("agent crashed during startup"));
+        // Pattern now requires AMA process name context
+        assert!(Patterns::service_crash().is_match("MonAgentHost process exited with error code 1"));
+        assert!(Patterns::service_crash().is_match("azuremonitoragent service stopped unexpectedly"));
+        assert!(Patterns::service_crash().is_match("mdsd crashed during startup"));
+        assert!(Patterns::service_crash().is_match("amacoreagent terminated unexpectedly"));
+        // Generic lines without AMA process names should not match
+        assert!(!Patterns::service_crash().is_match("process exited with error code 1"));
+        assert!(!Patterns::service_crash().is_match("service stopped unexpectedly"));
         assert!(!Patterns::service_crash().is_match("service started"));
         assert!(!Patterns::service_crash().is_match("Health monitor is not running"));
+        assert!(!Patterns::service_crash().is_match("Scheduled task failed to run"));
     }
 
     #[test]

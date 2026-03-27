@@ -33,7 +33,11 @@ pub fn run(path: Option<PathBuf>) -> Result<()> {
 
         terminal.draw(|frame| ui::draw(frame, &mut app))?;
 
-        if let Some(action) = event::next_action(Duration::from_millis(100), app.screen(), app.browser_focus())? {
+        if let Some(action) = event::next_action(
+            Duration::from_millis(100),
+            app.screen(),
+            app.browser_focus(),
+        )? {
             match app.handle_action(action) {
                 ActionResult::None => {}
                 ActionResult::Quit => break,

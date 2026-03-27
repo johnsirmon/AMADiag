@@ -1,6 +1,6 @@
 use super::shared::{
-    group_severity_badge, group_severity_style, key_badge, key_desc,
-    render_vertical_scrollbar, severity_pill,
+    group_severity_badge, group_severity_style, key_badge, key_desc, render_vertical_scrollbar,
+    severity_pill,
 };
 use crate::tui::{
     app::{App, Focus, StatusKind},
@@ -214,7 +214,10 @@ fn draw_timeline(frame: &mut Frame, app: &App, area: Rect) {
         let padding = axis_width.saturating_sub(start.len() + end_len);
         let axis_text = format!("{start}{:>width$}", end, width = padding + end_len);
         frame.render_widget(
-            Paragraph::new(Span::styled(axis_text, Style::default().fg(Color::DarkGray))),
+            Paragraph::new(Span::styled(
+                axis_text,
+                Style::default().fg(Color::DarkGray),
+            )),
             axis_area,
         );
     }
